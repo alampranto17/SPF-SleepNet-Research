@@ -1,0 +1,38 @@
+{
+  "dataset": "ISRUC-III Sleep Staging",
+  "model_type": "Binary N3 detector + N3-quality regressor (Option A)",
+  "n_subjects": 10,
+  "sampling_rate": 200,
+  "n3_recall": 0.9973,
+  "n3_precision": 0.4238,
+  "n3_f1": 0.5948,
+  "auc": 0.9847,
+  "quality_rmse": 0.0476,
+  "quality_r2": 0.8838,
+  "val_losses": [
+    0.4867,
+    0.2794,
+    0.3474,
+    0.1923,
+    0.2248,
+    0.1875,
+    0.2695,
+    0.1493,
+    1.9075,
+    0.8413,
+    0.8413
+  ],
+  "val_accs": [
+    0.7379,
+    0.8504,
+    0.82,
+    0.887,
+    0.8763,
+    0.8858,
+    0.9432,
+    0.9449,
+    0.5146,
+    0.7188,
+    0.7188
+  ]
+}
