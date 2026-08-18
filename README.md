@@ -24,27 +24,6 @@ SleepQualityNet combines:
 - Physiologically motivated EEG features
 - Multi-task learning
 
-```text
-Single-Channel EEG
-        │
-        ▼
-   CNN Encoder
-        │
-        ▼
- Temporal Attention
-        │
-        ▼
-  Shared EEG Feature
-      /       \
-     /         \
-    ▼           ▼
-N3 Detection   Delta-Intensity
-    │             │
-    ▼             ▼
-N3 Probability   EEG-Derived Score
-```
-
----
 
 ## 📊 Dataset
 
