@@ -123,7 +123,10 @@ if "data" in RUN_STAGES:
         D.build_cache(CACHE_DIR, RAW_ISRUC1_DIR, RAW_ISRUC2_DIR, RAW_ISRUC3_DIR, RAW_HMC_DIR,
                       dodh=RAW_DODH_DIR, dodo=RAW_DODO_DIR, dod_scorers=RAW_DOD_SCORERS_DIR)
     if USE_HMC_PHYSIONET and not RAW_HMC_DIR:
-        DL.cache_hmc_physionet(CACHE_DIR, max_recordings=10 if q else None)
+        try:
+            DL.cache_hmc_physionet(CACHE_DIR, max_recordings=6 if q else None)
+        except Exception as exc:
+            print("HMC download failed:", exc)
     if USE_ISRUC_OFFICIAL:
         DL.cache_isruc_details(CACHE_DIR)
         for grp, raw_dir, ids in (("I", RAW_ISRUC1_DIR, range(1, 9) if q else range(1, 101)),

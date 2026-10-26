@@ -30,7 +30,11 @@ import zipfile
 
 from . import data as D
 
-HMC_URL = "https://physionet.org/files/hmc-sleep-staging/1.1/"
+# PhysioNet open data is mirrored on AWS S3 (physionet-open). From Kaggle the S3
+# mirror is typically 10-50x faster than physionet.org, so it is tried first.
+HMC_MIRRORS = ("https://physionet-open.s3.amazonaws.com/hmc-sleep-staging/1.1/",
+               "https://physionet.org/files/hmc-sleep-staging/1.1/")
+HMC_URL = HMC_MIRRORS[-1]
 ISRUC_URL = "http://dataset.isr.uc.pt/ISRUC_Sleep/subgroup{grp}/{sid}.rar"
 ISRUC_DETAILS = "http://dataset.isr.uc.pt/ISRUC_Sleep/Details/Details_subgroup_{grp}_Submission.xlsx"
 DOD_ZIP = {"DOD-H": "https://zenodo.org/records/15900394/files/dodh.zip?download=1",
@@ -39,45 +43,101 @@ DOD_SCORERS_REPO = "https://codeload.github.com/Dreem-Organization/dreem-learnin
 DOD_EXCLUDE = {"5d8e93a5-d26a-436d-bc2c-e9527dc92cbf"}   # DOD-O record without consensus
 
 
-def _fetch(url, out, retries=4, timeout=180):
+def _fetch(url, out, retries=4, timeout=180, log=None, label=None, progress_every=30):
+    """Download ``url`` (or the first working URL of a list/tuple) to ``out``.
+
+    * socket ``timeout`` doubles as stall detection: no bytes for ``timeout`` s
+      aborts the attempt and retries (next mirror first).
+    * with ``log`` set, prints size / MB downloaded / speed every
+      ``progress_every`` seconds, so a slow server never looks frozen.
+    """
+    urls = [url] if isinstance(url, str) else list(url)
+    label = label or os.path.basename(out)
+    last_exc = None
     for k in range(retries):
-        try:
+        for u in urls:
             tmp = out + ".part"
-            req = urllib.request.Request(url, headers={"User-Agent": "sqn2/2.0"})
-            with urllib.request.urlopen(req, timeout=timeout) as r, open(tmp, "wb") as f:
-                shutil.copyfileobj(r, f, length=1 << 20)
-            os.replace(tmp, out)
-            return out
-        except Exception as exc:
-            if k == retries - 1:
-                raise RuntimeError(f"download failed {url}: {exc}")
+            try:
+                req = urllib.request.Request(u, headers={"User-Agent": "sqn2/2.0"})
+                t0 = t_last = time.time()
+                done = 0
+                with urllib.request.urlopen(req, timeout=timeout) as r, open(tmp, "wb") as f:
+                    total = int(r.headers.get("Content-Length") or 0)
+                    while True:
+                        buf = r.read(1 << 20)
+                        if not buf:
+                            break
+                        f.write(buf)
+                        done += len(buf)
+                        now = time.time()
+                        if log and now - t_last >= progress_every:
+                            t_last = now
+                            pct = f" ({100 * done / total:.0f}% of {total / 1e6:.0f} MB)" if total else ""
+                            log(f"    .. {label}: {done / 1e6:.0f} MB{pct}, "
+                                f"{done / 1e6 / max(now - t0, 1e-3):.1f} MB/s")
+                if total and done < total:
+                    raise IOError(f"incomplete: {done}/{total} bytes")
+                os.replace(tmp, out)
+                return out
+            except Exception as exc:
+                last_exc = exc
+                if log:
+                    host = u.split("/")[2]
+                    log(f"    !! {label} from {host}: {type(exc).__name__}: {str(exc)[:120]} - retrying")
+                if os.path.exists(tmp):
+                    os.remove(tmp)
+        if k < retries - 1:
             time.sleep(5 * (k + 1))
+    raise RuntimeError(f"download failed {urls[0]}: {last_exc}")
 
 
 def _run_jobs(jobs, workers, log, label):
+    """Run jobs in parallel; print each line as soon as that job finishes."""
+    t0 = time.time()
     with cf.ThreadPoolExecutor(workers) as ex:
-        for i, (name, st) in enumerate(ex.map(lambda j: j(), jobs), 1):
-            log(f"[{label} {i}/{len(jobs)}] {name}: {st}")
+        futs = [ex.submit(j) for j in jobs]
+        for i, fut in enumerate(cf.as_completed(futs), 1):
+            try:
+                name, st = fut.result()
+            except Exception as exc:                       # never kill the whole stage
+                name, st = "?", f"FAILED {exc}"
+            el = (time.time() - t0) / 60
+            eta = el / i * (len(jobs) - i)
+            log(f"[{label} {i}/{len(jobs)}] {name}: {st}   ({el:.1f} min, ETA {eta:.0f} min)")
 
 
 # ---------------------------------------------------------------------------
 # HMC (PhysioNet)
 # ---------------------------------------------------------------------------
-def hmc_listing():
+def hmc_listing(log=print):
+    """Recording keys from the RECORDS file (S3 mirror first), else the HTML index."""
+    for base in HMC_MIRRORS:
+        try:
+            with urllib.request.urlopen(base + "RECORDS", timeout=60) as r:
+                keys = sorted(set(re.findall(r"(SN\d{3})", r.read().decode("utf-8", "ignore"))))
+            if keys:
+                return keys
+        except Exception as exc:
+            log(f"[HMC] RECORDS from {base.split('/')[2]} failed: {exc}")
     with urllib.request.urlopen(HMC_URL + "recordings/", timeout=60) as r:
         html = r.read().decode("utf-8", "ignore")
     return sorted(set(re.findall(r'href="(SN\d{3})\.edf"', html)))
 
 
-def cache_hmc_physionet(cache_dir, max_recordings=None, workers=4, log=print):
+def _hmc(path):
+    return [m + path for m in HMC_MIRRORS]
+
+
+def cache_hmc_physionet(cache_dir, max_recordings=None, workers=3, log=print):
     os.makedirs(cache_dir, exist_ok=True)
     tmp = tempfile.mkdtemp(prefix="sqn2_hmc_")
-    keys = hmc_listing()
+    keys = hmc_listing(log)
     if max_recordings is not None:
         keys = keys[:max_recordings]
-    log(f"[HMC] {len(keys)} recordings listed on PhysioNet")
+    log(f"[HMC] {len(keys)} recordings to cache (~110 MB each; AWS S3 mirror first, "
+        f"physionet.org fallback). One line per finished recording, progress every 30 s.")
     try:
-        _fetch(HMC_URL + "Subjects_info_aggregated.txt",
+        _fetch(_hmc("Subjects_info_aggregated.txt"),
                os.path.join(cache_dir, "HMC_Subjects_info_aggregated.txt"))
     except Exception as exc:
         log(f"[HMC] subject info not downloaded: {exc}")
@@ -90,8 +150,8 @@ def cache_hmc_physionet(cache_dir, max_recordings=None, workers=4, log=print):
             p = os.path.join(tmp, f"{key}.edf")
             s = os.path.join(tmp, f"{key}_sleepscoring.edf")
             try:
-                _fetch(HMC_URL + f"recordings/{key}.edf", p)
-                _fetch(HMC_URL + f"recordings/{key}_sleepscoring.edf", s)
+                _fetch(_hmc(f"recordings/{key}.edf"), p, timeout=90, log=log, label=f"HMC {key}")
+                _fetch(_hmc(f"recordings/{key}_sleepscoring.edf"), s, timeout=90)
                 out = D.load_hmc(p, s)
                 D.save_cache(os.path.join(cache_dir, name), *out)
                 return name, f"ok ch={out[4]['channel_raw']} fs={out[4]['native_fs']:.0f}"
@@ -182,7 +242,7 @@ def cache_isruc_official(cache_dir, subgroup="I", subject_ids=None, workers=3, l
             rar = os.path.join(tmp, f"{sid}.rar")
             sub = os.path.join(tmp, f"x{sid}")
             try:
-                _fetch(ISRUC_URL.format(grp=subgroup, sid=sid), rar, timeout=900)
+                _fetch(ISRUC_URL.format(grp=subgroup, sid=sid), rar, timeout=120, log=log, label=f"{cohort} {sid}")
                 _extract_rar(rar, sub, tool)
                 os.remove(rar)
                 found = D.discover_isruc_dir(sub)
@@ -269,7 +329,7 @@ def cache_dod(cache_dir, which=("DOD-H", "DOD-O"), max_recordings=None, log=prin
                     f"allow_full_download=True if the disk has room for the full zip")
                 continue
             local_zip = os.path.join(tmp, f"{key}.zip")
-            _fetch(DOD_ZIP[cohort], local_zip, timeout=3600)
+            _fetch(DOD_ZIP[cohort], local_zip, timeout=300, log=log, label=f"{cohort} zip", progress_every=60)
             zf = zipfile.ZipFile(local_zip)
         members = [n for n in zf.namelist() if n.endswith(".h5")]
         members = [n for n in members if os.path.splitext(os.path.basename(n))[0] not in DOD_EXCLUDE]
