@@ -1,14 +1,16 @@
 {
- "stage": "A: data download",
- "updated_utc": "2026-10-26 21:20:20",
- "elapsed_min": 20.3,
+ "stage": "B: corpus and data inventory",
+ "updated_utc": "2026-10-26 21:40:23",
+ "elapsed_min": 40.4,
  "cached_recordings": {
-  "CAP": 106,
+  "CAP": 108,
   "DODH": 25,
   "HMC": 151,
   "ISRUC1": 65,
-  "DODO": 55
+  "DODO": 55,
+  "ISRUC3": 10,
+  "ISRUC2": 16
  },
  "finished_training_runs": 0,
- "disk_free_gb": 18.8
+ "disk_free_gb": 18.7
 }
