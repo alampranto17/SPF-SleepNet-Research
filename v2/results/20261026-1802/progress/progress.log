@@ -175,3 +175,65 @@ ISRUC-I Drive download failed: cannot import name 'DownloadCancelled' from 'gdow
     .. ISRUC-I MEGA: 5.24 GB on disk, 11 min
     .. ISRUC-I MEGA: 5.24 GB on disk, 12 min
     .. ISRUC-I MEGA: 5.24 GB on disk, 13 min
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-1802
+    .. ISRUC-I MEGA: 5.24 GB on disk, 14 min
+    .. ISRUC-I MEGA: 5.24 GB on disk, 15 min
+[ISRUC-I MEGA] no progress for 10 min (MEGA transfer quota?) - stopped; subjects already complete are cached, re-run later for the rest
+[ISRUC-I MEGA] megatools exit -9: WARNING: chunk download failed (Server returned 509 (over quota)), re-trying after 128 seconds | 36.rec: 0.00% - 0 bytes of 153.2 MiB (0 bytes/s) | WARNING: chunk download failed (Server returned 509 (over quota)), re-trying after 256 seconds | 36.rec: 0.00% - 0 bytes of 153.2 MiB (0 bytes/s) | WARNING: chunk download failed (Server returned 509 (over quota)), re-trying after 256 seconds (often the MEGA transfer quota - re-run in a few hours; finished subjects are kept)
+[ISRUC-I MEGA] ISRUC1_001: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_002: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_003: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_004: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_005: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_006: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_007: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_008: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_009: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_010: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_011: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_012: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_013: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_014: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_015: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_016: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_017: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_018: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_019: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_020: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_021: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_022: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_023: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_024: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_025: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_026: ok s1 ch=C4-A1 scorers=2
+[ISRUC-I MEGA] ISRUC1_027: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_028: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_029: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_030: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_031: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_032: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_033: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_034: ok s1 ch=C4-M1 scorers=2
+[ISRUC-I MEGA] ISRUC1_035: ok s1 ch=C4-M1 scorers=2
+ISRUC-I: 35/100 subjects cached
+[ISRUC-II MEGA] downloading the official folder with megatools (progress every 60 s)
+    .. ISRUC-II MEGA: 0.00 GB on disk, 1 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 2 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 3 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 4 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 5 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 6 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 7 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 8 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 9 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 10 min
+    .. ISRUC-II MEGA: 0.00 GB on disk, 11 min
+[ISRUC-II MEGA] no progress for 10 min (MEGA transfer quota?) - stopped; subjects already complete are cached, re-run later for the rest
+[ISRUC-II MEGA] megatools exit -9: WARNING: chunk download failed (Server returned 509 (over quota)), re-trying after 128 seconds | 1.rec: 0.00% - 0 bytes of 145.5 MiB (0 bytes/s) | WARNING: chunk download failed (Server returned 509 (over quota)), re-trying after 256 seconds | 1.rec: 0.00% - 0 bytes of 145.5 MiB (0 bytes/s) | WARNING: chunk download failed (Server returned 509 (over quota)), re-trying after 256 seconds (often the MEGA transfer quota - re-run in a few hours; finished subjects are kept)
+ISRUC-II: 0/8 subjects cached
+ISRUC-III Drive download failed: cannot import name 'DownloadCancelled' from 'gdown.exceptions' (/usr/local/lib/python3.13/dist-packages/gdown/exceptions.py)
+[ISRUC-III MEGA] downloading the official folder with megatools (progress every 60 s)
+    .. ISRUC-III MEGA: 0.00 GB on disk, 1 min
+    .. ISRUC-III MEGA: 0.00 GB on disk, 2 min
+    .. ISRUC-III MEGA: 0.00 GB on disk, 3 min
+    .. ISRUC-III MEGA: 0.00 GB on disk, 4 min
