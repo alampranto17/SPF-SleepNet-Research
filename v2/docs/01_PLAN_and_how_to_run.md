@@ -43,9 +43,14 @@ External cohorts are never used for training, model selection or thresholds. The
    - **Later commits:** **restore `sqn2-cache` and the finished runs (`sqn2-runs`) automatically**. Nothing is downloaded or re-trained twice; unfinished runs continue.
 6. Download `sqn2_v2_outputs.zip` from *Output*.
 
+**Where each cohort comes from (automatic).**
+- HMC: AWS S3 mirror of PhysioNet (`physionet-open`), with physionet.org as fallback (151 recordings in ~4 min on Kaggle).
+- ISRUC: the old server `dataset.isr.uc.pt` has been retired (DNS no longer resolves). ISRUC-I and ISRUC-III come from public Google Drive folders (`ISRUC1_DRIVE_FOLDER`, `ISRUC3_DRIVE_FOLDER`; shared "Anyone with the link"), downloaded file by file with gdown ≥ 6. ISRUC-II comes from the official MEGA folder linked on sleeptight.isr.uc.pt (megatools). The free MEGA quota is about 5 GB per 6 h, so MEGA is also the fallback for I and III.
+- If ISRUC-I or HMC is incomplete in a full run, training is not started. The partial cache is saved to `sqn2-cache`, and the next run continues the download.
+
 **If a download fails.**
-- ISRUC-III: share the Drive folder as "Anyone with the link"; the official server is also tried.
-- ISRUC server unreachable from Kaggle: run `export_compact.py` on your PC with your `D:\AI_Project\…` folders and upload the zip as a Dataset.
+- Drive "too many downloads" quota: wait a few hours and run again; finished subjects are kept.
+- Drive and MEGA both unavailable: run `export_compact.py` on your PC with your local ISRUC folders and upload the zip as a Dataset.
 - DOD range streaming refused: set `DOD_ALLOW_FULL_ZIP_DOWNLOAD = True` (needs about 40 GB free disk).
 
 ## Honest expectations

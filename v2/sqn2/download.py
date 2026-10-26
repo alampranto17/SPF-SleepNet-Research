@@ -212,10 +212,14 @@ def _extract_rar(rar, out_dir, tool):
 
 
 def cache_isruc_details(cache_dir, log=print):
+    alive = host_alive(ISRUC_DETAILS)
     for grp, cohort in (("I", "ISRUC-I"), ("II", "ISRUC-II"), ("III", "ISRUC-III")):
         p = os.path.join(cache_dir, f"Details_subgroup_{grp}.xlsx")
         try:
             if not os.path.exists(p):
+                if not alive:
+                    raise RuntimeError("Details spreadsheet not found locally and the old ISRUC "
+                                       "server is retired (age/sex for this subgroup unavailable)")
                 _fetch(ISRUC_DETAILS.format(grp=grp), p)
             rows = D.read_isruc_details(p, D.COHORT_PREFIX[cohort])
             D.update_participant_metadata(cache_dir, rows, cohort,
@@ -226,11 +230,31 @@ def cache_isruc_details(cache_dir, log=print):
             log(f"[ISRUC details] subgroup {grp}: not available ({exc})")
 
 
+def host_alive(url, timeout=10):
+    import socket
+    host = url.split("/")[2].split(":")[0]
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.gethostbyname(host)
+        return True
+    except Exception:
+        return False
+    finally:
+        socket.setdefaulttimeout(None)
+
+
 def cache_isruc_official(cache_dir, subgroup="I", subject_ids=None, workers=3, log=print):
     os.makedirs(cache_dir, exist_ok=True)
     cohort = {"I": "ISRUC-I", "II": "ISRUC-II", "III": "ISRUC-III"}[subgroup]
     pre = D.COHORT_PREFIX[cohort]
     ids = list(subject_ids or {"I": range(1, 101), "II": range(1, 9), "III": range(1, 11)}[subgroup])
+    ids = [i for i in ids if not glob.glob(os.path.join(cache_dir, f"{pre}_{i:03d}*.npz"))]
+    if not ids:
+        log(f"[{cohort}] all requested subjects already cached")
+        return
+    if not host_alive(ISRUC_URL):
+        log(f"[{cohort}] old ISRUC server dataset.isr.uc.pt does not resolve (retired) - skipped")
+        return
     tool = _ensure_unrar(log)
     log(f"[{cohort}] extractor: {tool}")
     tmp = tempfile.mkdtemp(prefix=f"sqn2_{pre}_")
@@ -265,14 +289,317 @@ def cache_isruc_official(cache_dir, subgroup="I", subject_ids=None, workers=3, l
     shutil.rmtree(tmp, ignore_errors=True)
 
 
-def cache_isruc_from_drive_folder(folder_link, cache_dir, subgroup="III", log=print):
+# ---------------------------------------------------------------------------
+# ISRUC from a public Google-Drive folder (no 50-item limit)
+# ---------------------------------------------------------------------------
+ISRUC_WANTED_EXT = (".rec", ".txt", ".rar", ".zip", ".edf", ".xlsx", ".xls")
+ISRUC_MEGA = {   # official links, sleeptight.isr.uc.pt (2025-); free MEGA quota ~5 GB / 6 h
+    "I": "https://mega.nz/folder/QJgDQDDZ#ZMDj3w82msavACurqP48IA",      # 14.1 GB
+    "II": "https://mega.nz/folder/wVgH2ZAJ#TTxlduGNt4TwaR1eNnl7IQ",     # 2.2 GB
+    "III": "https://mega.nz/folder/hMIDEBBJ#jzU5WOF7V5fQCgykEkOptA",    # 1.35 GB
+}
+
+
+def _drive_get(url, timeout=60):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read().decode("utf-8", "ignore")
+
+
+def _parse_embedded_folder(html):
+    """[(name, id, is_folder)] from drive.google.com/embeddedfolderview HTML."""
+    import html as _html
+    out = []
+    for blk in html.split('class="flip-entry"')[1:]:
+        mid = re.search(r'id="entry-([\w-]+)"', blk)
+        href = re.search(r'href="([^"]+)"', blk)
+        title = re.search(r'class="flip-entry-title">([^<]*)<', blk)
+        if mid and title:
+            h = href.group(1) if href else ""
+            out.append((_html.unescape(title.group(1)).strip(), mid.group(1),
+                        "/folders/" in h or "folderview" in h))
+    return out
+
+
+def drive_list_folder(folder, log=print, _rel="", _depth=0):
+    """Recursive listing of a PUBLIC Drive folder -> [(relpath, file_id)].
+
+    Uses the embeddedfolderview page (lists every item); falls back to gdown's
+    parser (max 50 items per folder) if that page cannot be parsed."""
+    fid = D.drive_id(folder)
+    items = []
+    try:
+        items = _parse_embedded_folder(_drive_get(f"https://drive.google.com/embeddedfolderview?id={fid}"))
+    except Exception as exc:
+        log(f"[drive] embeddedfolderview failed for {fid}: {exc}")
+    files = []
+    if len(items) >= 50:          # embedded view may truncate: merge with gdown's listing
+        try:
+            g = _gdown()
+            seen = {n for n, _, _ in items}
+            for f in g.download_folder(**_kw(g.download_folder, id=fid, skip_download=True,
+                                             quiet=True, remaining_ok=True)) or []:
+                top = f.path.split("/")[0]
+                if top not in seen and "/" not in f.path:
+                    items.append((top, f.id, False))
+                    seen.add(top)
+                elif top not in seen:
+                    files.append((f"{_rel}/{f.path}" if _rel else f.path, f.id))
+        except Exception as exc:
+            log(f"[drive] gdown cross-check skipped: {exc}")
+    if items:
+        for name, iid, is_folder in items:
+            rel = f"{_rel}/{name}" if _rel else name
+            if is_folder:
+                if _depth < 6:
+                    files += drive_list_folder(iid, log, rel, _depth + 1)
+            else:
+                files.append((rel, iid))
+        return files
+    if _depth > 0:
+        return files
+    gdown = _gdown()
+    log(f"[drive] falling back to gdown {gdown.__version__} folder listing")
+    for f in gdown.download_folder(**_kw(gdown.download_folder, id=fid, skip_download=True,
+                                         quiet=True, remaining_ok=True)) or []:
+        files.append((f.path, f.id))
+    return files
+
+
+def _kw(fn, **kw):
+    import inspect
+    ok = inspect.signature(fn).parameters
+    return {k: v for k, v in kw.items() if k in ok}
+
+
+def _gdown():
+    """gdown >= 6 (no 50-files-per-folder limit) when it can be installed."""
+    try:
+        import gdown
+        if int(gdown.__version__.split(".")[0]) >= 6:
+            return gdown
+    except Exception:
+        pass
+    subprocess.run(["pip", "install", "-q", "-U", "gdown>=6"], check=False, timeout=300,
+                   capture_output=True)
+    import importlib
     import gdown
-    tmp = tempfile.mkdtemp(prefix="sqn2_drive_")
-    gdown.download_folder(id=D.drive_id(folder_link), output=tmp, quiet=True, remaining_ok=True)
-    kw = {"I": "isruc1", "II": "isruc2", "III": "isruc3"}[subgroup]
-    rows = D.build_cache(cache_dir, log=log, **{kw: tmp})
+    return importlib.reload(gdown)
+
+
+def _gdown_file(gdown, fid, dst):
+    try:
+        out = gdown.download(**_kw(gdown.download, id=fid, output=dst, quiet=True, retries=2,
+                                   timeout=120))
+    except Exception:
+        return None
+    return out if out and os.path.exists(dst) and os.path.getsize(dst) > 0 else None
+
+
+def _subject_groups(paths):
+    """Group relative paths by subject: descend through single-child wrapper
+    folders, then each child (folder or '<n>...' file) is one subject."""
+    parts = [p.split("/") for p in paths]
+    depth = 0
+    while True:
+        heads = {tuple(q[:depth + 1]) for q in parts if len(q) > depth + 1}
+        if len(heads) == 1 and all(len(q) > depth + 1 for q in parts):
+            depth += 1
+            continue
+        break
+    groups = {}
+    for p, q in zip(paths, parts):
+        if len(q) <= depth:
+            continue
+        m = re.match(r"\D*(\d+)", q[depth])
+        if m:
+            groups.setdefault(int(m.group(1)), []).append(p)
+    return depth, groups
+
+
+def _cache_subject_dir(sub, cache_dir, cohort, sid, tool, log):
+    for arc in glob.glob(os.path.join(sub, "**", "*"), recursive=True):
+        low = arc.lower()
+        if low.endswith(".rar"):
+            _extract_rar(arc, os.path.splitext(arc)[0], tool or _ensure_unrar(log))
+            os.remove(arc)
+        elif low.endswith(".zip"):
+            shutil.unpack_archive(arc, os.path.splitext(arc)[0])
+            os.remove(arc)
+    found = D.discover_isruc_dir(sub)
+    if not found:
+        return "FAILED no .rec + _1.txt found"
+    msgs = []
+    for _, ses, nses, rec, txts in found:
+        out = D.load_isruc(rec, txts, cohort, sid, ses, nses)
+        D.save_cache(os.path.join(cache_dir, out[4]["recording"] + ".npz"), *out)
+        msgs.append(f"s{ses} ch={out[4]['channel_raw']} scorers={len(txts)}")
+    return "ok " + ", ".join(msgs)
+
+
+def _grab_details(paths_local, cache_dir, grp, log):
+    for f in paths_local:
+        if f.lower().endswith((".xlsx", ".xls")) and "detail" in os.path.basename(f).lower():
+            dst = os.path.join(cache_dir, f"Details_subgroup_{grp}.xlsx")
+            if not os.path.exists(dst):
+                shutil.copy2(f, dst)
+                log(f"[ISRUC-{grp}] subject details spreadsheet found: {os.path.basename(f)}")
+
+
+def cache_isruc_from_drive_folder(folder_link, cache_dir, subgroup="III", subject_ids=None,
+                                  workers=3, log=print):
+    """Download a public Drive copy of an ISRUC subgroup subject by subject and cache it.
+    Accepts per-subject folders (n/n.rec, n/n_1.txt, ...) or per-subject .rar/.zip files."""
+    gdown = _gdown()
+    cohort = {"I": "ISRUC-I", "II": "ISRUC-II", "III": "ISRUC-III"}[subgroup]
+    pre = D.COHORT_PREFIX[cohort]
+    os.makedirs(cache_dir, exist_ok=True)
+    listing = [(p, i) for p, i in drive_list_folder(folder_link, log)
+               if p.lower().endswith(ISRUC_WANTED_EXT)]
+    by_path = dict(listing)
+    depth, groups = _subject_groups([p for p, _ in listing])
+    log(f"[{cohort} Drive] {len(listing)} files listed, {len(groups)} subjects "
+        f"(ids {min(groups) if groups else '-'}..{max(groups) if groups else '-'})")
+    tmp = tempfile.mkdtemp(prefix=f"sqn2_drive_{pre}_")
+    # loose spreadsheets (subject details) at any level outside subject folders
+    extra = [p for p in by_path if p.lower().endswith((".xlsx", ".xls"))]
+    loc = []
+    for p in extra[:5]:
+        dst = os.path.join(tmp, os.path.basename(p))
+        if _gdown_file(gdown, by_path[p], dst):
+            loc.append(dst)
+    _grab_details(loc, cache_dir, subgroup, log)
+    want = set(subject_ids) if subject_ids else None
+    sids = sorted(s for s in groups if (want is None or s in want))
+    tool = None
+    if any(p.lower().endswith(".rar") for p, _ in listing):
+        tool = _ensure_unrar(log)
+
+    def make(sid):
+        def job():
+            name = f"{pre}_{sid:03d}"
+            if glob.glob(os.path.join(cache_dir, f"{name}*.npz")):
+                return name, "cached"
+            sub = os.path.join(tmp, f"s{sid}")
+            try:
+                n_bytes = 0
+                for p in groups[sid]:
+                    if p.lower().endswith((".xlsx", ".xls")):
+                        continue
+                    rel = "/".join(p.split("/")[depth:])
+                    dst = os.path.join(sub, rel)
+                    os.makedirs(os.path.dirname(dst), exist_ok=True)
+                    ok = None
+                    for k in range(3):
+                        ok = _gdown_file(gdown, by_path[p], dst)
+                        if ok:
+                            break
+                        time.sleep(10 * (k + 1))
+                    if not ok:
+                        return name, (f"FAILED Drive download of {rel} (Drive quota 'too many "
+                                      f"downloads' or file not public)")
+                    n_bytes += os.path.getsize(dst)
+                return name, _cache_subject_dir(sub, cache_dir, cohort, sid, tool, log) + \
+                    f" [{n_bytes / 1e6:.0f} MB]"
+            except Exception as exc:
+                return name, f"FAILED {exc}"
+            finally:
+                shutil.rmtree(sub, ignore_errors=True)
+        return job
+    if sids:
+        _run_jobs([make(s) for s in sids], workers, log, f"{cohort} Drive")
     shutil.rmtree(tmp, ignore_errors=True)
-    return rows
+    return len(glob.glob(os.path.join(cache_dir, f"{pre}_*.npz")))
+
+
+# ---------------------------------------------------------------------------
+# ISRUC from the official MEGA folders (megatools static build)
+# ---------------------------------------------------------------------------
+MEGATOOLS_URL = ("https://xff.cz/megatools/builds/builds/"
+                 "megatools-1.11.5.20250706-linux-x86_64.tar.gz")
+
+
+def _ensure_megatools(log=print):
+    if shutil.which("megatools"):
+        return shutil.which("megatools")
+    d = os.path.join(tempfile.gettempdir(), "megatools")
+    exe = glob.glob(os.path.join(d, "**", "megatools"), recursive=True)
+    if not exe:
+        try:
+            os.makedirs(d, exist_ok=True)
+            tgz = os.path.join(d, "mt.tar.gz")
+            _fetch(MEGATOOLS_URL, tgz, timeout=120)
+            shutil.unpack_archive(tgz, d)
+            exe = glob.glob(os.path.join(d, "**", "megatools"), recursive=True)
+        except Exception as exc:
+            log(f"[MEGA] static megatools download failed ({exc}); trying apt")
+    if not exe:
+        subprocess.run(["apt-get", "install", "-y", "-qq", "megatools"], capture_output=True,
+                       timeout=600)
+        return shutil.which("megatools")
+    os.chmod(exe[0], 0o755)
+    return exe[0]
+
+
+def cache_isruc_from_mega(cache_dir, subgroup="II", log=print, timeout_h=3.0):
+    """Whole-folder download with megatools, then cache every subject.
+    Free MEGA transfer quota is roughly 5 GB per 6 h per IP: fine for II (2.2 GB) and
+    III (1.35 GB); subgroup I (14 GB) may stop part-way - re-run later to continue."""
+    cohort = {"I": "ISRUC-I", "II": "ISRUC-II", "III": "ISRUC-III"}[subgroup]
+    pre = D.COHORT_PREFIX[cohort]
+    os.makedirs(cache_dir, exist_ok=True)
+    exe = _ensure_megatools(log)
+    if not exe:
+        log(f"[{cohort} MEGA] megatools unavailable - skipped")
+        return 0
+    dl = os.path.join(tempfile.gettempdir(), f"sqn2_mega_{pre}")
+    os.makedirs(dl, exist_ok=True)
+    log(f"[{cohort} MEGA] downloading the official folder with megatools (progress every 60 s)")
+    proc = subprocess.Popen([exe, "dl", "--path", dl, ISRUC_MEGA[subgroup]],
+                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    t0 = t_last = time.time()
+    tail = []
+    for line in proc.stdout:
+        line = line.strip()
+        if line:
+            tail = (tail + [line])[-5:]
+        now = time.time()
+        if now - t_last > 60:
+            t_last = now
+            size = sum(os.path.getsize(f) for f in glob.glob(os.path.join(dl, "**", "*"),
+                                                               recursive=True) if os.path.isfile(f))
+            log(f"    .. {cohort} MEGA: {size / 1e9:.2f} GB on disk, {(now - t0) / 60:.0f} min")
+        if now - t0 > timeout_h * 3600:
+            proc.kill()
+            log(f"[{cohort} MEGA] stopped after {timeout_h} h")
+            break
+    proc.wait()
+    if proc.returncode not in (0, None):
+        log(f"[{cohort} MEGA] megatools exit {proc.returncode}: {' | '.join(tail)[-400:]}"
+            " (often the MEGA transfer quota - re-run in a few hours; finished subjects are kept)")
+    files = [os.path.relpath(f, dl) for f in glob.glob(os.path.join(dl, "**", "*"), recursive=True)
+             if os.path.isfile(f)]
+    _grab_details([os.path.join(dl, f) for f in files], cache_dir, subgroup, log)
+    depth, groups = _subject_groups(files)
+    tool = _ensure_unrar(log) if any(f.lower().endswith(".rar") for f in files) else None
+    for sid in sorted(groups):
+        name = f"{pre}_{sid:03d}"
+        if glob.glob(os.path.join(cache_dir, f"{name}*.npz")):
+            continue
+        sub = os.path.join(dl, "_s", str(sid))
+        try:
+            for f in groups[sid]:
+                dst = os.path.join(sub, "/".join(f.split("/")[depth:]))
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
+                shutil.move(os.path.join(dl, f), dst)
+            st = _cache_subject_dir(sub, cache_dir, cohort, sid, tool, log)
+        except Exception as exc:
+            st = f"FAILED {exc}"
+        finally:
+            shutil.rmtree(sub, ignore_errors=True)
+        log(f"[{cohort} MEGA] {name}: {st}")
+    shutil.rmtree(dl, ignore_errors=True)
+    return len(glob.glob(os.path.join(cache_dir, f"{pre}_*.npz")))
 
 
 # ---------------------------------------------------------------------------

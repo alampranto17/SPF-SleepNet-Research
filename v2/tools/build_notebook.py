@@ -48,8 +48,13 @@ PUSH_QUICK_TEST_RESULTS = False   # quick-test numbers are a pipeline check, not
 
 # ---- data sources (Sleep-EDF is no longer used) ----
 USE_HMC_PHYSIONET = True              # training cohort (PhysioNet, CC BY 4.0)
-USE_ISRUC_OFFICIAL = True             # ISRUC subgroups I (training), II and III (external)
+# ISRUC: the old server dataset.isr.uc.pt is retired. Order tried: Google Drive -> official MEGA.
+# Drive folders must be shared "Anyone with the link" (same files as the thesis data folders).
+ISRUC1_DRIVE_FOLDER = "https://drive.google.com/drive/folders/1KiEl4xk0gRTNG9Oeg-gCfzKGKU0gnjGH"
+ISRUC2_DRIVE_FOLDER = None            # not on Drive -> official MEGA folder (2.2 GB)
 ISRUC3_DRIVE_FOLDER = "https://drive.google.com/drive/folders/1b4Df79NxyiOiYjG83bk2c9tGKXVDpZ5F"
+USE_ISRUC_MEGA = True                 # official MEGA links (free quota ~5 GB / 6 h per IP)
+USE_ISRUC_OFFICIAL = False            # old server, retired (kept only as a last resort)
 USE_DOD_ZENODO = True                 # Dreem DOD-H / DOD-O, 5 scorers (external)
 DOD_ALLOW_FULL_ZIP_DOWNLOAD = False   # only if range streaming fails AND disk has ~40 GB free
 # Optional: raw folders already attached as Kaggle datasets (leave None to download)
@@ -127,23 +132,35 @@ if "data" in RUN_STAGES:
             DL.cache_hmc_physionet(CACHE_DIR, max_recordings=6 if q else None)
         except Exception as exc:
             print("HMC download failed:", exc)
-    if USE_ISRUC_OFFICIAL:
-        DL.cache_isruc_details(CACHE_DIR)
-        for grp, raw_dir, ids in (("I", RAW_ISRUC1_DIR, range(1, 9) if q else range(1, 101)),
-                                  ("II", RAW_ISRUC2_DIR, range(1, 3) if q else range(1, 9)),
-                                  ("III", RAW_ISRUC3_DIR, range(1, 3) if q else range(1, 11))):
-            if raw_dir:
-                continue
+    ISRUC_N = {"I": 100, "II": 8, "III": 10}
+    ISRUC_Q = {"I": range(1, 9), "II": range(1, 3), "III": range(1, 3)}
+    def _n_cached(grp):
+        pre = {"I": "ISRUC1", "II": "ISRUC2", "III": "ISRUC3"}[grp]
+        return len({os.path.basename(f).split("_")[1] for f in glob.glob(os.path.join(CACHE_DIR, pre + "_*.npz"))})
+    for grp, raw_dir, drive in (("I", RAW_ISRUC1_DIR, ISRUC1_DRIVE_FOLDER),
+                                ("II", RAW_ISRUC2_DIR, ISRUC2_DRIVE_FOLDER),
+                                ("III", RAW_ISRUC3_DIR, ISRUC3_DRIVE_FOLDER)):
+        if raw_dir:
+            continue
+        need = len(ISRUC_Q[grp]) if q else ISRUC_N[grp]
+        ids = list(ISRUC_Q[grp]) if q else None
+        if drive and _n_cached(grp) < need:
             try:
-                DL.cache_isruc_official(CACHE_DIR, grp, list(ids))
+                DL.cache_isruc_from_drive_folder(drive, CACHE_DIR, grp, subject_ids=ids)
+            except Exception as exc:
+                print(f"ISRUC-{grp} Drive download failed:", exc)
+        if USE_ISRUC_MEGA and _n_cached(grp) < need and not (q and grp == "I" and _n_cached(grp) > 0):
+            try:
+                DL.cache_isruc_from_mega(CACHE_DIR, grp)
+            except Exception as exc:
+                print(f"ISRUC-{grp} MEGA download failed:", exc)
+        if USE_ISRUC_OFFICIAL and _n_cached(grp) < need:
+            try:
+                DL.cache_isruc_official(CACHE_DIR, grp, ids)
             except Exception as exc:
                 print(f"ISRUC-{grp} official download failed:", exc)
-    if ISRUC3_DRIVE_FOLDER and not RAW_ISRUC3_DIR and \
-            len(glob.glob(os.path.join(CACHE_DIR, "ISRUC3_*.npz"))) < (2 if QUICK_TEST else 10):
-        try:
-            DL.cache_isruc_from_drive_folder(ISRUC3_DRIVE_FOLDER, CACHE_DIR, "III")
-        except Exception as exc:
-            print("ISRUC-III Drive download failed (share the folder 'Anyone with the link'):", exc)
+        print(f"ISRUC-{grp}: {_n_cached(grp)}/{need} subjects cached")
+    DL.cache_isruc_details(CACHE_DIR)
     if USE_DOD_ZENODO and not (RAW_DODH_DIR or RAW_DODO_DIR):
         try:
             DL.cache_dod(CACHE_DIR, max_recordings=3 if q else None,
@@ -199,6 +216,14 @@ CFG.update(time_budget_h=TIME_BUDGET_H, _t_start=T_START, verbose=False)
 if QUICK_TEST:
     CFG.update(n_folds=3, max_passes=3, patience=2, mc_passes=3, n_boot=100,
                variants=["full_v2", "cnn_feat_pw"], xai_epochs_per_fold=20)
+_n_isruc1 = len({os.path.basename(f).split("_")[1] for f in glob.glob(os.path.join(CACHE_DIR, "ISRUC1_*.npz"))})
+_n_hmc = len(glob.glob(os.path.join(CACHE_DIR, "HMC_*.npz")))
+if not QUICK_TEST and "train" in RUN_STAGES and (_n_isruc1 < 90 or _n_hmc < 140):
+    RUN_STAGES = [s for s in RUN_STAGES if s not in ("train", "analyse")]
+    print(f"Training cohorts incomplete (ISRUC-I {_n_isruc1}/100, HMC {_n_hmc}/151): training "
+          f"is NOT started so no GPU hours are wasted. The cache is already saved to "
+          f"'{CACHE_DATASET}'; run the notebook again (e.g. after the MEGA/Drive quota resets) "
+          f"and it continues downloading from where it stopped.")
 if "train" in RUN_STAGES:
     n_runs_before = len(glob.glob(os.path.join(RUN_DIR, "*.npz")))
     try:
@@ -213,7 +238,7 @@ if "train" in RUN_STAGES:
 
 cells.append(md("## Stage D — RQ1–RQ7 analyses against pre-specified criteria"))
 cells.append(code('''if "analyse" not in RUN_STAGES:
-    raise SystemExit("analysis stage not requested (RUN_STAGES)")
+    raise SystemExit("analysis stage skipped (RUN_STAGES / incomplete training cohorts)")
 res, summary = P.analyse_all(corpus, CFG, RUN_DIR, OUT_DIR)
 if QUICK_TEST:
     print("QUICK_TEST run: numbers below are a pipeline check only - do not report them.")
