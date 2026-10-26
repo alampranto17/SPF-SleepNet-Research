@@ -1,8 +1,14 @@
 {
  "stage": "A: data download",
- "updated_utc": "2026-10-26 21:00:17",
- "elapsed_min": 0.3,
- "cached_recordings": {},
+ "updated_utc": "2026-10-26 21:20:20",
+ "elapsed_min": 20.3,
+ "cached_recordings": {
+  "CAP": 106,
+  "DODH": 25,
+  "HMC": 151,
+  "ISRUC1": 65,
+  "DODO": 55
+ },
  "finished_training_runs": 0,
- "disk_free_gb": 20.9
+ "disk_free_gb": 18.8
 }
