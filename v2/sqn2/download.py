@@ -439,12 +439,18 @@ def _cache_subject_dir(sub, cache_dir, cohort, sid, tool, log):
 
 
 def _grab_details(paths_local, cache_dir, grp, log):
-    for f in paths_local:
-        if f.lower().endswith((".xlsx", ".xls")) and "detail" in os.path.basename(f).lower():
-            dst = os.path.join(cache_dir, f"Details_subgroup_{grp}.xlsx")
-            if not os.path.exists(dst):
-                shutil.copy2(f, dst)
-                log(f"[ISRUC-{grp}] subject details spreadsheet found: {os.path.basename(f)}")
+    """Any spreadsheet that parses as an ISRUC subject table (subject + age columns)."""
+    dst = os.path.join(cache_dir, f"Details_subgroup_{grp}.xlsx")
+    if os.path.exists(dst):
+        return
+    cands = sorted((f for f in paths_local if f.lower().endswith((".xlsx", ".xls"))),
+                   key=lambda f: "detail" not in os.path.basename(f).lower())
+    for f in cands:
+        rows = D.read_isruc_details(f, "X")
+        if rows:
+            shutil.copy2(f, dst)
+            log(f"[ISRUC-{grp}] subject details found in {os.path.basename(f)} ({len(rows)} subjects)")
+            return
 
 
 def cache_isruc_from_drive_folder(folder_link, cache_dir, subgroup="III", subject_ids=None,
@@ -455,17 +461,21 @@ def cache_isruc_from_drive_folder(folder_link, cache_dir, subgroup="III", subjec
     cohort = {"I": "ISRUC-I", "II": "ISRUC-II", "III": "ISRUC-III"}[subgroup]
     pre = D.COHORT_PREFIX[cohort]
     os.makedirs(cache_dir, exist_ok=True)
-    listing = [(p, i) for p, i in drive_list_folder(folder_link, log)
-               if p.lower().endswith(ISRUC_WANTED_EXT)]
+    full = drive_list_folder(folder_link, log)
+    listing = [(p, i) for p, i in full if p.lower().endswith(ISRUC_WANTED_EXT)]
     by_path = dict(listing)
     depth, groups = _subject_groups([p for p, _ in listing])
     log(f"[{cohort} Drive] {len(listing)} files listed, {len(groups)} subjects "
         f"(ids {min(groups) if groups else '-'}..{max(groups) if groups else '-'})")
     tmp = tempfile.mkdtemp(prefix=f"sqn2_drive_{pre}_")
-    # loose spreadsheets (subject details) at any level outside subject folders
+    # non-subject files (e.g. a subject-details spreadsheet under another name)
+    in_groups = {p for ps in groups.values() for p in ps}
+    others = [p for p, _ in full if p not in in_groups]
+    if others:
+        log(f"[{cohort} Drive] files outside subject folders: {others[:10]}")
     extra = [p for p in by_path if p.lower().endswith((".xlsx", ".xls"))]
     loc = []
-    for p in extra[:5]:
+    for p in extra[:10]:
         dst = os.path.join(tmp, os.path.basename(p))
         if _gdown_file(gdown, by_path[p], dst):
             loc.append(dst)
