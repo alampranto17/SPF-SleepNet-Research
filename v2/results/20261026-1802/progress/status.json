@@ -1,8 +1,10 @@
 {
  "stage": "A: data download",
- "updated_utc": "2026-10-26 18:02:52",
- "elapsed_min": 0.2,
- "cached_recordings": {},
+ "updated_utc": "2026-10-26 18:22:56",
+ "elapsed_min": 20.3,
+ "cached_recordings": {
+  "HMC": 151
+ },
  "finished_training_runs": 0,
- "disk_free_gb": 20.9
+ "disk_free_gb": 20.2
 }
