@@ -60,19 +60,24 @@ def dataset_exists(user, slug):
 
 
 def _copy_tree(src, dst):
+    """Copy every file below ``src`` (symlinks followed) into ``dst``, keeping relative
+    paths and skipping files that already exist."""
     n = 0
     os.makedirs(dst, exist_ok=True)
-    for root, _, files in os.walk(src):
-        rel = os.path.relpath(root, src)
-        tgt = os.path.join(dst, rel) if rel != "." else dst
-        os.makedirs(tgt, exist_ok=True)
-        for f in files:
-            if f == "dataset-metadata.json":
-                continue
-            d = os.path.join(tgt, f)
-            if not os.path.exists(d):
-                shutil.copy2(os.path.join(root, f), d)
-                n += 1
+    src = os.path.realpath(src)                       # Kaggle mounts inputs through symlinks
+    files = set()
+    for root, _, fs in os.walk(src, followlinks=True):
+        files.update(os.path.join(root, f) for f in fs)
+    files.update(f for f in glob.glob(os.path.join(src, "**", "*"), recursive=True) if os.path.isfile(f))
+    for f in sorted(files):
+        if os.path.basename(f) == "dataset-metadata.json":
+            continue
+        rel = os.path.relpath(f, src)
+        d = os.path.join(dst, rel)
+        if not os.path.exists(d):
+            os.makedirs(os.path.dirname(d), exist_ok=True)
+            shutil.copy2(f, d)
+            n += 1
     return n
 
 
@@ -83,14 +88,21 @@ def _attached_inputs(slug, root="/kaggle/input", depth=5, alt_names=()):
     out = []
     if not os.path.isdir(root):
         return out
-    for cur, dirs, files in os.walk(root):
-        if cur[len(root):].count(os.sep) >= depth:
+    seen = set()
+    for cur, dirs, files in os.walk(root, followlinks=True):
+        real = os.path.realpath(cur)
+        if real in seen or cur[len(root):].count(os.sep) >= depth:
             dirs[:] = []
             continue
-        if os.path.basename(cur) in names and os.listdir(cur):
+        seen.add(real)
+        if os.path.basename(cur) in names and _n_files(cur) > 0:
             out.append(cur)
             dirs[:] = []
     return out
+
+
+def _n_files(path):
+    return sum(len(f) for _, _, f in os.walk(os.path.realpath(path), followlinks=True))
 
 
 def pull_dataset(user, slug, dest, log=print):
@@ -128,6 +140,8 @@ def pull_dataset(user, slug, dest, log=print):
                 import kagglehub
             src = kagglehub.dataset_download(f"{user}/{slug}")
             how = "kagglehub"
+            log(f"[kaggle] kagglehub path {src} -> {os.path.realpath(src)} "
+                f"({_n_files(src)} files)")
         except Exception as exc:
             log(f"[kaggle] kagglehub download failed too: {str(exc)[:200]}")
     if not src:
