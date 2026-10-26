@@ -21,7 +21,18 @@ def setup_credentials(log=print):
         try:
             from kaggle_secrets import UserSecretsClient
             s = UserSecretsClient()
-            user, key = s.get_secret("KAGGLE_USERNAME"), s.get_secret("KAGGLE_KEY")
+
+            def _get(*names):
+                for n in names:
+                    try:
+                        v = s.get_secret(n)
+                    except Exception:
+                        v = None
+                    if v:
+                        return v.strip()
+                return None
+            user = _get("KAGGLE_USERNAME", "kaggle_username")
+            key = _get("KAGGLE_KEY", "kaggle_key")
         except Exception as exc:
             log(f"[kaggle] no API secrets found ({type(exc).__name__}); automatic datasets OFF. "
                 f"Add secrets KAGGLE_USERNAME and KAGGLE_KEY to enable.")

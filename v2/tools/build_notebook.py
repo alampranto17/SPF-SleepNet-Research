@@ -7,7 +7,7 @@ import nbformat as nbf
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PKG = os.path.join(ROOT, "sqn2")
 MODULES = ["__init__", "data", "download", "features", "scores", "models", "train",
-           "stats", "analysis", "xai", "report", "figures", "pipeline", "kaggle_io"]
+           "stats", "analysis", "xai", "report", "figures", "pipeline", "kaggle_io", "github_io"]
 
 md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
 cells = []
@@ -27,7 +27,8 @@ cells.append(md("""# SleepQualityNet v2 — N3 detection and rule-derived N3 EEG
   - first run: downloads the data, **automatically saves the cache as your private dataset `sqn2-cache`**, then trains and analyses;
   - every later run: **restores `sqn2-cache` (and finished training runs from `sqn2-runs`) automatically** — no re-download, no re-training of finished runs.
 * Optional first check: `QUICK_TEST = True` (≈30 min; uses separate `sqn2-runs-quicktest`, so it never mixes with the real runs).
-* Without the secrets everything still works, but the cache stays only in the notebook output.
+* **Results to GitHub (optional):** add a secret named **`github_token`** (`GITHUB_TOKEN` also works): a *fine-grained* token for `SPF-SleepNet-Research` only, with *Contents: Read and write*. At the end of each full run the tables, figures and `research_question_results.csv` are pushed to `v2/results/<date>/` on the `v2-kaggle` branch.
+* Without the secrets everything still works, but outputs stay only in the notebook output.
 
 **Scope of claims.** All scores are rule-derived research-prototype descriptors of the EEG signal. They are *not* clinical sleep quality, not validated against expert quality ratings (none exist in these datasets) and not diagnostic. Synthetic data is never used: if a dataset fails to download the notebook stops or reports it.
 """))
@@ -40,6 +41,10 @@ RUN_STAGES = ["data", "train", "analyse"]   # normally leave all three
 AUTO_KAGGLE_DATASETS = True    # save/restore private datasets via Kaggle Secrets (see top)
 CACHE_DATASET = "sqn2-cache"   # private dataset holding the compact cache (shared by quick/full)
 RUNS_DATASET = "sqn2-runs"     # private dataset holding finished training runs
+AUTO_GITHUB_PUSH = True        # push result tables/figures to GitHub (needs Kaggle secret github_token)
+GITHUB_REPO = "alampranto17/SPF-SleepNet-Research"
+GITHUB_BRANCH = "v2-kaggle"
+PUSH_QUICK_TEST_RESULTS = False   # quick-test numbers are a pipeline check, not results
 
 # ---- data sources (Sleep-EDF is no longer used) ----
 USE_HMC_PHYSIONET = True              # training cohort (PhysioNet, CC BY 4.0)
@@ -236,6 +241,15 @@ with zipfile.ZipFile(zp, "w", zipfile.ZIP_DEFLATED) as z:
         if os.path.exists(f) and os.path.getsize(f) < 50e6:
             z.write(f, os.path.relpath(f, WORK))
 print("wrote", zp, f"{os.path.getsize(zp)/1e6:.1f} MB", f"| total elapsed {(_time.time()-T_START)/3600:.2f} h")
+
+from sqn2 import github_io as GH
+if AUTO_GITHUB_PUSH and (PUSH_QUICK_TEST_RESULTS or not QUICK_TEST):
+    n_runs = len(glob.glob(os.path.join(RUN_DIR, "*.npz")))
+    note = (f"{'QUICK TEST - pipeline check only, not reportable. ' if QUICK_TEST else ''}"
+            f"Cohorts: {corpus.rec.cohort.value_counts().to_dict()}; training runs available: {n_runs}.")
+    GH.push_results(OUT_DIR, GITHUB_REPO, GITHUB_BRANCH,
+                    run_name=_time.strftime("%Y%m%d-%H%M") + ("_quicktest" if QUICK_TEST else ""),
+                    note=note)
 '''))
 
 cells.append(md("""## Reporting rules for the manuscript
