@@ -106,9 +106,15 @@ cells.append(md("""## Stage A — data acquisition and compact cache
 Each recording is processed and deleted immediately after caching, so disk use stays small. Finished recordings are skipped on re-runs.
 The cache log printed below is the **channel audit**: every recording must show a central EEG derivation (C4-A1/C4-M1 or C3-A2/C3-M2); recordings without one are skipped (never an EOG fallback). DOD records are streamed from the remote zip one at a time (HTTP range requests)."""))
 
-cells.append(code('''import importlib, shutil, glob, json
+cells.append(code('''import importlib, shutil, glob, json, sys
+# Re-running in the same Kaggle session? Drop any previously imported sqn2 modules so the
+# freshly written package files above are the ones actually used.
+for _m in [m for m in list(sys.modules) if m == "sqn2" or m.startswith("sqn2.")]:
+    del sys.modules[_m]
+importlib.invalidate_caches()
 import sqn2
 from sqn2 import data as D, download as DL, kaggle_io as KIO
+assert hasattr(DL, "cache_isruc_from_mega"), "stale sqn2 package - restart the kernel (Run > Restart)"
 KUSER = KIO.setup_credentials() if AUTO_KAGGLE_DATASETS else None
 if AUTO_KAGGLE_DATASETS:
     KIO.pull_dataset(KUSER, CACHE_DATASET, CACHE_DIR)

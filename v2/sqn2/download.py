@@ -658,7 +658,8 @@ def cache_dod(cache_dir, which=("DOD-H", "DOD-O"), max_recordings=None, log=prin
             local_zip = os.path.join(tmp, f"{key}.zip")
             _fetch(DOD_ZIP[cohort], local_zip, timeout=300, log=log, label=f"{cohort} zip", progress_every=60)
             zf = zipfile.ZipFile(local_zip)
-        members = [n for n in zf.namelist() if n.endswith(".h5")]
+        members = [n for n in zf.namelist() if n.endswith(".h5")
+                   and "__MACOSX" not in n and not os.path.basename(n).startswith("._")]
         members = [n for n in members if os.path.splitext(os.path.basename(n))[0] not in DOD_EXCLUDE]
         if max_recordings is not None:
             members = members[:max_recordings]
