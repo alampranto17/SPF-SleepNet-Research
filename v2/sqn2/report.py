@@ -106,6 +106,14 @@ def methods_parameters(cfg, out_dir):
         ("Continuity window", f"+/-{SC.CONTINUITY_HALF_WINDOW} epochs", ""),
         ("N3 episode", "runs of predicted N3 merged across gaps <= 2 epochs; >= 2 N3 epochs", ""),
         ("Cross-validation", "5 folds by participant (ISRUC-I + HMC), stratified by cohort", ""),
+        ("Within-N3 grade", "slow-wave coverage (0.5-2 Hz full waves, p2p >= 75 uV) per 30-s epoch: "
+                            "Low < 20 %, Moderate 20-50 %, High > 50 % (R&K stage 3 / 4 anchors); "
+                            "secondary: N3 EEG Rating 0-33 / 33-67 / 67-100; detected N3 epochs only"),
+        ("Grade reference", "CAP Sleep Database (PhysioNet, 108 PSGs, R&K scoring with S3 and S4 "
+                            "separate, C4-A1/C3-A2): external only, never used for training or thresholds"),
+        ("Same-protocol baselines", "DeepSleepNet, TinySleepNet, AttnSleep, L-SeqSleepNet re-implemented at "
+                                    "100 Hz; raw EEG only; identical folds, inner-validation selection, "
+                                    "threshold, temperature, loss and positive-class weight as the proposed model"),
         ("External cohorts", "ISRUC-II (test-retest), ISRUC-III, DOD-H, DOD-O: never used for training, "
          "selection or thresholds; predicted by the 5-fold model ensemble", ""),
         ("Seed", f"{cfg['seed']} (per-fold seed derived deterministically)", ""),
@@ -131,6 +139,7 @@ def go_no_go(summary_df, out_dir):
         ("Overall N3 EEG Rating", g("RQ3", "GO_WITH_LIMITATIONS")),
         ("Episode-level rating", g("RQ7", "GO_WITH_LIMITATIONS")),
         ("Whole-night N3 profile", g("RQ7")),
+        ("Within-N3 grade (Low/Moderate/High)", g("RQ2b", "GO_WITH_LIMITATIONS")),
         ("Clinical sleep-quality claim", "NO_GO"),
     ]
     df = pd.DataFrame(rows, columns=["phase", "decision"])

@@ -18,7 +18,9 @@ import pandas as pd
 # validated categorical slots 1-6 (fixed order, never cycled)
 C1, C2, C3, C4, C5, C6 = "#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"
 INK, INK2, GRID = "#0b0b0b", "#52514e", "#e4e3df"
-COHORT_COLOR = {"ISRUC-I": C1, "HMC": C2, "ISRUC-III": C3, "ISRUC-II": C4, "DOD-H": C5, "DOD-O": C6}
+COHORT_COLOR = {"ISRUC-I": C1, "HMC": C2, "ISRUC-III": C3, "ISRUC-II": C4, "DOD-H": C5, "DOD-O": C6,
+                "CAP": INK2}   # 7th cohort: neutral (grading reference only)
+GRADE_COLOR = {"Low": "#b9d4f3", "Moderate": "#5d9ce3", "High": "#1a4f91"}   # ordinal, one hue
 FACTOR_COLOR = {"delta_intensity": C1, "sw_morphology": C2, "spectral_dominance": C3,
                 "rating_prior": C4}
 
@@ -217,10 +219,63 @@ def fig_graded_agreement(out_dir):
     return _save(fig, out_dir, "fig_rq2_graded_expert_agreement.png")
 
 
+def fig_sota(out_dir):
+    t = pd.read_csv(os.path.join(out_dir, "rq1_sota_comparison.csv"))
+    t = t[t["set"].str.startswith("cross-validation")].sort_values("f1")
+    fig, ax = plt.subplots(figsize=(5.2, 0.42 * len(t) + 1))
+    y = np.arange(len(t))
+    lo = [c[0] if isinstance(c, (list, tuple)) else np.nan for c in t.get("f1_ci95", [np.nan] * len(t))]
+    col = [C1 if m == "full_v2" else INK2 for m in t.model]
+    ax.barh(y, t.f1, color=col, height=0.6)
+    for yi, (f, m) in enumerate(zip(t.f1, t.model)):
+        ax.text(f + 0.005, yi, f"{f:.3f}", va="center", fontsize=8, color=INK)
+    ax.set_yticks(y, [("SleepQualityNet v2" if m == "full_v2" else m) for m in t.model])
+    ax.set_xlim(max(0, t.f1.min() - 0.1), min(1, t.f1.max() + 0.06))
+    ax.set_xlabel("Pooled out-of-fold N3 F1 (identical folds and protocol)")
+    ax.set_title("Same-protocol comparison with published architectures")
+    ax.grid(axis="y", visible=False)
+    return _save(fig, out_dir, "fig_rq1_sota.png")
+
+
+def fig_n3_grade(out_dir):
+    names = ["Low", "Moderate", "High"]
+    panels = []
+    p1 = os.path.join(out_dir, "rq2_rk_crosstab_detected.csv")
+    if not os.path.exists(p1):
+        p1 = os.path.join(out_dir, "rq2_rk_crosstab_all.csv")
+    if os.path.exists(p1):
+        ct = pd.read_csv(p1, index_col=0)
+        ct = ct.reindex(columns=[n for n in names if n in ct.columns]).fillna(0)
+        panels.append(("Expert R&K stage (CAP)", ct.div(ct.sum(1), axis=0)))
+    p2 = os.path.join(out_dir, "rq2_sw_grade_by_expert_vote_fraction.csv")
+    if os.path.exists(p2):
+        v = pd.read_csv(p2)
+        v = v[v.cohort.isin(["DOD-H", "DOD-O"])] if v.cohort.isin(["DOD-H", "DOD-O"]).any() else v
+        g = v.groupby("vote")[[n for n in names if n in v.columns]].mean()
+        g.index = [f"{x:.0%}" for x in g.index]
+        panels.append(("Fraction of experts voting N3", g))
+    if not panels:
+        raise FileNotFoundError("no grade tables")
+    fig, axes = plt.subplots(1, len(panels), figsize=(4.2 * len(panels), 3.2), squeeze=False)
+    for ax, (title, tab) in zip(axes[0], panels):
+        left = np.zeros(len(tab))
+        for n in tab.columns:
+            ax.barh(range(len(tab)), tab[n], left=left, color=GRADE_COLOR[n], label=n, height=0.6,
+                    edgecolor="white", linewidth=1)
+            left += tab[n].to_numpy()
+        ax.set_yticks(range(len(tab)), tab.index)
+        ax.set_xlim(0, 1)
+        ax.set_xlabel("Share of detected N3 epochs")
+        ax.set_title(title)
+        ax.grid(axis="y", visible=False)
+    axes[0][-1].legend(title="N3 slow-wave grade", loc="lower right", fontsize=8)
+    return _save(fig, out_dir, "fig_rq2b_n3_grade.png")
+
+
 def make_all(out_dir, log=print):
     made = []
     for fn in (fig_pr_curves, fig_homeostatic, fig_graded_agreement, fig_ablation,
-               fig_risk_coverage, fig_profiles, fig_example_night, fig_xai):
+               fig_risk_coverage, fig_profiles, fig_example_night, fig_xai, fig_sota, fig_n3_grade):
         try:
             made.append(fn(out_dir))
         except Exception as exc:

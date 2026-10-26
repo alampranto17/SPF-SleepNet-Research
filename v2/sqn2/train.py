@@ -36,8 +36,15 @@ VARIANTS = {
     "cnn_feat_pw":         dict(use_feat=True, pos_weight=True, use_attention=True, context=False),
     "cnn_feat_pw_noattn":  dict(use_feat=True, pos_weight=True, use_attention=False, context=False),
     "full_v2":             dict(use_feat=True, pos_weight=True, use_attention=True, context=True),
+    # same-protocol published baselines (raw EEG only; see baselines.py)
+    "deepsleepnet":        dict(arch="deepsleepnet", use_feat=False, pos_weight=True),
+    "tinysleepnet":        dict(arch="tinysleepnet", use_feat=False, pos_weight=True),
+    "attnsleep":           dict(arch="attnsleep", use_feat=False, pos_weight=True),
+    "lseqsleepnet":        dict(arch="lseqsleepnet", use_feat=False, pos_weight=True),
 }
 PRIMARY_VARIANT = "full_v2"
+ABLATION_VARIANTS = [k for k, v in VARIANTS.items() if "arch" not in v]
+BASELINE_VARIANTS = [k for k, v in VARIANTS.items() if "arch" in v]
 
 
 # ---------------------------------------------------------------------------
@@ -71,7 +78,7 @@ class Corpus:
             sd = ep.std(axis=1)
             scale = float(np.median(sd[sd > 1e-3])) if (sd > 1e-3).any() else 1.0
             X.append((ep / scale).astype(np.float16))
-            qc = {k: arr[k] for k in arr if k.startswith(("qc_", "flag_"))}
+            qc = {k: arr[k] for k in arr if k.startswith(("qc_", "flag_", "rk_"))}
             qcs.append(pd.DataFrame(qc))
             feats.append(ft)
             meta.update({"offset": off, "n": n, "raw_scale": scale,
@@ -122,7 +129,8 @@ class Corpus:
 # Folds
 # ---------------------------------------------------------------------------
 TRAIN_COHORTS = ("ISRUC-I", "HMC")
-EXTERNAL_COHORTS = ("ISRUC-II", "ISRUC-III", "DOD-H", "DOD-O")
+EXTERNAL_COHORTS = ("ISRUC-II", "ISRUC-III", "DOD-H", "DOD-O")   # pre-specified RQ1 externals
+GRADING_COHORTS = ("CAP",)    # external, R&K S3/S4 expert reference for the within-N3 grade only
 
 
 def make_folds(corpus, k=5, seed=42, train_cohorts=TRAIN_COHORTS, inner_frac=0.15):
@@ -305,9 +313,13 @@ class Trainer:
         fs = _fold_seed(seed, split["fold"])
         torch.manual_seed(fs)
         rng = np.random.default_rng(fs)
-        model = SleepQualityNetV2(n_feat=c.Fraw.shape[1], use_feat=v["use_feat"],
-                                  use_attention=v["use_attention"],
-                                  context=v["context"]).to(self.dev)
+        if "arch" in v:
+            from . import baselines as BL
+            model = BL.build(v["arch"]).to(self.dev)
+        else:
+            model = SleepQualityNetV2(n_feat=c.Fraw.shape[1], use_feat=v["use_feat"],
+                                      use_attention=v["use_attention"],
+                                      context=v["context"]).to(self.dev)
         opt = torch.optim.AdamW(model.parameters(), lr=cfg["lr"], weight_decay=cfg["wd"])
         amp = self.dev.type == "cuda"
         gscaler = torch.amp.GradScaler("cuda", enabled=amp)

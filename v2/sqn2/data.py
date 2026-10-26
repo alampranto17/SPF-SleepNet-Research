@@ -58,7 +58,7 @@ EEG_CANDIDATES = ["C4-A1", "C4-M1", "C3-A2", "C3-M2"]
 ISRUC_EEG_CANDIDATES = EEG_CANDIDATES          # backward-compatible name
 
 COHORT_PREFIX = {"ISRUC-I": "ISRUC1", "ISRUC-II": "ISRUC2", "ISRUC-III": "ISRUC3",
-                 "HMC": "HMC", "DOD-H": "DODH", "DOD-O": "DODO"}
+                 "HMC": "HMC", "DOD-H": "DODH", "DOD-O": "DODO", "CAP": "CAP"}
 
 
 def _norm_ch(name: str) -> str:
@@ -73,6 +73,10 @@ def pick_channel(ch_names, candidates=EEG_CANDIDATES):
     for cand in candidates:
         if _norm_ch(cand) in normed:
             return normed[_norm_ch(cand)]
+    flat = {_norm_ch(c).replace("-", ""): c for c in ch_names}      # e.g. 'C4A1' (CAP)
+    for cand in candidates:
+        if _norm_ch(cand).replace("-", "") in flat:
+            return flat[_norm_ch(cand).replace("-", "")]
     return None
 
 
@@ -294,6 +298,81 @@ def load_hmc(psg_path, scoring_path):
             "derivation": standard_derivation(ch), "native_fs": fs, "n_epochs": int(n),
             "crop_start_s": float(t0), "n_raters": 1, "reference": "single technician (AASM v2.4)",
             "source_file": Path(psg_path).name}
+    multi = np.full((n, 2), -2, np.int8)
+    multi[:, 0] = labels
+    return epochs, labels, multi, qc, meta
+
+
+# ---------------------------------------------------------------------------
+# CAP Sleep Database (PhysioNet; Rechtschaffen & Kales scoring with S3 and S4)
+# ---------------------------------------------------------------------------
+CAP_EVENT = {"SLEEP-S0": (0, 0), "SLEEP-S1": (1, 1), "SLEEP-S2": (2, 2), "SLEEP-S3": (3, 3),
+             "SLEEP-S4": (3, 4), "SLEEP-REM": (4, 5), "SLEEP-MT": (-1, -1),
+             "SLEEP-UNSCORED": (-1, -1)}       # event -> (AASM-mapped label, R&K code)
+
+
+def _clock(t):
+    p = [int(float(x)) for x in re.split(r"[:.]", str(t).strip())[:3]]
+    return p[0] * 3600 + p[1] * 60 + p[2]
+
+
+def read_cap_txt(path):
+    """[(clock_seconds, duration_s, aasm_label, rk_code)] from a CAP RemLogic export."""
+    with open(path, encoding="latin-1") as f:
+        lines = f.read().splitlines()
+    hdr = next(i for i, l in enumerate(lines) if l.strip().lower().startswith("sleep stage"))
+    cols = [c.strip().lower() for c in lines[hdr].split("\t")]
+    ci = {k: next(i for i, c in enumerate(cols) if c.startswith(k)) for k in ("time", "event", "duration")}
+    rows = []
+    for l in lines[hdr + 1:]:
+        parts = l.split("\t")
+        if len(parts) <= max(ci.values()):
+            continue
+        ev = parts[ci["event"]].strip().upper()
+        if ev not in CAP_EVENT:
+            continue
+        try:
+            rows.append((_clock(parts[ci["time"]]), float(parts[ci["duration"]]), *CAP_EVENT[ev]))
+        except ValueError:
+            continue
+    return rows
+
+
+def load_cap(edf_path, txt_path):
+    raw = _read_edf(edf_path)
+    ch = pick_channel(raw.ch_names)
+    if ch is None:
+        raise RuntimeError(f"no central EEG derivation in {Path(edf_path).name}: {raw.ch_names}")
+    fs = float(raw.info["sfreq"])
+    rows = read_cap_txt(txt_path)
+    if not rows:
+        raise RuntimeError("no SLEEP-* stage events")
+    md = raw.info.get("meas_date")
+    t_edf = md.hour * 3600 + md.minute * 60 + md.second if md is not None else rows[0][0]
+    on = [((t - t_edf) % 86400, d, a, r) for t, d, a, r in rows]
+    t0 = min(o for o, *_ in on)
+    t1 = min(raw.n_times / fs, max(o + d for o, d, *_ in on))
+    if t1 - t0 < 3600:
+        raise RuntimeError(f"scoring/recording overlap only {(t1 - t0) / 60:.0f} min (clock mismatch?)")
+    sig = raw.get_data(picks=[ch], units="uV", start=int(round(t0 * fs)), stop=int(round(t1 * fs)))[0]
+    n = len(sig) // int(round(EPOCH_SEC * fs))
+    labels = np.full(n, -1, np.int8)
+    rk = np.full(n, -1, np.int8)
+    for o, d, a, r in on:
+        si = int(round((o - t0) / EPOCH_SEC))
+        ei = max(si + 1, int(round((o - t0 + d) / EPOCH_SEC)))
+        labels[max(si, 0):min(ei, n)] = a
+        rk[max(si, 0):min(ei, n)] = r
+    epochs, qc, n = process_signal(_to_uv(sig), fs, n)
+    labels, rk = labels[:n], rk[:n]
+    qc = dict(qc, rk_code=rk)
+    key = Path(edf_path).stem
+    meta = {"cohort": "CAP", "participant": f"CAP_{key}", "recording": f"CAP_{key}",
+            "night": 1, "is_primary": True, "channel_raw": ch,
+            "derivation": standard_derivation(ch), "native_fs": fs, "n_epochs": int(n),
+            "crop_start_s": float(t0), "n_raters": 1,
+            "reference": "single scorer, Rechtschaffen & Kales (S3 and S4 separate)",
+            "diagnosis_group": re.sub(r"\d+$", "", key), "source_file": Path(edf_path).name}
     multi = np.full((n, 2), -2, np.int8)
     multi[:, 0] = labels
     return epochs, labels, multi, qc, meta
