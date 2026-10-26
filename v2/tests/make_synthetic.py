@@ -88,57 +88,86 @@ def write_isruc(root, sid, chan_style, n_epochs=520, amp=1.0):
             f.write("\n".join(map(str, lab)) + "\n")
 
 
-def write_sleep_edf(root, pkey, night, age, n_sleep=480):
-    fs = 100
-    wake_pad = 240  # 2 h of wake on each side (cropped to 30 min by the loader)
-    st = np.concatenate([np.zeros(wake_pad, int), hypnogram(n_sleep, rng.uniform(0.7, 1.2)),
-                         np.zeros(wake_pad, int)])
-    amp = 0.55 * (1.0 - 0.006 * (age - 25))      # Fpz-Cz smaller; amplitude falls with age
-    sig = simulate(st, fs, amp)
-    names = ["EEG Fpz-Cz", "EEG Pz-Oz", "EOG horizontal"]
-    data = np.vstack([sig, rng.normal(0, 10e-6, len(sig)), rng.normal(0, 30e-6, len(sig))])
-    info = mne.create_info(names, fs, ["eeg", "eeg", "eog"])
-    raw = mne.io.RawArray(data, info, verbose="error")
-    base = f"{pkey}{night}E0"
-    mne.export.export_raw(os.path.join(root, f"{base}-PSG.edf"), raw, fmt="edf",
-                          overwrite=True, verbose="error")
-    names_map = {0: "Sleep stage W", 1: "Sleep stage 1", 2: "Sleep stage 2",
-                 3: "Sleep stage 3", 4: "Sleep stage R"}
-    on, du, de = [], [], []
+def _stage_runs(st):
     i = 0
     while i < len(st):
         j = i
         while j < len(st) and st[j] == st[i]:
             j += 1
-        on.append(i * 30.0)
-        du.append((j - i) * 30.0)
-        de.append(names_map[st[i]])
+        yield i, j, st[i]
         i = j
+
+
+def write_hmc(root, k, age):
+    fs = 256
+    st = hypnogram(600, rng.uniform(0.7, 1.2))
+    sig = simulate(st, fs, 1.0 - 0.005 * (age - 25))
+    names = ["EEG F4-M1", "EEG C4-M1", "EEG O2-M1", "EEG C3-M2", "EOG E1-M2"]
+    data = np.vstack([sig if nm == "EEG C4-M1" else rng.normal(0, 15e-6, len(sig)) for nm in names])
+    raw = mne.io.RawArray(data, mne.create_info(names, fs, "eeg"), verbose="error")
+    key = f"SN{k:03d}"
+    mne.export.export_raw(os.path.join(root, f"{key}.edf"), raw, fmt="edf", overwrite=True,
+                          verbose="error")
+    m = {0: "Sleep stage W", 1: "Sleep stage N1", 2: "Sleep stage N2", 3: "Sleep stage N3",
+         4: "Sleep stage R"}
+    on, du, de = [0.0], [0.0], ["Lights off@@EEG F4-A1"]
+    for i, j, s_ in _stage_runs(st):
+        for e in range(i, j):                       # HMC scores epoch by epoch
+            on.append(e * 30.0); du.append(30.0); de.append(m[s_])
     hraw = mne.io.RawArray(np.zeros((1, len(st) * 30)), mne.create_info(["dummy"], 1, "misc"),
                            verbose="error")
     hraw.set_annotations(mne.Annotations(on, du, de))
-    mne.export.export_raw(os.path.join(root, f"{pkey}{night}EC-Hypnogram.edf"), hraw,
-                          fmt="edf", overwrite=True, verbose="error")
+    mne.export.export_raw(os.path.join(root, f"{key}_sleepscoring.edf"), hraw, fmt="edf",
+                          overwrite=True, verbose="error")
+
+
+def write_dod(root, scorers_root, ds, rid):
+    import h5py, json as _json
+    fs = 250
+    st = hypnogram(560, rng.uniform(0.7, 1.2))
+    sig = simulate(st, fs, 0.9)                     # volts (tests unit guard)
+    os.makedirs(root, exist_ok=True)
+    with h5py.File(os.path.join(root, f"{rid}.h5"), "w") as h5:
+        g = h5.create_group("signals/eeg")
+        for nm in ("C3_M2", "F3_F4", "O1_M2"):
+            d = g.create_dataset(nm, data=(sig if nm == "C3_M2" else rng.normal(0, 1e-5, len(sig))))
+            d.attrs["fs"] = fs
+        h5.create_dataset("hypnogram", data=st)
+    for k in range(1, 6):                           # 5 scorers disagree near N2/N3 borders
+        lab = st.copy()
+        for i in range(1, len(st) - 1):
+            if st[i] in (2, 3) and (st[i - 1] != st[i] or st[i + 1] != st[i]) and rng.random() < 0.45:
+                lab[i] = 3 if st[i] == 2 else 2
+        d = os.path.join(scorers_root, ds, f"scorer_{k}")
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, f"{rid}.json"), "w") as f:
+            _json.dump([int(x) for x in lab], f)
 
 
 def main(root):
-    i1, i3, se = (os.path.join(root, x) for x in ("ISRUC-Sleep-I", "ISRUC-Sleep-III", "Sleep-EDF"))
-    for d in (i1, i3, se):
+    import pandas as pd
+    i1, i2, i3, hm = (os.path.join(root, x) for x in ("ISRUC-Sleep-I", "ISRUC-Sleep-II",
+                                                     "ISRUC-Sleep-III", "HMC"))
+    for d in (i1, i2, i3, hm):
         os.makedirs(d, exist_ok=True)
     for sid in range(1, 9):
         write_isruc(i1, sid, "A" if sid <= 2 else "M")
+    pd.DataFrame({"Subject": [f"Subject {i}" for i in range(1, 9)],
+                  "Age": rng.integers(20, 80, 8), "Sex": rng.choice(["M", "F"], 8),
+                  "Diagnosis": "synthetic"}).to_excel(
+        os.path.join(i1, "Details_subgroup_I_Submission.xlsx"), index=False)
+    for sid in range(1, 4):                         # ISRUC-II: two sessions per subject
+        for ses in (1, 2):
+            write_isruc(os.path.join(i2, str(sid)), ses, "M")
     for sid in range(1, 3):
         write_isruc(i3, sid, "M")
-    import pandas as pd
-    rows = []
-    for k in range(8):
-        pkey = f"SC40{k}"
-        age = int(rng.integers(25, 90))
-        nights = (1, 2) if k < 4 else (1,)
-        for nt in nights:
-            write_sleep_edf(se, pkey, nt, age)
-            rows.append({"subject": k, "night": nt, "age": age, "sex (F=1)": int(rng.integers(1, 3))})
-    pd.DataFrame(rows).to_excel(os.path.join(se, "SC-subjects.xlsx"), index=False)
+    for k in range(1, 9):
+        write_hmc(hm, k, int(rng.integers(25, 80)))
+    sc = os.path.join(root, "dod_scorers")
+    import uuid
+    for ds, folder, n in (("dodh", "DOD-H", 4), ("dodo", "DOD-O", 4)):
+        for _ in range(n):
+            write_dod(os.path.join(root, folder), sc, ds, str(uuid.UUID(int=int(rng.integers(1 << 62)))))
     print("synthetic data written to", root)
 
 

@@ -15,9 +15,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-C1, C2, C3 = "#2a78d6", "#eb6834", "#1baf7a"
+# validated categorical slots 1-6 (fixed order, never cycled)
+C1, C2, C3, C4, C5, C6 = "#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"
 INK, INK2, GRID = "#0b0b0b", "#52514e", "#e4e3df"
-COHORT_COLOR = {"ISRUC-I": C1, "Sleep-EDF": C2, "ISRUC-III": C3}
+COHORT_COLOR = {"ISRUC-I": C1, "HMC": C2, "ISRUC-III": C3, "ISRUC-II": C4, "DOD-H": C5, "DOD-O": C6}
+FACTOR_COLOR = {"delta_intensity": C1, "sw_morphology": C2, "spectral_dominance": C3,
+                "rating_prior": C4}
 
 plt.rcParams.update({
     "figure.facecolor": "white", "axes.facecolor": "white", "savefig.facecolor": "white",
@@ -42,17 +45,17 @@ def fig_pr_curves(out_dir):
     oof = oof[(oof.label >= 0) & oof.is_primary]
     fig, ax = plt.subplots(figsize=(3.6, 3.2))
     sets = [(c, g) for c, g in oof.groupby("cohort")]
-    ep = os.path.join(out_dir, "external_isruc3_predictions.parquet")
+    ep = os.path.join(out_dir, "external_predictions.parquet")
     if os.path.exists(ep):
         e = pd.read_parquet(ep)
-        sets.append(("ISRUC-III", e[e.label >= 0]))
+        sets += [(c, g) for c, g in e[e.label >= 0].groupby("cohort")]
     for c, g in sets:
         p, r, _ = precision_recall_curve(g.y, g.prob)
         ax.plot(r, p, color=COHORT_COLOR.get(c, INK2),
                 label=f"{c} (AP={average_precision_score(g.y, g.prob):.3f})")
     ax.set_xlabel("Recall")
     ax.set_ylabel("Precision")
-    ax.set_title("N3 detection, out-of-fold")
+    ax.set_title("N3 detection (OOF: ISRUC-I, HMC; others external)")
     ax.legend(loc="lower left", fontsize=8)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1.02)
@@ -60,7 +63,8 @@ def fig_pr_curves(out_dir):
 
 
 def fig_homeostatic(out_dir):
-    S = pd.read_parquet(os.path.join(out_dir, "factor_scores_oof.parquet"))
+    S = pd.read_parquet(os.path.join(out_dir, "factor_scores.parquet"))
+    S = S[S.split == "OOF"]
     S = S[S.pred == 1]
     n = S.groupby("rec").epoch_idx.transform("max") + 1
     S["half"] = np.where(S.epoch_idx < n / 2, "early", "late")
@@ -110,7 +114,7 @@ def fig_risk_coverage(out_dir):
 
 def fig_profiles(out_dir):
     prof = pd.read_csv(os.path.join(out_dir, "rq7_overnight_n3_eeg_profiles.csv"))
-    pr = prof[prof.is_primary]
+    pr = prof[prof.is_primary & (prof.split == "OOF")]
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.2))
     for c, g in pr.groupby("cohort"):
         axes[0].scatter(g.expert_n3_minutes, g.pred_n3_minutes, s=18, color=COHORT_COLOR.get(c, INK2),
@@ -121,25 +125,29 @@ def fig_profiles(out_dir):
     axes[0].set_ylabel("Predicted N3 minutes")
     axes[0].set_title("Overnight N3 duration")
     axes[0].legend(fontsize=8)
-    sedf = prof[prof.cohort == "Sleep-EDF"]
+    multi = prof.groupby("participant").rec.transform("nunique") >= 2
+    tp = prof[multi].sort_values(["participant", "rec"])
     for metric, color, lab in (("pred_median_rating", C1, "Overall N3 EEG Rating"),
                                ("pred_n3_minutes", C2, "N3 minutes")):
-        piv = sedf.pivot_table(index="participant", columns="is_primary", values=metric)
-        if True in piv and False in piv:
-            piv = piv.dropna()
-            z = (piv - piv.stack().mean()) / (piv.stack().std() + 1e-9)
-            axes[1].scatter(z[True], z[False], s=18, color=color, label=lab,
-                            edgecolor="white", linewidth=0.5)
+        if not len(tp):
+            break
+        a = tp.groupby("participant")[metric].nth(0).to_numpy()
+        b = tp.groupby("participant")[metric].nth(1).to_numpy()
+        both = np.concatenate([a, b])
+        mu, sd = np.nanmean(both), np.nanstd(both) + 1e-9
+        axes[1].scatter((a - mu) / sd, (b - mu) / sd, s=18, color=color, label=lab,
+                        edgecolor="white", linewidth=0.5)
     axes[1].plot([-3, 3], [-3, 3], color=INK2, lw=1, ls="--")
-    axes[1].set_xlabel("Night 1 (z-score)")
-    axes[1].set_ylabel("Night 2 (z-score)")
-    axes[1].set_title("Night-to-night reproducibility")
+    axes[1].set_xlabel("Session 1 (z-score)")
+    axes[1].set_ylabel("Session 2 (z-score)")
+    axes[1].set_title("Test-retest (ISRUC-II)")
     axes[1].legend(fontsize=8)
     return _save(fig, out_dir, "fig_rq7_profiles.png")
 
 
 def fig_example_night(out_dir, participant=None):
-    S = pd.read_parquet(os.path.join(out_dir, "factor_scores_oof.parquet"))
+    S = pd.read_parquet(os.path.join(out_dir, "factor_scores.parquet"))
+    S = S[S.split == "OOF"]
     oof = pd.read_parquet(os.path.join(out_dir, "oof_predictions_full_v2.parquet"))
     d = oof[oof.is_primary].merge(S[["idx", "rating_prior"]], on="idx", how="left")
     rec = (d[d.participant == participant].rec.iloc[0] if participant else
@@ -181,10 +189,38 @@ def fig_xai(out_dir):
     return _save(fig, out_dir, "fig_rq5_band_explanations.png")
 
 
+def fig_graded_agreement(out_dir):
+    """Factor scores vs the fraction of experts who scored the epoch N3
+    (epochs where every expert said N2 or N3)."""
+    S = pd.read_parquet(os.path.join(out_dir, "factor_scores.parquet"))
+    S = S[S.n3_vote_frac.notna()]
+    facs = ["delta_intensity", "sw_morphology", "spectral_dominance", "rating_prior"]
+    names = {"delta_intensity": "Delta intensity", "sw_morphology": "SW morphology",
+             "spectral_dominance": "Spectral dominance", "rating_prior": "Overall rating"}
+    cohorts = [c for c in ("DOD-H", "DOD-O", "ISRUC-I", "ISRUC-II", "ISRUC-III")
+               if c in set(S.cohort)]
+    fig, axes = plt.subplots(1, max(1, len(cohorts)), figsize=(2.6 * max(1, len(cohorts)), 2.9),
+                             sharey=True, squeeze=False)
+    for ax, c in zip(axes[0], cohorts):
+        g = S[(S.cohort == c) & S.label.isin([2, 3])]
+        g = g.assign(vote=g.n3_vote_frac.round(2))
+        for f in facs:
+            m = g.groupby("vote")[f].agg(["mean", "sem", "count"])
+            m = m[m["count"] >= 20]
+            ax.errorbar(m.index, m["mean"], yerr=1.96 * m["sem"], color=FACTOR_COLOR[f],
+                        marker="o", ms=4, lw=1.6, capsize=2, label=names[f])
+        ax.set_title(c)
+        ax.set_xlabel("Fraction of experts scoring N3")
+    axes[0][0].set_ylabel("Mean score (0-100), 95% CI")
+    axes[0][-1].legend(fontsize=7, loc="lower right")
+    fig.suptitle("Graded expert agreement (N2/N3 epochs)", fontsize=10, y=1.03)
+    return _save(fig, out_dir, "fig_rq2_graded_expert_agreement.png")
+
+
 def make_all(out_dir, log=print):
     made = []
-    for fn in (fig_pr_curves, fig_homeostatic, fig_ablation, fig_risk_coverage, fig_profiles,
-               fig_example_night, fig_xai):
+    for fn in (fig_pr_curves, fig_homeostatic, fig_graded_agreement, fig_ablation,
+               fig_risk_coverage, fig_profiles, fig_example_night, fig_xai):
         try:
             made.append(fn(out_dir))
         except Exception as exc:

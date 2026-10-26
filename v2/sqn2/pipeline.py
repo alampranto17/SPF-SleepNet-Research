@@ -49,7 +49,7 @@ def train_all(corpus, cfg, run_dir, log=print):
         for fo in folds:
             tr.run("feat_gbm", fo, run_dir, seed=cfg["seed"], gbm=True)
     if cfg.get("run_loco"):
-        cohorts = sorted(corpus.rec[corpus.rec.cohort.isin(["ISRUC-I", "Sleep-EDF"])].cohort.unique())
+        cohorts = sorted(corpus.rec[corpus.rec.cohort.isin(list(T.TRAIN_COHORTS))].cohort.unique())
         for coh in cohorts:
             if out_of_time():
                 break
@@ -67,17 +67,21 @@ def analyse_all(corpus, cfg, run_dir, out_dir, log=print):
     res["r1"] = r1
     log("[RQ2/3] factor scores")
     S = A.compute_fold_scores(corpus, oof, run_dir)
-    S.join(oof[["idx", "rec", "epoch_idx", "participant", "cohort", "label", "pred"]]) \
-        .to_parquet(os.path.join(out_dir, "factor_scores_oof.parquet"))
-    res["r2"] = A.rq2(oof, S, corpus, out_dir)
-    res["r3"] = A.rq3(oof, S, out_dir)
+    Sx = A.compute_external_scores(corpus, ext) if ext is not None and len(ext) else None
+    cols = ["idx", "rec", "epoch_idx", "participant", "cohort", "label", "pred", "n3_vote_frac"]
+    fs = [S.join(oof[cols]).assign(split="OOF")]
+    if Sx is not None:
+        fs.append(Sx.join(ext[cols]).assign(split="external"))
+    pd.concat(fs, ignore_index=True).to_parquet(os.path.join(out_dir, "factor_scores.parquet"))
+    res["r2"] = A.rq2(oof, S, corpus, out_dir, ext, Sx)
+    res["r3"] = A.rq3(oof, S, out_dir, ext, Sx)
     log("[RQ4] component analysis")
     res["r4"] = A.rq4(corpus, run_dir, out_dir)
     log("[RQ6] reliability")
-    r6 = A.rq6(oof, out_dir)
+    r6 = A.rq6(oof, out_dir, ext)
     res["r6"] = r6
     log("[RQ7] episodes / overnight profiles")
-    res["r7"] = A.rq7(oof, S, r6[3], out_dir)
+    res["r7"] = A.rq7(oof, S, r6[3], out_dir, ext, Sx, r6[4])
     log("[RQ5] explainability")
     try:
         res["r5"] = X.rq5(corpus, run_dir, out_dir, oof, S, n_per_fold=cfg["xai_epochs_per_fold"])

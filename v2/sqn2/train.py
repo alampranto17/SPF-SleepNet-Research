@@ -54,6 +54,7 @@ class Corpus:
         feat_dir = feat_dir or os.path.join(cache_dir, "_features")
         os.makedirs(feat_dir, exist_ok=True)
         X, rows, recs, feats, qcs = [], [], [], [], []
+        self.labels_multi = {}
         off = 0
         for i, p in enumerate(files):
             arr, meta = D.load_cache(p)
@@ -76,11 +77,19 @@ class Corpus:
             meta.update({"offset": off, "n": n, "raw_scale": scale,
                          "montage": montage_family(meta["derivation"])})
             recs.append(meta)
+            lm = arr["labels_multi"].astype(int)
+            scored = lm >= 0
+            n_r = scored.sum(1)
+            frac = np.where(n_r > 0, ((lm == 3) & scored).sum(1) / np.maximum(n_r, 1), np.nan)
             rows.append(pd.DataFrame({
                 "rec": meta["recording"], "participant": meta["participant"],
                 "cohort": meta["cohort"], "montage": meta["montage"],
                 "is_primary": meta["is_primary"], "epoch_idx": arr["epoch_index"],
-                "label": arr["labels"].astype(int), "label2": arr["labels2"].astype(int)}))
+                "label": arr["labels"].astype(int),
+                "label2": lm[:, 1] if lm.shape[1] > 1 else np.full(n, -2),
+                "n_raters_epoch": n_r, "n3_vote_frac": frac,
+                "all_votes_n2n3": (scored.any(1) & np.all(~scored | np.isin(lm, [2, 3]), 1))}))
+            self.labels_multi[meta["recording"]] = lm
             off += n
             if (i + 1) % 25 == 0:
                 log(f"[corpus] {i + 1}/{len(files)} recordings loaded")
@@ -112,7 +121,11 @@ class Corpus:
 # ---------------------------------------------------------------------------
 # Folds
 # ---------------------------------------------------------------------------
-def make_folds(corpus, k=5, seed=42, train_cohorts=("ISRUC-I", "Sleep-EDF"), inner_frac=0.15):
+TRAIN_COHORTS = ("ISRUC-I", "HMC")
+EXTERNAL_COHORTS = ("ISRUC-II", "ISRUC-III", "DOD-H", "DOD-O")
+
+
+def make_folds(corpus, k=5, seed=42, train_cohorts=TRAIN_COHORTS, inner_frac=0.15):
     """Participant-level folds stratified by cohort; returns list of dicts."""
     rng = np.random.default_rng(seed)
     rec = corpus.rec
@@ -139,7 +152,7 @@ def make_folds(corpus, k=5, seed=42, train_cohorts=("ISRUC-I", "Sleep-EDF"), inn
             "fold": f,
             "train_recs": list(prim[prim.participant.isin(train_p)].index),
             "inner_recs": list(prim[prim.participant.isin(inner)].index),
-            "test_recs": list(rec[rec.participant.isin(test_p)].index),   # incl. night-2
+            "test_recs": list(rec[rec.participant.isin(test_p)].index),
             "external_recs": list(rec[~rec.cohort.isin(train_cohorts)].index),
             "train_participants": train_p, "inner_participants": sorted(inner),
             "test_participants": test_p,

@@ -2,8 +2,9 @@
 
 Modules
 -------
-data      : dataset loaders (ISRUC-I, ISRUC-III, Sleep-EDF), per-epoch QC flags,
-            compact per-recording cache (.npz), Google-Drive download helpers.
+data      : dataset loaders (ISRUC-I/II/III, HMC, Dreem DOD-H/O), per-epoch QC flags,
+            multi-rater labels, compact per-recording cache (.npz).
+download  : Kaggle downloaders (PhysioNet HMC, ISRUC server, Zenodo DOD streaming).
 features  : vectorised spectral features, zero-crossing slow-wave detector.
 scores    : rule-derived factor scores (0-100), overall N3 EEG Rating,
             episode / whole-night N3 profiles.

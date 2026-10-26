@@ -6,7 +6,8 @@ exist in the data) and must not be described as clinical sleep quality.
 
 Scaling: each raw metric is converted to a percentile (0-100) of the
 distribution of that metric over EXPERT-SCORED N3 epochs of TRAINING
-participants recorded with the SAME derivation (C4-M1 family vs Fpz-Cz).
+participants recorded with the same derivation family (all cohorts used here are
+central-mastoid: C4-M1 / C3-M2; the montage hook is kept for other datasets).
 A score of 50 therefore means "as strong as the median N3 epoch of the
 training population for this montage".  References are re-fitted inside every
 cross-validation fold, so test participants never influence their own scale.
@@ -31,7 +32,10 @@ CONTINUITY_HALF_WINDOW = 5        # epochs on each side (= +/- 2.5 min)
 
 
 def montage_family(derivation: str) -> str:
-    return "Fpz-Cz" if "fpz" in str(derivation).lower() else "central"
+    d = str(derivation).lower()
+    if "fpz" in d or "fp1" in d or "fp2" in d:
+        return "frontal-polar"
+    return "central" if ("c3" in d or "c4" in d) else "other"
 
 
 class FactorReference:

@@ -3,7 +3,7 @@
 **v2 replaces the v1 notebook results.** The v1 loader read 83/100 ISRUC-I subjects from an EOG channel (`E1-M2`) and selected checkpoints on the test fold. See [`docs/02_v1_audit_and_supervisor_comments.md`](docs/02_v1_audit_and_supervisor_comments.md).
 
 ## What v2 produces
-For each 30-s epoch of one EEG channel (C4-M1 or Fpz-Cz):
+For each 30-s epoch of one central EEG channel (C4-M1 or C3-M2):
 - **P(N3)** from a CNN-attention network with handcrafted-feature fusion and a dilated temporal-context block (±15 epochs);
 - for detected N3 only: **Delta Intensity**, **Slow-Wave Morphology**, **Spectral Dominance** and **N3 Continuity** scores (0–100, montage-referenced percentiles), plus an exactly decomposable **Overall N3 EEG Rating**;
 - a cross-fitted **Signal Reliability Score** (0–100, low/medium/high, rejection flag);
@@ -12,11 +12,11 @@ For each 30-s epoch of one EEG channel (C4-M1 or Fpz-Cz):
 These are rule-derived research-prototype descriptors of the EEG signal, **not** clinical sleep-quality scores.
 
 ## Run it
-Kaggle (free GPU): import [`SleepQualityNet_v2_kaggle.ipynb`](SleepQualityNet_v2_kaggle.ipynb), enable GPU T4 ×2 and Internet, and run. It downloads Sleep-EDF from PhysioNet and ISRUC from its official server or Drive. Full instructions: [`docs/01_PLAN_and_how_to_run.md`](docs/01_PLAN_and_how_to_run.md).
+Kaggle (free GPU): import [`SleepQualityNet_v2_kaggle.ipynb`](SleepQualityNet_v2_kaggle.ipynb), enable GPU T4 ×2 and Internet, and run. It downloads HMC (PhysioNet), ISRUC-Sleep I/II/III (official server) and Dreem DOD-H/O (Zenodo, 5 scorers). Training: ISRUC-I + HMC; external: ISRUC-II, ISRUC-III, DOD-H, DOD-O. Full instructions: [`docs/01_PLAN_and_how_to_run.md`](docs/01_PLAN_and_how_to_run.md).
 
 Local cache export (optional, if the ISRUC server is unreachable from Kaggle):
 ```
-python export_compact.py --isruc1 D:/AI_Project/ISRUC-Sleep-I --isruc3 D:/AI_Project/ISRUC-Sleep-III --sleepedf D:/AI_Project/Sleep-EDF --out sqn2_cache.zip
+python export_compact.py --isruc1 D:/AI_Project/ISRUC-Sleep-I --isruc2 D:/AI_Project/ISRUC-Sleep-II --isruc3 D:/AI_Project/ISRUC-Sleep-III --hmc D:/AI_Project/HMC --out sqn2_cache.zip
 ```
 
 ## Repository layout
