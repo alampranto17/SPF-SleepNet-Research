@@ -55,6 +55,9 @@ ISRUC1_DRIVE_FOLDER = "https://drive.google.com/drive/folders/1KiEl4xk0gRTNG9Oeg
 ISRUC2_DRIVE_FOLDER = None            # not on Drive -> official MEGA folder (2.2 GB)
 ISRUC3_DRIVE_FOLDER = "https://drive.google.com/drive/folders/1b4Df79NxyiOiYjG83bk2c9tGKXVDpZ5F"
 USE_ISRUC_MEGA = True                 # official MEGA links (free quota ~5 GB / 6 h per IP)
+DRIVE_RETRY_ROUNDS = 3                # extra Drive passes after a quota stop (full run only) ...
+DRIVE_COOLDOWN_MIN = 20               # ... with this pause before each
+ISRUC_KNOWN_UNUSABLE = {"I": 1}       # ISRUC-I subject 40: no referenced central derivation in the file
 USE_ISRUC_OFFICIAL = False            # old server, retired (kept only as a last resort)
 USE_DOD_ZENODO = True                 # Dreem DOD-H / DOD-O, 5 scorers (external)
 USE_CAP_PHYSIONET = True              # CAP Sleep Database: expert R&K S3/S4 -> reference for the Low/Moderate/High N3 grade
@@ -204,14 +207,22 @@ if "data" in RUN_STAGES:
                          allow_full_download=DOD_ALLOW_FULL_ZIP_DOWNLOAD)
         except Exception as exc:
             print("DOD download failed:", exc)
-    # second Drive pass: CAP / DOD downloads gave the Drive quota time to recover
-    for grp, (raw_dir, drive) in SRC.items():
-        if not raw_dir and drive and _n_cached(grp) < _need(grp):
-            print(f"ISRUC-{grp}: second Drive pass for the {_need(grp) - _n_cached(grp)} missing subjects")
+    # further Drive passes: the anonymous Drive quota (~5 GB per machine) recovers with time.
+    # Training cannot start before ISRUC-I is complete, so waiting here costs nothing extra.
+    for rnd in range(1 + (0 if q else DRIVE_RETRY_ROUNDS)):
+        todo = [g for g, (raw_dir, drive) in SRC.items()
+                if not raw_dir and drive and _n_cached(g) < _need(g) - ISRUC_KNOWN_UNUSABLE.get(g, 0)]
+        if not todo:
+            break
+        if rnd > 0:
+            print(f"Drive quota: waiting {DRIVE_COOLDOWN_MIN} min before Drive pass {rnd + 2} ...")
+            _time.sleep(DRIVE_COOLDOWN_MIN * 60)
+        for grp in todo:
+            print(f"ISRUC-{grp}: Drive pass {rnd + 2} for the {_need(grp) - _n_cached(grp)} missing subjects")
             try:
-                DL.cache_isruc_from_drive_folder(drive, CACHE_DIR, grp, subject_ids=list(ISRUC_Q[grp]) if q else None)
+                DL.cache_isruc_from_drive_folder(SRC[grp][1], CACHE_DIR, grp, subject_ids=list(ISRUC_Q[grp]) if q else None)
             except Exception as exc:
-                print(f"ISRUC-{grp} Drive (pass 2) failed:", exc)
+                print(f"ISRUC-{grp} Drive pass failed:", exc)
             print(f"ISRUC-{grp}: {_n_cached(grp)}/{_need(grp)} subjects cached")
 files = sorted(glob.glob(os.path.join(CACHE_DIR, "*.npz")))
 by = pd.Series([os.path.basename(f).split("_")[0] for f in files]).value_counts()
@@ -269,9 +280,11 @@ if QUICK_TEST:
                variants=["full_v2", "cnn_feat_pw", "tinysleepnet", "lseqsleepnet"], xai_epochs_per_fold=20)
 _n_isruc1 = len({os.path.basename(f).split("_")[1] for f in glob.glob(os.path.join(CACHE_DIR, "ISRUC1_*.npz"))})
 _n_hmc = len(glob.glob(os.path.join(CACHE_DIR, "HMC_*.npz")))
-if not QUICK_TEST and "train" in RUN_STAGES and (_n_isruc1 < 90 or _n_hmc < 140):
+_n_runs_done = len(glob.glob(os.path.join(RUN_DIR, "*.npz")))
+# all usable ISRUC-I subjects (99/100) before the folds are frozen by the first training run
+if not QUICK_TEST and "train" in RUN_STAGES and _n_runs_done == 0 and (_n_isruc1 < 99 or _n_hmc < 150):
     RUN_STAGES = [s for s in RUN_STAGES if s not in ("train", "analyse")]
-    print(f"Training cohorts incomplete (ISRUC-I {_n_isruc1}/100, HMC {_n_hmc}/151): training "
+    print(f"Training cohorts incomplete (ISRUC-I {_n_isruc1}/99 usable, HMC {_n_hmc}/151): training "
           f"is NOT started so no GPU hours are wasted. The cache is already saved to "
           f"'{CACHE_DATASET}'; run the notebook again (e.g. after the MEGA/Drive quota resets) "
           f"and it continues downloading from where it stopped.")
