@@ -24,6 +24,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+import threading
 import time
 import urllib.request
 import zipfile
@@ -541,7 +542,7 @@ def _ensure_megatools(log=print):
     return exe[0]
 
 
-def cache_isruc_from_mega(cache_dir, subgroup="II", log=print, timeout_h=3.0):
+def cache_isruc_from_mega(cache_dir, subgroup="II", log=print, timeout_h=3.0, stall_min=10):
     """Whole-folder download with megatools, then cache every subject.
     Free MEGA transfer quota is roughly 5 GB per 6 h per IP: fine for II (2.2 GB) and
     III (1.35 GB); subgroup I (14 GB) may stop part-way - re-run later to continue."""
@@ -557,18 +558,30 @@ def cache_isruc_from_mega(cache_dir, subgroup="II", log=print, timeout_h=3.0):
     log(f"[{cohort} MEGA] downloading the official folder with megatools (progress every 60 s)")
     proc = subprocess.Popen([exe, "dl", "--path", dl, ISRUC_MEGA[subgroup]],
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-    t0 = t_last = time.time()
+    t0 = time.time()
     tail = []
-    for line in proc.stdout:
-        line = line.strip()
-        if line:
-            tail = (tail + [line])[-5:]
+
+    def _reader():                                  # stdout read in a thread so a silent
+        for line in proc.stdout:                    # (stalled) megatools cannot block us
+            line = line.strip()
+            if line:
+                tail.append(line)
+                del tail[:-5]
+    threading.Thread(target=_reader, daemon=True).start()
+    last_size, last_growth = -1, time.time()
+    while proc.poll() is None:
+        time.sleep(60)
         now = time.time()
-        if now - t_last > 60:
-            t_last = now
-            size = sum(os.path.getsize(f) for f in glob.glob(os.path.join(dl, "**", "*"),
-                                                               recursive=True) if os.path.isfile(f))
-            log(f"    .. {cohort} MEGA: {size / 1e9:.2f} GB on disk, {(now - t0) / 60:.0f} min")
+        size = sum(os.path.getsize(f) for f in glob.glob(os.path.join(dl, "**", "*"),
+                                                         recursive=True) if os.path.isfile(f))
+        if size > last_size:
+            last_size, last_growth = size, now
+        log(f"    .. {cohort} MEGA: {size / 1e9:.2f} GB on disk, {(now - t0) / 60:.0f} min")
+        if now - last_growth > stall_min * 60:
+            proc.kill()
+            log(f"[{cohort} MEGA] no progress for {stall_min} min (MEGA transfer quota?) - stopped; "
+                f"subjects already complete are cached, re-run later for the rest")
+            break
         if now - t0 > timeout_h * 3600:
             proc.kill()
             log(f"[{cohort} MEGA] stopped after {timeout_h} h")
@@ -578,7 +591,7 @@ def cache_isruc_from_mega(cache_dir, subgroup="II", log=print, timeout_h=3.0):
         log(f"[{cohort} MEGA] megatools exit {proc.returncode}: {' | '.join(tail)[-400:]}"
             " (often the MEGA transfer quota - re-run in a few hours; finished subjects are kept)")
     files = [os.path.relpath(f, dl) for f in glob.glob(os.path.join(dl, "**", "*"), recursive=True)
-             if os.path.isfile(f)]
+             if os.path.isfile(f) and "megatmp" not in os.path.basename(f).lower()]   # skip partials
     _grab_details([os.path.join(dl, f) for f in files], cache_dir, subgroup, log)
     depth, groups = _subject_groups(files)
     tool = _ensure_unrar(log) if any(f.lower().endswith(".rar") for f in files) else None
