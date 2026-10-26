@@ -338,11 +338,23 @@ def read_cap_txt(path):
     return rows
 
 
+def _monopolar_pair(ch_names):
+    """('C4', 'A1') style pair when only monopolar electrodes are stored (some CAP files)."""
+    up = {_norm_ch(c): c for c in ch_names}
+    for a, r in (("C4", "A1"), ("C3", "A2"), ("C4", "M1"), ("C3", "M2")):
+        if a in up and r in up:
+            return up[a], up[r]
+    return None
+
+
 def load_cap(edf_path, txt_path):
     raw = _read_edf(edf_path)
     ch = pick_channel(raw.ch_names)
+    mono = None
     if ch is None:
-        raise RuntimeError(f"no central EEG derivation in {Path(edf_path).name}: {raw.ch_names}")
+        mono = _monopolar_pair(raw.ch_names)
+        if mono is None:
+            raise RuntimeError(f"no central EEG derivation in {Path(edf_path).name}: {raw.ch_names}")
     fs = float(raw.info["sfreq"])
     rows = read_cap_txt(txt_path)
     if not rows:
@@ -354,7 +366,13 @@ def load_cap(edf_path, txt_path):
     t1 = min(raw.n_times / fs, max(o + d for o, d, *_ in on))
     if t1 - t0 < 3600:
         raise RuntimeError(f"scoring/recording overlap only {(t1 - t0) / 60:.0f} min (clock mismatch?)")
-    sig = raw.get_data(picks=[ch], units="uV", start=int(round(t0 * fs)), stop=int(round(t1 * fs)))[0]
+    if mono is None:
+        sig = raw.get_data(picks=[ch], units="uV", start=int(round(t0 * fs)), stop=int(round(t1 * fs)))[0]
+    else:                                          # re-reference monopolar C4 to A1 (= C4-A1)
+        two = raw.get_data(picks=list(mono), units="uV", start=int(round(t0 * fs)),
+                           stop=int(round(t1 * fs)))
+        sig = two[0] - two[1]
+        ch = f"{mono[0]}-{mono[1]}"
     n = len(sig) // int(round(EPOCH_SEC * fs))
     labels = np.full(n, -1, np.int8)
     rk = np.full(n, -1, np.int8)

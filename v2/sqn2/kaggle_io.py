@@ -13,6 +13,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 
 
 def setup_credentials(log=print):
@@ -41,8 +42,9 @@ def setup_credentials(log=print):
         log("[kaggle] secrets empty; automatic datasets OFF")
         return None
     os.environ["KAGGLE_USERNAME"], os.environ["KAGGLE_KEY"] = user, key
-    if shutil.which("kaggle") is None:
-        subprocess.run(["pip", "install", "-q", "kaggle"], check=False)
+    # the preinstalled CLI (2.0.x) returns 404 for private-dataset downloads -> upgrade
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-U", "kaggle"], check=False,
+                   capture_output=True, timeout=300)
     log(f"[kaggle] API credentials loaded for user '{user}'")
     return user
 
@@ -74,21 +76,44 @@ def _copy_tree(src, dst):
     return n
 
 
+def _attached_inputs(slug, root="/kaggle/input", depth=4):
+    out = []
+    if not os.path.isdir(root):
+        return out
+    for cur, dirs, _ in os.walk(root):
+        if cur[len(root):].count(os.sep) >= depth:
+            dirs[:] = []
+            continue
+        if os.path.basename(cur) == slug and os.listdir(cur):
+            out.append(cur)
+            dirs[:] = []
+    return out
+
+
 def pull_dataset(user, slug, dest, log=print):
-    """Restore a dataset into ``dest``: attached input first, then the API."""
-    for cand in (f"/kaggle/input/{slug}", f"/kaggle/input/{slug}/{os.path.basename(dest)}"):
-        if os.path.isdir(cand) and os.listdir(cand):
-            n = _copy_tree(cand, dest)
-            log(f"[kaggle] restored {n} files from attached input {cand}")
-            return True
+    """Restore a dataset into ``dest``: attached input (any mount path) AND the API
+    (newest version; files already present are skipped)."""
+    got = False
+    for cand in _attached_inputs(slug):
+        n = _copy_tree(cand, dest)
+        for z in glob.glob(os.path.join(dest, "**", "*.zip"), recursive=True):
+            try:
+                shutil.unpack_archive(z, os.path.splitext(z)[0])
+                os.remove(z)
+            except Exception:
+                pass
+        log(f"[kaggle] restored {n} files from attached input {cand}")
+        got = True
     if not user or not dataset_exists(user, slug):
-        log(f"[kaggle] no existing dataset {user}/{slug} - starting fresh")
-        return False
+        if not got:
+            log(f"[kaggle] no existing dataset {user}/{slug} - starting fresh")
+        return got
     tmp = dest.rstrip("/") + "_dl"
     code, out = _kaggle("datasets", "download", "-d", f"{user}/{slug}", "-p", tmp, "--unzip")
     if code != 0:
-        log(f"[kaggle] download of {user}/{slug} failed: {out[-300:]}")
-        return False
+        log(f"[kaggle] API download of {user}/{slug} failed: {out[-300:]}" +
+            ("" if got else f"  -> attach it instead: Add Input > Your Datasets > {slug}"))
+        return got
     for z in glob.glob(os.path.join(tmp, "**", "*.zip"), recursive=True):   # dir-mode zips
         shutil.unpack_archive(z, os.path.splitext(z)[0])
         os.remove(z)
