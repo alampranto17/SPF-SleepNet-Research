@@ -176,9 +176,11 @@ if "data" in RUN_STAGES:
                     DL.cache_isruc_from_mega(CACHE_DIR, grp)
                 except Exception as exc:
                     print(f"ISRUC-{grp} MEGA download failed:", exc)
-        # ... then MEGA only as a fallback when Drive delivered less than 90 %
+        # ... then MEGA as a fallback. MEGA downloads the whole folder from subject 1 onwards,
+        # so for ISRUC-I (14 GB > quota) it is only useful when Drive delivered (almost) nothing.
+        MEGA_FALLBACK_BELOW = {"I": 0.10, "III": 0.90}
         for grp, (raw_dir, drive) in SRC.items():
-            if not raw_dir and drive and _n_cached(grp) < 0.9 * _need(grp):
+            if not raw_dir and drive and _n_cached(grp) < MEGA_FALLBACK_BELOW.get(grp, 0.9) * _need(grp):
                 try:
                     DL.cache_isruc_from_mega(CACHE_DIR, grp)
                 except Exception as exc:
@@ -202,6 +204,15 @@ if "data" in RUN_STAGES:
                          allow_full_download=DOD_ALLOW_FULL_ZIP_DOWNLOAD)
         except Exception as exc:
             print("DOD download failed:", exc)
+    # second Drive pass: CAP / DOD downloads gave the Drive quota time to recover
+    for grp, (raw_dir, drive) in SRC.items():
+        if not raw_dir and drive and _n_cached(grp) < _need(grp):
+            print(f"ISRUC-{grp}: second Drive pass for the {_need(grp) - _n_cached(grp)} missing subjects")
+            try:
+                DL.cache_isruc_from_drive_folder(drive, CACHE_DIR, grp, subject_ids=list(ISRUC_Q[grp]) if q else None)
+            except Exception as exc:
+                print(f"ISRUC-{grp} Drive (pass 2) failed:", exc)
+            print(f"ISRUC-{grp}: {_n_cached(grp)}/{_need(grp)} subjects cached")
 files = sorted(glob.glob(os.path.join(CACHE_DIR, "*.npz")))
 by = pd.Series([os.path.basename(f).split("_")[0] for f in files]).value_counts()
 print("\\ncached recordings:", by.to_dict(), f"| total {len(files)}",

@@ -518,7 +518,7 @@ def _grab_details(paths_local, cache_dir, grp, log):
 
 
 def cache_isruc_from_drive_folder(folder_link, cache_dir, subgroup="III", subject_ids=None,
-                                  workers=3, log=print):
+                                  workers=3, log=print, max_consecutive_fail=6):
     """Download a public Drive copy of an ISRUC subgroup subject by subject and cache it.
     Accepts per-subject folders (n/n.rec, n/n_1.txt, ...) or per-subject .rar/.zip files."""
     gdown = _gdown()
@@ -545,16 +545,26 @@ def cache_isruc_from_drive_folder(folder_link, cache_dir, subgroup="III", subjec
             loc.append(dst)
     _grab_details(loc, cache_dir, subgroup, log)
     want = set(subject_ids) if subject_ids else None
-    sids = sorted(s for s in groups if (want is None or s in want))
+    sids = sorted(s for s in groups if (want is None or s in want)
+                  and not glob.glob(os.path.join(cache_dir, f"{pre}_{s:03d}*.npz")))
+    if not sids:
+        log(f"[{cohort} Drive] all listed subjects already cached")
     tool = None
     if any(p.lower().endswith(".rar") for p, _ in listing):
         tool = _ensure_unrar(log)
+
+    import threading as _th
+    fails = {"consec": 0}
+    lock = _th.Lock()
 
     def make(sid):
         def job():
             name = f"{pre}_{sid:03d}"
             if glob.glob(os.path.join(cache_dir, f"{name}*.npz")):
                 return name, "cached"
+            with lock:
+                if fails["consec"] >= max_consecutive_fail:
+                    return name, "SKIPPED (Drive quota - retried in a later pass / run)"
             sub = os.path.join(tmp, f"s{sid}")
             try:
                 n_bytes = 0
@@ -571,9 +581,13 @@ def cache_isruc_from_drive_folder(folder_link, cache_dir, subgroup="III", subjec
                             break
                         time.sleep(10 * (k + 1))
                     if not ok:
+                        with lock:
+                            fails["consec"] += 1
                         return name, (f"FAILED Drive download of {rel} (Drive quota 'too many "
                                       f"downloads' or file not public)")
                     n_bytes += os.path.getsize(dst)
+                with lock:
+                    fails["consec"] = 0
                 return name, _cache_subject_dir(sub, cache_dir, cohort, sid, tool, log) + \
                     f" [{n_bytes / 1e6:.0f} MB]"
             except Exception as exc:
