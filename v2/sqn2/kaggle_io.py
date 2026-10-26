@@ -104,22 +104,43 @@ def pull_dataset(user, slug, dest, log=print):
                 pass
         log(f"[kaggle] restored {n} files from attached input {cand}")
         got = True
-    if not user or not dataset_exists(user, slug):
+    if not user:
         if not got:
-            log(f"[kaggle] no existing dataset {user}/{slug} - starting fresh")
+            log(f"[kaggle] no API credentials - {slug} not restored")
         return got
     tmp = dest.rstrip("/") + "_dl"
+    src, how = None, None
     code, out = _kaggle("datasets", "download", "-d", f"{user}/{slug}", "-p", tmp, "--unzip")
-    if code != 0:
-        log(f"[kaggle] API download of {user}/{slug} failed: {out[-300:]}" +
-            ("" if got else f"  -> attach it instead: Add Input > Your Datasets > {slug}"))
+    if code == 0 and os.path.isdir(tmp) and os.listdir(tmp):
+        src, how = tmp, "kaggle CLI"
+    else:
+        msg = out.strip().splitlines()[-1][:200] if out.strip() else f"exit {code}"
+        log(f"[kaggle] CLI download of {user}/{slug} failed ({msg}); trying kagglehub")
+        try:
+            try:
+                import kagglehub
+            except ImportError:
+                subprocess.run([sys.executable, "-m", "pip", "install", "-q", "kagglehub"],
+                               check=False, capture_output=True, timeout=300)
+                import kagglehub
+            src = kagglehub.dataset_download(f"{user}/{slug}")
+            how = "kagglehub"
+        except Exception as exc:
+            log(f"[kaggle] kagglehub download failed too: {str(exc)[:200]}")
+    if not src:
+        if not got:
+            log(f"[kaggle] no existing/accessible dataset {user}/{slug} - starting fresh "
+                f"(or attach it: Add Input > Your Datasets > {slug})")
         return got
-    for z in glob.glob(os.path.join(tmp, "**", "*.zip"), recursive=True):   # dir-mode zips
-        shutil.unpack_archive(z, os.path.splitext(z)[0])
-        os.remove(z)
-    n = _copy_tree(tmp, dest)
+    n = _copy_tree(src, dest)
+    for z in glob.glob(os.path.join(dest, "**", "*.zip"), recursive=True):   # dir-mode zips
+        try:
+            shutil.unpack_archive(z, os.path.splitext(z)[0])
+            os.remove(z)
+        except Exception:
+            pass
     shutil.rmtree(tmp, ignore_errors=True)
-    log(f"[kaggle] restored {n} files from private dataset {user}/{slug}")
+    log(f"[kaggle] restored {n} files from private dataset {user}/{slug} via {how}")
     return True
 
 
