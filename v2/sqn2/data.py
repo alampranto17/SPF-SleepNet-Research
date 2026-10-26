@@ -237,11 +237,18 @@ def parse_isruc_txt(path):
 def load_isruc(rec_path, txt_paths, cohort="ISRUC-I", sid=None, session=1, n_sessions=1):
     raw = _read_edf(rec_path)
     ch = pick_channel(raw.ch_names)
-    if ch is None:
-        raise RuntimeError(f"no central EEG derivation in {Path(rec_path).name}; "
-                           f"channels={raw.ch_names}")
     fs = float(raw.info["sfreq"])
-    sig = raw.get_data(picks=[ch], units="uV")[0]
+    reref = ch is None
+    if ch is not None:
+        sig = raw.get_data(picks=[ch], units="uV")[0]
+    else:                       # monopolar storage (e.g. ISRUC-I subject 40): C4 - A1 = C4-A1
+        mono = _monopolar_pair(raw.ch_names)
+        if mono is None:
+            raise RuntimeError(f"no central EEG derivation in {Path(rec_path).name}; "
+                               f"channels={raw.ch_names}")
+        two = raw.get_data(picks=list(mono), units="uV")
+        sig = two[0] - two[1]
+        ch = f"{mono[0]}-{mono[1]}"
     labs = [parse_isruc_txt(t) for t in txt_paths if t and os.path.exists(t)]
     if not labs:
         raise RuntimeError("no annotation file")
@@ -259,7 +266,7 @@ def load_isruc(rec_path, txt_paths, cohort="ISRUC-I", sid=None, session=1, n_ses
             "derivation": standard_derivation(ch), "native_fs": fs, "n_epochs": int(n),
             "crop_start_s": 0.0, "label_epochs_in_file": int(len(labs[0])),
             "signal_epochs": int(n_sig), "n_raters": len(labs), "reference": "scorer 1",
-            "source_file": Path(rec_path).name}
+            "channel_rereferenced": bool(reref), "source_file": Path(rec_path).name}
     return epochs, multi[:, 0].copy(), multi, qc, meta
 
 
