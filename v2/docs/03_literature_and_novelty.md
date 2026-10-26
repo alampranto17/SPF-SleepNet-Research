@@ -51,3 +51,30 @@
 - De Fazio et al. 2026, Sensors 26(13):4091 — https://www.mdpi.com/1424-8220/26/13/4091
 - Shin 2026 dissertation / TNSRE 2025 (delta–beta PAC) — https://www.arxiv.org/pdf/2511.15012
 - Pan et al. 2026, Front. Neurosci. (sleep staging) — https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2026.1944816/full
+
+
+## 4. Added 26 Oct 2026: within-N3 grade (Low / Moderate / High) and same-protocol baselines
+
+### What the literature has (checked 26 Oct 2026)
+- **Binary N3 / SWS detection** from single-channel EEG exists (e.g. Yeh et al., *Diagnostics* 2024: Wake and N3 from C3-M2 with Wigner–Ville features; yes/no only, no grade).
+- **Continuous depth across all stages** exists: SDI (4-channel PSG, npj Digit Med 2025), ECG-SDI (2026), ORP (wake-likeness). None grades slow-wave expression *within* AASM N3 from one EEG channel.
+- **R&K 6-class staging** (S3 and S4 as separate classes) was common before 2007, and some automatic stagers trained on R&K data (e.g. Sleep-EDF) output S3/S4. AASM 2007 merged them into N3, and current models predict N3 only.
+
+### Claim that survives (use "to our knowledge" once)
+> A single-channel EEG framework that (i) detects N3 under AASM scoring and (ii) grades every detected N3 epoch as **Low / Moderate / High** slow-wave expression, with the grade anchored to the published R&K / AASM criteria (< 20 % / 20–50 % / > 50 % of the epoch covered by ≥ 75 µV, 0.5–2 Hz waves) and validated against references independent of its construction: **expert R&K S3 vs S4 scoring (CAP Sleep Database)**, the **fraction of 2–5 experts** who scored the epoch N3 (DOD, ISRUC), the **within-night homeostatic decline**, and **night-to-night stability** (ISRUC-II).
+
+Wording rules:
+- Say "within-N3 slow-wave grade" or "N3 grade". Do not say "N3 quality" or "sleep quality".
+- Do not claim "first automatic S3/S4 classifier". R&K-era stagers did that. The novelty is the AASM-era combination: N3 detection, a criteria-anchored 3-level grade, factor decomposition, reliability, and independent expert validation across six cohorts.
+- The grade is rule-derived from the detector output, not learned from grade labels. State this. The learned part is N3 detection; the grade is a transparent, manual-anchored measurement on top of it.
+
+### Same-protocol comparison (RQ1b)
+DeepSleepNet (2017), TinySleepNet (2020), AttnSleep (2021) and L-SeqSleepNet (2023) are re-implemented at 100 Hz and trained on the **identical** folds with the identical selection, threshold, calibration, loss and class weight. Deviations from the original training recipes are listed in `baselines.BASELINE_NOTES`. Only this same-protocol table may be used for "better than / comparable to" statements; published numbers from other datasets are context only.
+
+### References for this section
+- Yeh et al. 2024, Automatic Wake and Deep-Sleep Stage Classification Based on Wigner–Ville Distribution Using a Single EEG Signal, *Diagnostics* 14(6):580 — https://www.mdpi.com/2075-4418/14/6/580
+- CAP Sleep Database, Terzano et al. 2001 (PhysioNet) — https://physionet.org/content/capslpdb/1.0.0/
+- DeepSleepNet, Supratak et al. 2017 — https://consensus.app/papers/details/e94c11b344d1598d9d226f99eccbdec9/
+- AttnSleep, Eldele et al. 2021 — https://consensus.app/papers/details/a422a70e2ba157ec972d546391f12103/
+- U-Sleep, Perslev et al. 2021 (possible zero-shot reference) — https://consensus.app/papers/details/68d5328af5625d4ea53f130fbdf36b30/
+- L-SeqSleepNet, Phan et al. 2023 — https://arxiv.org/pdf/2301.03441

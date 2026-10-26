@@ -6,7 +6,7 @@ import nbformat as nbf
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PKG = os.path.join(ROOT, "sqn2")
-MODULES = ["__init__", "data", "download", "features", "scores", "models", "train",
+MODULES = ["__init__", "data", "download", "features", "scores", "models", "baselines", "train",
            "stats", "analysis", "xai", "report", "figures", "pipeline", "kaggle_io", "github_io"]
 
 md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
@@ -57,6 +57,7 @@ ISRUC3_DRIVE_FOLDER = "https://drive.google.com/drive/folders/1b4Df79NxyiOiYjG83
 USE_ISRUC_MEGA = True                 # official MEGA links (free quota ~5 GB / 6 h per IP)
 USE_ISRUC_OFFICIAL = False            # old server, retired (kept only as a last resort)
 USE_DOD_ZENODO = True                 # Dreem DOD-H / DOD-O, 5 scorers (external)
+USE_CAP_PHYSIONET = True              # CAP Sleep Database: expert R&K S3/S4 -> reference for the Low/Moderate/High N3 grade
 DOD_ALLOW_FULL_ZIP_DOWNLOAD = False   # only if range streaming fails AND disk has ~40 GB free
 # Optional: raw folders already attached as Kaggle datasets (leave None to download)
 RAW_ISRUC1_DIR = None
@@ -178,6 +179,11 @@ if "data" in RUN_STAGES:
                 print(f"ISRUC-{grp} official download failed:", exc)
         print(f"ISRUC-{grp}: {_n_cached(grp)}/{need} subjects cached")
     DL.cache_isruc_details(CACHE_DIR)
+    if USE_CAP_PHYSIONET:
+        try:
+            DL.cache_cap_physionet(CACHE_DIR, max_recordings=3 if q else None)
+        except Exception as exc:
+            print("CAP download failed:", exc)
     if USE_DOD_ZENODO and not (RAW_DODH_DIR or RAW_DODO_DIR):
         try:
             DL.cache_dod(CACHE_DIR, max_recordings=3 if q else None,
@@ -226,14 +232,18 @@ Order: the primary model (`full_v2`) on all folds first, then the ablation varia
 | cnn_feat_pw_noattn | ✓ | ✓ | mean pool | – |
 | **full_v2** | ✓ | ✓ | ✓ | ✓ |
 
-Training cohorts: ISRUC-I + HMC. External (never trained on): ISRUC-II, ISRUC-III, DOD-H, DOD-O.
+**Same-protocol published baselines** (raw EEG only, identical folds, selection, threshold, loss and class weight): DeepSleepNet (2017), TinySleepNet (2020), AttnSleep (2021), L-SeqSleepNet (2023). Training order: full_v2 → ablations → baselines → GBM → leave-one-cohort-out; anything not finished within the time budget continues on the next commit.
+
+Training cohorts: ISRUC-I + HMC. External (never trained on): ISRUC-II, ISRUC-III, DOD-H, DOD-O; CAP (R&K S3/S4 expert reference for the within-N3 grade only).
+
+**Within-N3 grade (RQ2b).** Every detected N3 epoch gets a Low / Moderate / High *N3 slow-wave grade* from the fraction of the epoch covered by slow waves (≥ 75 µV, 0.5–2 Hz): < 20 % / 20–50 % (R&K stage 3) / > 50 % (R&K stage 4), plus the secondary N3 EEG Rating band (0–33 / 33–67 / 67–100). It is validated against expert R&K S3 vs S4 (CAP), graded multi-expert agreement (DOD, ISRUC), within-night decline and ISRUC-II night-to-night stability.
 """))
 cells.append(code('''from sqn2 import pipeline as P
 CFG = dict(P.DEFAULT_CFG)
 CFG.update(time_budget_h=TIME_BUDGET_H, _t_start=T_START, verbose=False)
 if QUICK_TEST:
     CFG.update(n_folds=3, max_passes=3, patience=2, mc_passes=3, n_boot=100,
-               variants=["full_v2", "cnn_feat_pw"], xai_epochs_per_fold=20)
+               variants=["full_v2", "cnn_feat_pw", "tinysleepnet", "lseqsleepnet"], xai_epochs_per_fold=20)
 _n_isruc1 = len({os.path.basename(f).split("_")[1] for f in glob.glob(os.path.join(CACHE_DIR, "ISRUC1_*.npz"))})
 _n_hmc = len(glob.glob(os.path.join(CACHE_DIR, "HMC_*.npz")))
 if not QUICK_TEST and "train" in RUN_STAGES and (_n_isruc1 < 90 or _n_hmc < 140):

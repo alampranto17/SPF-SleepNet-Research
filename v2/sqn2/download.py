@@ -170,6 +170,66 @@ def cache_hmc_physionet(cache_dir, max_recordings=None, workers=3, log=print):
 
 
 # ---------------------------------------------------------------------------
+# CAP Sleep Database (PhysioNet; R&K scoring with S3 and S4) - grading reference
+# ---------------------------------------------------------------------------
+CAP_MIRRORS = ("https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/",
+               "https://physionet.org/files/capslpdb/1.0.0/")
+CAP_FALLBACK_KEYS = ([f"brux{i}" for i in range(1, 3)] + [f"ins{i}" for i in range(1, 10)] +
+                     [f"n{i}" for i in range(1, 17)] + [f"narco{i}" for i in range(1, 6)] +
+                     [f"nfle{i}" for i in range(1, 41)] + [f"plm{i}" for i in range(1, 11)] +
+                     [f"rbd{i}" for i in range(1, 23)] + [f"sdb{i}" for i in range(1, 5)])
+
+
+def cap_listing(log=print):
+    for base in CAP_MIRRORS:
+        try:
+            with urllib.request.urlopen(base + "RECORDS", timeout=60) as r:
+                keys = re.findall(r"([a-z]+\d+)\.edf", r.read().decode("utf-8", "ignore"))
+            if keys:
+                return sorted(set(keys), key=lambda k: (re.sub(r"\d", "", k), int(re.sub(r"\D", "", k))))
+        except Exception as exc:
+            log(f"[CAP] RECORDS from {base.split('/')[2]} failed: {exc}")
+    return CAP_FALLBACK_KEYS
+
+
+def cache_cap_physionet(cache_dir, max_recordings=None, workers=3, log=print):
+    """External R&K reference for the within-N3 grade (S3 vs S4); never used for training."""
+    os.makedirs(cache_dir, exist_ok=True)
+    tmp = tempfile.mkdtemp(prefix="sqn2_cap_")
+    keys = cap_listing(log)
+    if max_recordings is not None:     # quick test: healthy controls first (more S3/S4)
+        keys = sorted(keys, key=lambda k: not k.startswith("n"))[:max_recordings]
+    log(f"[CAP] {len(keys)} recordings to cache (~370 MB each; AWS S3 mirror first)")
+
+    def make(key):
+        def job():
+            name = f"CAP_{key}.npz"
+            if os.path.exists(os.path.join(cache_dir, name)):
+                return name, "cached"
+            p = os.path.join(tmp, f"{key}.edf")
+            t = os.path.join(tmp, f"{key}.txt")
+            try:
+                _fetch([m + f"{key}.edf" for m in CAP_MIRRORS], p, timeout=90, log=log, label=f"CAP {key}")
+                _fetch([m + f"{key}.txt" for m in CAP_MIRRORS], t, timeout=90)
+                out = D.load_cap(p, t)
+                D.save_cache(os.path.join(cache_dir, name), *out)
+                rk = out[3]["rk_code"]
+                return name, (f"ok ch={out[4]['channel_raw']} fs={out[4]['native_fs']:.0f} "
+                              f"S3={int((rk == 3).sum())} S4={int((rk == 4).sum())}")
+            except Exception as exc:
+                return name, f"FAILED {exc}"
+            finally:
+                for f in (p, t):
+                    if os.path.exists(f):
+                        os.remove(f)
+        return job
+    _run_jobs([make(k) for k in keys], workers, log, "CAP")
+    D.update_participant_metadata(cache_dir, {}, "CAP",
+                                  "diagnosis group from record name; age/sex not loaded")
+    shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ---------------------------------------------------------------------------
 # ISRUC (.rar) from the official server
 # ---------------------------------------------------------------------------
 def _ensure_unrar(log=print):

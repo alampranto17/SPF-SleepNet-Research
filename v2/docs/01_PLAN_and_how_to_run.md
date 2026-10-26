@@ -11,6 +11,7 @@ From one EEG channel, (1) detect N3, (2) describe each detected N3 epoch with tr
 | ISRUC-Sleep subgroup II (8 healthy, 2 sessions each) | external only | C4-M1 | Test–retest of the Overnight N3 EEG Profile. |
 | ISRUC-Sleep subgroup III (10 healthy) | external only | C4-M1 | Two scorers. |
 | Dreem DOD-H (25 healthy) / DOD-O (55 OSA) | external only | C3-M2 / C4-M1 | **5 expert scorers per recording.** Consensus = majority vote; also the graded expert-agreement reference. Zenodo, MIT licence. |
+| CAP Sleep Database (108 PSGs: 16 healthy, 92 sleep disorders; PhysioNet, ODC-By) | external, grade reference only | C4-A1 / C3-A2 | **R&K scoring with S3 and S4 separate**: expert reference for the Low/Moderate/High within-N3 grade. Not part of the RQ1 external criterion. |
 
 External cohorts are never used for training, model selection or thresholds. They are predicted by the ensemble of the 5 fold models.
 
@@ -32,6 +33,10 @@ External cohorts are never used for training, model selection or thresholds. The
 | RQ5 XAI | band-stop perturbation, band-decomposed IG, SHAP surrogate, attention alignment | delta top in ≥ 70 % of participants for perturbation and IG, and SHAP top group delta with fidelity ≥ 0.70 |
 | RQ6 reliability | prediction errors (OOF and external); expert disagreement (ISRUC 2, DOD 5 scorers) | AUROC ≥ 0.75 and F1@80 % coverage > F1@100 % |
 | RQ7 profiles | expert-hypnogram profile (OOF and external); ISRUC-II test–retest | ICC(2,1) ≥ 0.75 for N3 minutes (OOF) |
+| RQ1b same-protocol SOTA | DeepSleepNet, TinySleepNet, AttnSleep, L-SeqSleepNet on identical folds | every model compared with participant-level paired tests + CI (direction is a finding) |
+| RQ2b within-N3 grade (Low/Moderate/High) | **expert R&K S3 vs S4 (CAP)**; graded expert agreement; within-night decline; ISRUC-II stability | slow-wave coverage AUROC ≥ 0.75 for S4 vs S3, AND High share early > late, AND grade rises with expert-vote fraction (p < 0.05) |
+
+RQ1b and RQ2b were added on 26 Oct 2026 after the quick pipeline check (synthetic-scale numbers only) and before any full-cohort result.
 
 ## Running on Kaggle (free tier) — automatic
 1. Create a notebook and upload `SleepQualityNet_v2_kaggle.ipynb` (*File → Import Notebook*).

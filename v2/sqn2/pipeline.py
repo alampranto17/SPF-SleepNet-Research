@@ -6,6 +6,8 @@ import json
 import os
 import time
 
+import torch
+
 import numpy as np
 import pandas as pd
 
@@ -43,17 +45,33 @@ def train_all(corpus, cfg, run_dir, log=print):
                 log(f"[train] TIME BUDGET reached - skipping {v} fold {fo['fold']}; "
                     f"re-run the notebook with the saved runs to resume")
                 continue
-            tr.run(v, fo, run_dir, seed=cfg["seed"])
-            log(f"[train] {v} fold {fo['fold']} done  (elapsed {(time.time() - t0) / 60:.1f} min)")
+            try:
+                tr.run(v, fo, run_dir, seed=cfg["seed"])
+                log(f"[train] {v} fold {fo['fold']} done  (elapsed {(time.time() - t0) / 60:.1f} min)")
+            except Exception as exc:          # one failing model must not stop the others
+                import traceback
+                log(f"[train] {v} fold {fo['fold']} FAILED: {type(exc).__name__}: {exc}")
+                log(traceback.format_exc()[-1500:])
+                if v == T.PRIMARY_VARIANT:
+                    raise
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+                break                         # skip remaining folds of this variant
     if cfg.get("run_gbm") and not out_of_time():
         for fo in folds:
-            tr.run("feat_gbm", fo, run_dir, seed=cfg["seed"], gbm=True)
+            try:
+                tr.run("feat_gbm", fo, run_dir, seed=cfg["seed"], gbm=True)
+            except Exception as exc:
+                log(f"[train] feat_gbm fold {fo['fold']} FAILED: {exc}")
     if cfg.get("run_loco"):
         cohorts = sorted(corpus.rec[corpus.rec.cohort.isin(list(T.TRAIN_COHORTS))].cohort.unique())
         for coh in cohorts:
             if out_of_time():
                 break
-            tr.run(T.PRIMARY_VARIANT, T.loco_split(corpus, coh, cfg["seed"]), run_dir, seed=cfg["seed"])
+            try:
+                tr.run(T.PRIMARY_VARIANT, T.loco_split(corpus, coh, cfg["seed"]), run_dir, seed=cfg["seed"])
+            except Exception as exc:
+                log(f"[train] LOCO {coh} FAILED: {exc}")
     return folds
 
 
@@ -74,9 +92,21 @@ def analyse_all(corpus, cfg, run_dir, out_dir, log=print):
         fs.append(Sx.join(ext[cols]).assign(split="external"))
     pd.concat(fs, ignore_index=True).to_parquet(os.path.join(out_dir, "factor_scores.parquet"))
     res["r2"] = A.rq2(oof, S, corpus, out_dir, ext, Sx)
+    log("[RQ2b] within-N3 grade (Low / Moderate / High)")
+    try:
+        res["r2b"] = A.rq2_bands(oof, S, out_dir, ext, Sx, corpus=corpus)
+    except Exception as exc:
+        log(f"[RQ2b] failed: {exc}")
+        res["r2b"] = None
     res["r3"] = A.rq3(oof, S, out_dir, ext, Sx)
     log("[RQ4] component analysis")
     res["r4"] = A.rq4(corpus, run_dir, out_dir)
+    log("[RQ1b] same-protocol comparison with published models")
+    try:
+        res["r1b"] = A.sota_comparison(corpus, run_dir, out_dir, n_boot=cfg["n_boot"])
+    except Exception as exc:
+        log(f"[RQ1b] failed: {exc}")
+        res["r1b"] = None
     log("[RQ6] reliability")
     r6 = A.rq6(oof, out_dir, ext)
     res["r6"] = r6
@@ -89,6 +119,6 @@ def analyse_all(corpus, cfg, run_dir, out_dir, log=print):
         log(f"[RQ5] failed: {exc}")
         res["r5"] = {"observed": f"FAILED: {exc}", "status": "NOT_RUN"}
     summ = A.rq_summary(out_dir, res["r1"], res["r2"], res["r3"], res["r4"], res["r5"],
-                        res["r6"], res["r7"])
+                        res["r6"], res["r7"], r2b=res.get("r2b"), r1b=res.get("r1b"))
     RP.go_no_go(summ, out_dir)
     return res, summ

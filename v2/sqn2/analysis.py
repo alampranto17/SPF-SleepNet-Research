@@ -19,7 +19,7 @@ from sklearn.metrics import roc_auc_score, f1_score
 
 from . import scores as SC
 from . import stats as ST
-from .train import binary_metrics, load_run, VARIANTS, PRIMARY_VARIANT
+from .train import binary_metrics, load_run, VARIANTS, PRIMARY_VARIANT, ABLATION_VARIANTS, BASELINE_VARIANTS
 
 CRITERIA = {
     "RQ1": "Pooled OOF N3 F1 >= 0.75 AND PR-AUC >= 0.85 (ISRUC-I + HMC, all scored epochs); "
@@ -43,6 +43,16 @@ CRITERIA = {
            "AND F1 at 80% coverage exceeds F1 at 100% coverage.",
     "RQ7": "Predicted vs expert-hypnogram N3 minutes per night: ICC(2,1) >= 0.75 "
            "(secondary: episode count, longest episode).",
+    # added 26 Oct 2026, before any full-cohort result existed
+    "RQ2b": "Within-N3 slow-wave grade (Low <20 %, Moderate 20-50 %, High >50 % slow-wave "
+            "coverage; R&K anchors) is valid if (G3) slow-wave coverage separates expert R&K S4 "
+            "from S3 on CAP with AUROC >= 0.75, AND (G1) the High share is larger early than late "
+            "in the night (p < 0.05), AND (G2) the grade rises with the fraction of experts "
+            "voting N3 (p < 0.05). Partial support: G3 met alone.",
+    "RQ1b": "Same-protocol comparison with DeepSleepNet, TinySleepNet, AttnSleep and "
+            "L-SeqSleepNet: answered when every model is trained on identical folds and the "
+            "participant-level paired difference (F1, PR-AUC) is reported with 95% CI and Holm "
+            "correction (direction is a finding, not a criterion).",
 }
 
 
@@ -472,7 +482,7 @@ def _participant_metrics(df):
 
 def rq4(corpus, run_dir, out_dir):
     pooled, per_part, params = {}, {}, {}
-    for v in list(VARIANTS) + ["feat_gbm"]:
+    for v in ABLATION_VARIANTS + ["feat_gbm"]:
         oof, _ = load_oof(corpus, run_dir, v)
         if oof is None:
             continue
@@ -506,6 +516,200 @@ def rq4(corpus, run_dir, out_dir):
         comp["p_holm"] = ST.holm(comp.p.to_numpy())
     comp.to_csv(os.path.join(out_dir, "rq4_component_effects.csv"), index=False)
     return tab, comp
+
+
+# ---------------------------------------------------------------------------
+# RQ1b: same-protocol comparison with published architectures
+# ---------------------------------------------------------------------------
+def sota_comparison(corpus, run_dir, out_dir, n_boot=1000):
+    """SleepQualityNet v2 vs DeepSleepNet / TinySleepNet / AttnSleep / L-SeqSleepNet,
+    all re-trained on identical folds with identical selection, threshold and
+    calibration.  Participant-level paired Wilcoxon (Holm) and bootstrap CIs."""
+    models = [PRIMARY_VARIANT] + BASELINE_VARIANTS
+    rows, per_part, ext_rows = [], {}, []
+    for v in models:
+        oof, ext = load_oof(corpus, run_dir, v)
+        if oof is None:
+            continue
+        n_folds = oof.fold.nunique()
+        s = scored(oof)
+        r = load_run(sorted(glob.glob(os.path.join(run_dir, f"{v}__fold[0-9]*.npz")))[0])
+        m = pooled_metrics(s)
+        m.update({f"{k}_ci95": val for k, val in participant_bootstrap(s, n_boot).items()})
+        m.update(model=v, set="cross-validation (training cohorts)", n_folds=n_folds,
+                 n_params=int(r.get("n_params", 0)),
+                 train_minutes_per_fold=float(r.get("seconds", np.nan)) / 60)
+        rows.append(m)
+        per_part[v] = _participant_metrics(s)
+        if ext is not None and len(ext):
+            for c, g in scored(ext, primary_only=False).groupby("cohort"):
+                mm = pooled_metrics(g)
+                mm.update(model=v, set=f"external={c}", n_folds=n_folds,
+                          n_params=int(r.get("n_params", 0)))
+                ext_rows.append(mm)
+    tab = pd.DataFrame(rows + ext_rows)
+    if len(tab):
+        lead = ["model", "set", "f1", "pr_auc", "roc_auc", "kappa", "precision", "recall",
+                "n_participants", "n_params"]
+        tab = tab[[c for c in lead if c in tab] + [c for c in tab if c not in lead]]
+    tab.to_csv(os.path.join(out_dir, "rq1_sota_comparison.csv"), index=False)
+    tests = []
+    for b in BASELINE_VARIANTS:
+        if b not in per_part or PRIMARY_VARIANT not in per_part:
+            continue
+        for metric in ("f1", "pr_auc"):
+            j = per_part[PRIMARY_VARIANT][[metric]].join(per_part[b][[metric]], lsuffix="_a",
+                                                         rsuffix="_b").dropna()
+            w = ST.wilcoxon_paired(j[f"{metric}_a"], j[f"{metric}_b"])
+            ci = ST.boot_ci_median_diff(j[f"{metric}_a"] - j[f"{metric}_b"])
+            tests.append({"comparison": f"{PRIMARY_VARIANT} vs {b}", "metric": metric,
+                          "median_participant_diff": float(np.median(j[f"{metric}_a"] - j[f"{metric}_b"]))
+                          if len(j) else np.nan,
+                          **w, "ci95_low": ci[0], "ci95_high": ci[1]})
+    tests = pd.DataFrame(tests)
+    if len(tests):
+        tests["p_holm"] = ST.holm(tests.p.to_numpy())
+    tests.to_csv(os.path.join(out_dir, "rq1_sota_paired_tests.csv"), index=False)
+    return tab, tests
+
+
+# ---------------------------------------------------------------------------
+# RQ2b: within-N3 grade (Low / Moderate / High)
+# ---------------------------------------------------------------------------
+# Two grades for every DETECTED N3 epoch; neither creates a new label:
+#  * "N3 slow-wave grade" (primary): fraction of the epoch covered by slow waves
+#    (0.5-2 Hz full waves, peak-to-peak >= 75 uV) with the Rechtschaffen & Kales
+#    anchors: < 20 % Low (below the AASM N3 amplitude criterion), 20-50 % Moderate
+#    (R&K stage 3), > 50 % High (R&K stage 4).  Thresholds come from the scoring
+#    manuals, not from our data or weights.
+#  * "N3 EEG Rating band" (secondary): overall N3 EEG Rating 0-33 / 33-67 / 67-100.
+# Validation references, all independent of the grade construction:
+#  G1 within-night (homeostatic) decline of the High share;
+#  G2 graded expert agreement (fraction of 2-5 experts voting N3);
+#  G3 EXPERT R&K S3 vs S4 on the CAP Sleep Database (visual scoring by the CAP experts);
+#  G4 night-to-night stability (ISRUC-II).
+GRADE_NAMES = ("Low", "Moderate", "High")
+SW_GRADE_EDGES = (0.20, 0.50)            # R&K / AASM anchors (fraction of the 30-s epoch)
+BAND_EDGES = (100 / 3, 200 / 3)          # rating scale tertiles, fixed a priori
+
+
+def _grade(v, edges):
+    v = np.asarray(v, dtype=float)
+    out = np.where(v > edges[1], 2, np.where(v >= edges[0], 1, 0)).astype(float)
+    out[np.isnan(v)] = np.nan
+    return out
+
+
+def n3_band(r):
+    return _grade(r, BAND_EDGES)
+
+
+def n3_sw_grade(sw_time_frac):
+    return _grade(sw_time_frac, SW_GRADE_EDGES)
+
+
+def rq2_bands(oof, S, out_dir, ext=None, Sx=None, rating="rating_prior", corpus=None):
+    from sklearn.metrics import cohen_kappa_score, roc_auc_score as _auc
+    parts = [oof.join(S).assign(split="OOF")]
+    if ext is not None and Sx is not None and len(ext):
+        parts.append(ext.join(Sx).assign(split="external"))
+    d = pd.concat(parts, ignore_index=True)
+    d["half"] = _half(d)
+    d["rating_band"] = n3_band(d[rating])
+    if corpus is not None and "sw_time_frac" in corpus.feat:
+        d["sw_time_frac"] = corpus.feat.loc[d.idx.to_numpy(), "sw_time_frac"].to_numpy()
+        d["sw_grade"] = n3_sw_grade(d.sw_time_frac)
+    grades = [g for g in ("sw_grade", "rating_band") if g in d]
+    det = d[d.pred == 1]
+    rows = []
+    for gcol in grades:
+        dd = det[det[gcol].notna()]
+        (dd.groupby(["split", "cohort"])[gcol].value_counts(normalize=True).unstack(fill_value=0)
+           .rename(columns=dict(enumerate(GRADE_NAMES)))
+           .to_csv(os.path.join(out_dir, f"rq2_{gcol}_distribution.csv")))
+        # G1 High share early > late, per participant
+        for name, g in [("all", dd)] + list(dd.groupby("cohort")):
+            sh = g.assign(high=(g[gcol] == 2).astype(float)).groupby(["participant", "half"]).high \
+                  .agg(["mean", "size"]).unstack()
+            if "early" not in sh["size"] or "late" not in sh["size"]:
+                continue
+            sh = sh[(sh["size"]["early"] >= 10) & (sh["size"]["late"] >= 10)]
+            if len(sh) >= 3:
+                rows.append({"grade": gcol, "test": "G1 High share early > late", "cohort": name,
+                             **ST.wilcoxon_paired(sh["mean"]["early"], sh["mean"]["late"], "greater")})
+        # G2 graded expert agreement
+        g = dd[dd.all_votes_n2n3 & (dd.n_raters_epoch >= 2)]
+        for name, gg in [("all multi-rater", g)] + list(g.groupby("cohort")):
+            if gg.n3_vote_frac.nunique() >= 2 and len(gg) >= 30:
+                rho, p = ST.spearman(gg[gcol], gg.n3_vote_frac)
+                rows.append({"grade": gcol, "test": "G2 grade ~ fraction of experts voting N3 (Spearman)",
+                             "cohort": name, "n": int(len(gg)), "median_diff": rho, "p": p})
+        if len(g):
+            (g.assign(vote=g.n3_vote_frac.round(2)).groupby(["cohort", "vote"])[gcol]
+              .value_counts(normalize=True).unstack(fill_value=0)
+              .rename(columns=dict(enumerate(GRADE_NAMES)))
+              .to_csv(os.path.join(out_dir, f"rq2_{gcol}_by_expert_vote_fraction.csv")))
+        # G4 ISRUC-II test-retest of the High share
+        tr = dd[dd.cohort == "ISRUC-II"]
+        if len(tr):
+            g2 = tr.assign(high=(tr[gcol] == 2).astype(float)).groupby(["participant", "rec"]).high \
+                   .agg(["mean", "size"]).reset_index()
+            g2 = g2[g2["size"] >= 10].sort_values(["participant", "rec"])
+            pairs = g2.groupby("participant")["mean"].apply(list)
+            pairs = pairs[pairs.apply(len) >= 2]
+            if len(pairs) >= 3:
+                rows.append({"grade": gcol, "test": "G4 High share test-retest ICC(2,1)",
+                             "cohort": "ISRUC-II", "n": int(len(pairs)),
+                             "median_diff": ST.icc(np.array([q[0] for q in pairs]),
+                                                   np.array([q[1] for q in pairs])), "p": np.nan})
+    # G3 expert R&K S3 vs S4 (CAP)
+    rk_rows = []
+    if "rk_code" in d:
+        cap = d[d.rk_code.isin([3, 4])]
+        for subset, g in (("expert S3/S4 epochs", cap), ("expert S3/S4 AND detected N3", cap[cap.pred == 1])):
+            if g.rk_code.nunique() < 2 or len(g) < 30:
+                continue
+            y4 = (g.rk_code == 4).astype(int).to_numpy()
+            r = {"subset": subset, "n_epochs": int(len(g)), "n_participants": int(g.participant.nunique()),
+                 "share_S4": float(y4.mean())}
+            for col in ("sw_time_frac", rating, "delta_intensity", "slow_wave_morphology",
+                        "spectral_dominance"):
+                if col in g and g[col].notna().any():
+                    m = g[col].notna().to_numpy()
+                    r[f"auroc_S4_vs_S3_{col}"] = float(_auc(y4[m], g[col].to_numpy()[m]))
+            if "sw_grade" in g:
+                m = g.sw_grade.notna().to_numpy()
+                hi = (g.sw_grade.to_numpy()[m] == 2).astype(int)
+                r["kappa_High_vs_S4"] = float(cohen_kappa_score(y4[m], hi))
+                r["sens_High_for_S4"] = float(hi[y4[m] == 1].mean()) if (y4[m] == 1).any() else np.nan
+                r["spec_notHigh_for_S3"] = float(1 - hi[y4[m] == 0].mean()) if (y4[m] == 0).any() else np.nan
+                ct = pd.crosstab(g.rk_code.map({3: "expert S3", 4: "expert S4"}),
+                                 g.sw_grade.map(dict(enumerate(GRADE_NAMES))))
+                ct.to_csv(os.path.join(out_dir, f"rq2_rk_crosstab_{'detected' if 'detected' in subset else 'all'}.csv"))
+            # participant-level: per participant AUROC, Wilcoxon > 0.5
+            au = []
+            for _, gp in g.groupby("participant"):
+                yy = (gp.rk_code == 4).astype(int)
+                if yy.nunique() == 2 and gp.sw_time_frac.notna().all() if "sw_time_frac" in gp else False:
+                    au.append(_auc(yy, gp.sw_time_frac))
+            if len(au) >= 5:
+                from scipy import stats as _st
+                r["participant_auroc_median"] = float(np.median(au))
+                r["participant_auroc_p_gt_0.5"] = float(_st.wilcoxon(np.array(au) - 0.5,
+                                                                     alternative="greater").pvalue)
+            rk_rows.append(r)
+            if "sw_grade" in g:
+                rows.append({"grade": "sw_grade", "test": f"G3 expert R&K S4 vs S3 AUROC [{subset}]",
+                             "cohort": "CAP", "n": int(len(g)),
+                             "median_diff": r.get("auroc_S4_vs_S3_sw_time_frac", np.nan),
+                             "p": r.get("participant_auroc_p_gt_0.5", np.nan)})
+    pd.DataFrame(rk_rows).to_csv(os.path.join(out_dir, "rq2_rk_grade_validation.csv"), index=False)
+    res = pd.DataFrame(rows)
+    res.to_csv(os.path.join(out_dir, "rq2_n3_grade_validity.csv"), index=False)
+    cols = ["idx", "rec", "epoch_idx", "participant", "cohort", "split", "pred", "label"] + \
+        [c for c in ("rk_code", "sw_time_frac", "sw_grade", rating, "rating_band") if c in d]
+    d.loc[d.pred == 1, cols].to_parquet(os.path.join(out_dir, "n3_grades_detected_epochs.parquet"))
+    return res
 
 
 # ---------------------------------------------------------------------------
@@ -703,13 +907,16 @@ def _status(ok_full, ok_partial=None):
     return "NOT_SUPPORTED"
 
 
-def rq_summary(out_dir, r1=None, r2=None, r3=None, r4=None, r5=None, r6=None, r7=None):
+def rq_summary(out_dir, r1=None, r2=None, r3=None, r4=None, r5=None, r6=None, r7=None,
+               r2b=None, r1b=None):
     rows = []
     if r1 is not None:
         t = r1.set_index("subset")
         po = t.loc["pooled_all_cohorts"]
         coh = t[t.index.str.startswith("cohort=")]
         ext = t.loc[t.index.str.startswith("external=")]
+        from .train import EXTERNAL_COHORTS as _EXT
+        ext = ext[[i.split("=")[1].split(" ")[0] in _EXT for i in ext.index]]   # pre-specified only
         base_ok = po.f1 >= 0.75 and po.pr_auc >= 0.85
         full = base_ok and (coh.f1 >= 0.70).all() and (len(ext) == 0 or (ext.f1 >= 0.70).all())
         obs = (f"pooled F1={po.f1:.3f} {tuple(round(x, 3) for x in po.f1_ci95)}, "
@@ -768,6 +975,31 @@ def rq_summary(out_dir, r1=None, r2=None, r3=None, r4=None, r5=None, r6=None, r7
                         or r.set.startswith("test-retest"))
         rows.append(("RQ7", CRITERIA["RQ7"], obs,
                      _status(icc_m >= 0.75, icc_m >= 0.60)))
+    if r1b is not None:
+        tab, tests = r1b
+        f1t = tests[tests.metric == "f1"] if len(tests) else tests
+        obs = "; ".join(f"{r.comparison}: dF1={r.median_participant_diff:+.3f} "
+                        f"[{r.ci95_low:+.3f},{r.ci95_high:+.3f}] p_holm={r.p_holm:.2g}"
+                        for _, r in f1t.iterrows()) if len(f1t) else "baselines not trained yet"
+        from .train import BASELINE_VARIANTS as _BV
+        rows.append(("RQ1b", CRITERIA["RQ1b"], obs,
+                     "ANSWERED" if len(f1t) == len(_BV) else
+                     ("PARTIALLY_ANSWERED" if len(f1t) else "NOT_RUN")))
+    if r2b is not None and len(r2b):
+        sw = r2b[r2b.grade == "sw_grade"]
+        g3 = sw[sw.test.str.startswith("G3") & sw.test.str.contains("detected")]
+        if not len(g3):
+            g3 = sw[sw.test.str.startswith("G3")]
+        g1 = sw[(sw.test.str.startswith("G1")) & (sw.cohort == "all")]
+        g2 = sw[(sw.test.str.startswith("G2")) & (sw.cohort == "all multi-rater")]
+        ok3 = bool(len(g3)) and float(g3.median_diff.iloc[0]) >= 0.75
+        ok1 = bool(len(g1)) and float(g1.p.iloc[0]) < 0.05
+        ok2 = bool(len(g2)) and float(g2.p.iloc[0]) < 0.05 and float(g2.median_diff.iloc[0]) > 0
+        obs = (f"CAP S4-vs-S3 AUROC={float(g3.median_diff.iloc[0]):.3f}; " if len(g3) else "CAP not available; ") + \
+              (f"High early>late p={float(g1.p.iloc[0]):.2g}; " if len(g1) else "") + \
+              (f"grade~expert-vote rho={float(g2.median_diff.iloc[0]):.3f} p={float(g2.p.iloc[0]):.2g}"
+               if len(g2) else "")
+        rows.append(("RQ2b", CRITERIA["RQ2b"], obs, _status(ok3 and ok1 and ok2, ok3)))
     df = pd.DataFrame(rows, columns=["research_question", "prespecified_criterion",
                                      "observed", "status"])
     df.to_csv(os.path.join(out_dir, "research_question_results.csv"), index=False)
