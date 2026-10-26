@@ -407,3 +407,16 @@ ISRUC-I: Drive pass 2 for the 6 missing subjects
 [ISRUC-I Drive 6/6] ISRUC1_099: FAILED Drive download of 99/99.rec (Drive quota 'too many downloads' or file not public)   (2.9 min, ETA 0 min)
 ISRUC-I: 94/100 subjects cached
 Drive quota: waiting 20 min before Drive pass 3 ...
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2255
+ISRUC-I: Drive pass 3 for the 6 missing subjects
+[ISRUC-I Drive] 504 files listed, 100 subjects (ids 1..100)
+[ISRUC-I Drive] files outside subject folders: ['65/65-1.pdf', '65/65-2.pdf', 'FileContainsCmd.txt']
+[ISRUC-I Drive 1/6] ISRUC1_096: ok s1 ch=C4-M1 scorers=2 [140 MB]   (0.2 min, ETA 1 min)
+[ISRUC-I Drive 2/6] ISRUC1_097: ok s1 ch=C4-M1 scorers=2 [149 MB]   (0.2 min, ETA 0 min)
+[ISRUC-I Drive 3/6] ISRUC1_095: ok s1 ch=C4-M1 scorers=2 [152 MB]   (0.2 min, ETA 0 min)
+[ISRUC-I Drive 4/6] ISRUC1_098: ok s1 ch=C4-M1 scorers=2 [158 MB]   (0.4 min, ETA 0 min)
+[ISRUC-I Drive 5/6] ISRUC1_100: ok s1 ch=C4-M1 scorers=2 [141 MB]   (0.5 min, ETA 0 min)
+[ISRUC-I Drive 6/6] ISRUC1_099: ok s1 ch=C4-M1 scorers=2 [147 MB]   (0.5 min, ETA 0 min)
+ISRUC-I: 100/100 subjects cached
+
+cached recordings: {'HMC': 151, 'CAP': 108, 'ISRUC1': 100, 'DODO': 55, 'DODH': 25, 'ISRUC2': 16, 'ISRUC3': 10} | total 465 | cache size 2.44 GB | elapsed 37.5 min

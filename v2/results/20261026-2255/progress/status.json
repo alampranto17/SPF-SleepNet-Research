@@ -1,9 +1,9 @@
 {
  "stage": "A: data download",
- "updated_utc": "2026-10-26 23:15:47",
- "elapsed_min": 20.5,
+ "updated_utc": "2026-10-26 23:35:50",
+ "elapsed_min": 40.5,
  "cached_recordings": {
-  "ISRUC1": 94,
+  "ISRUC1": 100,
   "CAP": 108,
   "DODO": 55,
   "HMC": 151,
