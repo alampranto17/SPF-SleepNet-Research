@@ -1,7 +1,7 @@
 {
- "stage": "A: data download",
- "updated_utc": "2026-10-26 20:03:16",
- "elapsed_min": 120.6,
+ "stage": "stopped after data stage (training cohorts incomplete or analysis not requested)",
+ "updated_utc": "2026-10-26 20:10:28",
+ "elapsed_min": 127.8,
  "cached_recordings": {
   "HMC": 151,
   "DODO": 55,
@@ -10,5 +10,5 @@
   "DODH": 25
  },
  "finished_training_runs": 0,
- "disk_free_gb": 19.0
+ "disk_free_gb": 18.9
 }

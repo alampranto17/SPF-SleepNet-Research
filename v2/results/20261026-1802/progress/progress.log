@@ -456,3 +456,30 @@ ISRUC-III: 0/10 subjects cached
 [DOD-O 55/55] DODO_d5181c33092a.npz: ok ch=C4_M1 fs=250 raters=5
 
 cached recordings: {'HMC': 151, 'CAP': 106, 'DODO': 55, 'ISRUC1': 35, 'DODH': 25} | total 372 | cache size 1.98 GB | elapsed 113.6 min
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-1802
+[kaggle] new version of alampranto/sqn2-cache
+[corpus] 25/372 recordings loaded
+[corpus] 50/372 recordings loaded
+[corpus] 75/372 recordings loaded
+[corpus] 100/372 recordings loaded
+[corpus] 125/372 recordings loaded
+[corpus] 150/372 recordings loaded
+[corpus] 175/372 recordings loaded
+[corpus] 200/372 recordings loaded
+[corpus] 225/372 recordings loaded
+[corpus] 250/372 recordings loaded
+[corpus] 275/372 recordings loaded
+[corpus] 300/372 recordings loaded
+[corpus] 325/372 recordings loaded
+[corpus] 350/372 recordings loaded
+[corpus] 372 recordings, 353,839 epochs, 372 participants; X on cuda (2.12 GB)
+cohort   channel_raw
+CAP      C3-A2            4
+         C4-A1           99
+         C4A1             3
+DOD-H    C3_M2           25
+DOD-O    C4_M1           55
+HMC      C4-M1          151
+ISRUC-I  C4-A1           17
+         C4-M1           18
+Training cohorts incomplete (ISRUC-I 35/100, HMC 151/151): training is NOT started so no GPU hours are wasted. The cache is already saved to 'sqn2-cache'; run the notebook again (e.g. after the MEGA/Drive quota resets) and it continues downloading from where it stopped.
