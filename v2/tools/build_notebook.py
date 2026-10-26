@@ -57,7 +57,9 @@ ISRUC3_DRIVE_FOLDER = "https://drive.google.com/drive/folders/1b4Df79NxyiOiYjG83
 USE_ISRUC_MEGA = True                 # official MEGA links (free quota ~5 GB / 6 h per IP)
 DRIVE_RETRY_ROUNDS = 3                # extra Drive passes after a quota stop (full run only) ...
 DRIVE_COOLDOWN_MIN = 20               # ... with this pause before each
-ISRUC_KNOWN_UNUSABLE = {"I": 1}       # ISRUC-I subject 40: no referenced central derivation in the file
+ISRUC_KNOWN_UNUSABLE = {}             # (subject 40 is now re-referenced C4 - A1)
+ISRUC1_MIN_TO_TRAIN = 90              # start training once >= this many ISRUC-I subjects are cached
+                                      # (after all Drive passes of this session); folds then freeze
 USE_ISRUC_OFFICIAL = False            # old server, retired (kept only as a last resort)
 USE_DOD_ZENODO = True                 # Dreem DOD-H / DOD-O, 5 scorers (external)
 USE_CAP_PHYSIONET = True              # CAP Sleep Database: expert R&K S3/S4 -> reference for the Low/Moderate/High N3 grade
@@ -281,10 +283,11 @@ if QUICK_TEST:
 _n_isruc1 = len({os.path.basename(f).split("_")[1] for f in glob.glob(os.path.join(CACHE_DIR, "ISRUC1_*.npz"))})
 _n_hmc = len(glob.glob(os.path.join(CACHE_DIR, "HMC_*.npz")))
 _n_runs_done = len(glob.glob(os.path.join(RUN_DIR, "*.npz")))
-# all usable ISRUC-I subjects (99/100) before the folds are frozen by the first training run
-if not QUICK_TEST and "train" in RUN_STAGES and _n_runs_done == 0 and (_n_isruc1 < 99 or _n_hmc < 150):
+# enough ISRUC-I subjects before the folds are frozen by the first training run
+if not QUICK_TEST and "train" in RUN_STAGES and _n_runs_done == 0 and \
+        (_n_isruc1 < ISRUC1_MIN_TO_TRAIN or _n_hmc < 150):
     RUN_STAGES = [s for s in RUN_STAGES if s not in ("train", "analyse")]
-    print(f"Training cohorts incomplete (ISRUC-I {_n_isruc1}/99 usable, HMC {_n_hmc}/151): training "
+    print(f"Training cohorts incomplete (ISRUC-I {_n_isruc1}/100, need >= {ISRUC1_MIN_TO_TRAIN}; HMC {_n_hmc}/151): training "
           f"is NOT started so no GPU hours are wasted. The cache is already saved to "
           f"'{CACHE_DATASET}'; run the notebook again (e.g. after the MEGA/Drive quota resets) "
           f"and it continues downloading from where it stopped.")
