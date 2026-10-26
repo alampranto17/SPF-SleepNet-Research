@@ -420,3 +420,48 @@ ISRUC-I: Drive pass 3 for the 6 missing subjects
 ISRUC-I: 100/100 subjects cached
 
 cached recordings: {'HMC': 151, 'CAP': 108, 'ISRUC1': 100, 'DODO': 55, 'DODH': 25, 'ISRUC2': 16, 'ISRUC3': 10} | total 465 | cache size 2.44 GB | elapsed 37.5 min
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2255
+[kaggle] new version of alampranto/sqn2-cache
+[corpus] 25/465 recordings loaded
+[corpus] 50/465 recordings loaded
+[corpus] 75/465 recordings loaded
+[corpus] 100/465 recordings loaded
+[corpus] 125/465 recordings loaded
+[corpus] 150/465 recordings loaded
+[corpus] 175/465 recordings loaded
+[corpus] 200/465 recordings loaded
+[corpus] 225/465 recordings loaded
+[corpus] 250/465 recordings loaded
+[corpus] 275/465 recordings loaded
+[corpus] 300/465 recordings loaded
+[corpus] 325/465 recordings loaded
+[corpus] 350/465 recordings loaded
+[corpus] 375/465 recordings loaded
+[corpus] 400/465 recordings loaded
+[corpus] 425/465 recordings loaded
+[corpus] 450/465 recordings loaded
+[corpus] 465 recordings, 437,430 epochs, 457 participants; X on cuda (2.62 GB)
+cohort     channel_raw
+CAP        C3-A2            4
+           C4-A1          101
+           C4A1             3
+DOD-H      C3_M2           25
+DOD-O      C4_M1           55
+HMC        C4-M1          151
+ISRUC-I    C4-A1           18
+           C4-M1           82
+ISRUC-II   C4-A1            2
+           C4-M1           14
+ISRUC-III  C4-A1           10
+  full_v2__fold0: done in 98s  thr=0.436 T=1.15 innerPR-AUC=0.9188 params=96,226
+[train] full_v2 fold 0 done  (elapsed 1.6 min)
+  full_v2__fold1: done in 115s  thr=0.760 T=1.13 innerPR-AUC=0.9470 params=96,226
+[train] full_v2 fold 1 done  (elapsed 3.5 min)
+  full_v2__fold2: done in 126s  thr=0.820 T=1.22 innerPR-AUC=0.9456 params=96,226
+[train] full_v2 fold 2 done  (elapsed 5.6 min)
+  full_v2__fold3: done in 114s  thr=0.688 T=0.97 innerPR-AUC=0.9663 params=96,226
+[train] full_v2 fold 3 done  (elapsed 7.5 min)
+  full_v2__fold4: done in 117s  thr=0.830 T=1.64 innerPR-AUC=0.9261 params=96,226
+[train] full_v2 fold 4 done  (elapsed 9.5 min)
+  cnn__fold0: done in 120s  thr=0.260 T=1.38 innerPR-AUC=0.9037 params=28,450
+[train] cnn fold 0 done  (elapsed 11.5 min)
