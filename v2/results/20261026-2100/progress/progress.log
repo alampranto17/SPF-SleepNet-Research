@@ -517,3 +517,35 @@ cached recordings: {'HMC': 151, 'CAP': 108, 'ISRUC1': 65, 'DODO': 55, 'DODH': 25
 [corpus] 50/430 recordings loaded
 [corpus] 75/430 recordings loaded
 [corpus] 100/430 recordings loaded
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2100
+[corpus] 125/430 recordings loaded
+[corpus] 150/430 recordings loaded
+[corpus] 175/430 recordings loaded
+[corpus] 200/430 recordings loaded
+[corpus] 225/430 recordings loaded
+[corpus] 250/430 recordings loaded
+[corpus] 275/430 recordings loaded
+[corpus] 300/430 recordings loaded
+[corpus] 325/430 recordings loaded
+[corpus] 350/430 recordings loaded
+[corpus] 375/430 recordings loaded
+[corpus] 400/430 recordings loaded
+[corpus] 425/430 recordings loaded
+[corpus] 430 recordings, 405,967 epochs, 422 participants; X on cuda (2.44 GB)
+cohort     channel_raw
+CAP        C3-A2            4
+           C4-A1          101
+           C4A1             3
+DOD-H      C3_M2           25
+DOD-O      C4_M1           55
+HMC        C4-M1          151
+ISRUC-I    C4-A1           17
+           C4-M1           48
+ISRUC-II   C4-A1            2
+           C4-M1           14
+ISRUC-III  C4-A1           10
+Training cohorts incomplete (ISRUC-I 65/100, HMC 151/151): training is NOT started so no GPU hours are wasted. The cache is already saved to 'sqn2-cache'; run the notebook again (e.g. after the MEGA/Drive quota resets) and it continues downloading from where it stopped.
+Analysis skipped: training cohorts are not complete yet (see the message above). This is not an error - the downloaded data is saved; run the notebook again to continue.
+wrote /kaggle/working/sqn2_v2_outputs.zip 0.0 MB | total elapsed 0.72 h
+[github] token loaded from Kaggle secret 'github_token'
+[github] pushed 2 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2100
