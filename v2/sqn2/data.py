@@ -199,8 +199,13 @@ def _read_edf(path, preload=True):
     import mne
     p = str(path)
     if not p.lower().endswith(".edf"):            # ISRUC .rec files are EDF
-        tmp = os.path.join(tempfile.gettempdir(), f"_sqn2_{os.getpid()}_{Path(p).stem}.edf")
-        shutil.copy2(p, tmp)
+        fd, tmp = tempfile.mkstemp(prefix=f"_sqn2_{Path(p).stem}_", suffix=".edf")
+        os.close(fd)
+        os.remove(tmp)
+        try:                                       # thread-safe unique name; no 150 MB copy
+            os.symlink(os.path.abspath(p), tmp)
+        except OSError:
+            shutil.copy2(p, tmp)
         try:
             return mne.io.read_raw_edf(tmp, preload=preload, verbose="error", infer_types=True)
         finally:
