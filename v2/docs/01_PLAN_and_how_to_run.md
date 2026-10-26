@@ -33,12 +33,14 @@ External cohorts are never used for training, model selection or thresholds. The
 | RQ6 reliability | prediction errors (OOF and external); expert disagreement (ISRUC 2, DOD 5 scorers) | AUROC ≥ 0.75 and F1@80 % coverage > F1@100 % |
 | RQ7 profiles | expert-hypnogram profile (OOF and external); ISRUC-II test–retest | ICC(2,1) ≥ 0.75 for N3 minutes (OOF) |
 
-## Running on Kaggle (free tier)
+## Running on Kaggle (free tier) — automatic
 1. Create a notebook and upload `SleepQualityNet_v2_kaggle.ipynb` (*File → Import Notebook*).
 2. *Settings*: **Accelerator: GPU T4 ×2**, **Internet: ON** (needs a phone-verified account).
-3. Set `QUICK_TEST = True` and *Run All*. It takes about 30 minutes and checks every download source and stage on a small subset.
-4. **Commit 1 (data).** Set `QUICK_TEST = False` and `RUN_STAGES = ["data"]`, then *Save Version → Save & Run All (Commit)*. About 90 GB is streamed (HMC ~13 GB, ISRUC ~18 GB, DOD ~58 GB through range requests); only the compact cache (~2–3 GB) is kept. Then *Output → New Dataset* from `sqn2_cache`.
-5. **Commit 2 (train + analyse).** Attach that dataset, set `PREVIOUS_OUTPUT_DIR = "/kaggle/input/<dataset>"` and `RUN_STAGES = ["train", "analyse"]`, then commit again. Expected time: training about 3–5 h, analyses about 0.5–1 h. The 10-hour time guard stops new training runs early if needed, and a re-run resumes.
+3. **One-time API secret.** kaggle.com → *Settings → API → Create New Token* downloads `kaggle.json`. In the notebook, *Add-ons → Secrets* → add **`KAGGLE_USERNAME`** and **`KAGGLE_KEY`** with its two values, and enable them for this notebook. Never paste the key into a cell or the chat.
+4. Optional check: `QUICK_TEST = True`, *Run All* (about 30 minutes).
+5. Set `QUICK_TEST = False`, then **Save Version → Save & Run All (Commit)**, and repeat the same commit whenever needed:
+   - **First commit:** streams about 90 GB, keeps a ~2–3 GB compact cache, and **saves it automatically as your private dataset `sqn2-cache`** before training starts. Then training and analysis run until the 10-hour guard.
+   - **Later commits:** **restore `sqn2-cache` and the finished runs (`sqn2-runs`) automatically**. Nothing is downloaded or re-trained twice; unfinished runs continue.
 6. Download `sqn2_v2_outputs.zip` from *Output*.
 
 **If a download fails.**
