@@ -370,3 +370,51 @@ ISRUC-III: 0/10 subjects cached
 [DOD] scorer hypnograms: DOD-H 25 records, DOD-O 55 records
 [DOD-H] streaming records from Zenodo with HTTP range requests
 [DOD-H] 25 records
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-1802
+[DOD-H 1/25] DODH_1da3544e211f.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 2/25] DODH_5bf0f9692846.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 3/25] DODH_a25b2296466e.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 4/25] DODH_119f972649a1.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 5/25] DODH_0d79f4b1ada5.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 6/25] DODH_64959ac4df7b.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 7/25] DODH_1fa6c4012516.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 8/25] DODH_37d0da975488.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 9/25] DODH_7d7788011876.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 10/25] DODH_769df255fbbd.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 11/25] DODH_18ede7144192.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 12/25] DODH_a45689510be6.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 13/25] DODH_bb474ab026a2.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 14/25] DODH_67fa8e296ed0.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 15/25] DODH_844f68ba4a7b.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 16/25] DODH_14c012bd9837.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 17/25] DODH_a30245e325fc.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 18/25] DODH_d3cadb7868b1.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 19/25] DODH_b5d5785dd8de.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 20/25] DODH_7ab8ff5fc9bf.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 21/25] DODH_f2a69bdc2be0.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 22/25] DODH_aa160c7897e0.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 23/25] DODH_25a6b2b0d3be.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 24/25] DODH_095d6e403da0.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-H 25/25] DODH_3e842aa8fe2c.npz: ok ch=C3_M2 fs=250 raters=5
+[DOD-O] streaming records from Zenodo with HTTP range requests
+[DOD-O] 55 records
+[DOD-O 1/55] DODO_6e2aa9336a12.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 2/55] DODO_c8110476c987.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 3/55] DODO_b3534fa3f7a9.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 4/55] DODO_e8ec8ec41030.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 5/55] DODO_a35a118ef4ce.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 6/55] DODO_b2d3ccddc337.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 7/55] DODO_83c1394e1cfd.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 8/55] DODO_730aba3b6834.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 9/55] DODO_6a7503ac48dd.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 10/55] DODO_fc10ee0bac3a.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 11/55] DODO_f66bc75ec79f.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 12/55] DODO_c03e27b0513c.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 13/55] DODO_5b94ec8a5609.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 14/55] DODO_e6b7cbeffb60.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 15/55] DODO_cc3b4b631449.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 16/55] DODO_ad47bc127b5e.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 17/55] DODO_0416d51fa1ef.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 18/55] DODO_e72505f154bc.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 19/55] DODO_a6254c8ae0a5.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 20/55] DODO_4e3c4ac4259d.npz: ok ch=C4_M1 fs=250 raters=5
