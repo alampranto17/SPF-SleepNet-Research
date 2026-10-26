@@ -24,12 +24,46 @@ DEFAULT_CFG = dict(
 )
 
 
-def train_all(corpus, cfg, run_dir, log=print):
-    os.makedirs(run_dir, exist_ok=True)
+def load_or_make_folds(corpus, cfg, run_dir, log=print):
+    """Folds are FROZEN at the first training session (runs/folds.json) so that runs
+    resumed in later sessions always use identical participant splits, even if more
+    recordings were cached in the meantime.  Training-cohort participants that are not
+    in the frozen folds are reported and left unused."""
+    path = os.path.join(run_dir, "folds.json")
+    have_runs = any(f.endswith(".npz") for f in os.listdir(run_dir))
+    if os.path.exists(path) and have_runs:
+        with open(path) as f:
+            saved = json.load(f)
+        if len(saved) == cfg["n_folds"]:
+            recs = set(corpus.rec.index)
+            ext = list(corpus.rec[~corpus.rec.cohort.isin(T.TRAIN_COHORTS)].index)
+            folds = []
+            for fo in saved:
+                fo = dict(fo)
+                fo["fold"] = int(fo["fold"]) if str(fo["fold"]).isdigit() else fo["fold"]
+                for k in ("train_recs", "inner_recs", "test_recs"):
+                    missing = [r for r in fo[k] if r not in recs]
+                    if missing:
+                        raise RuntimeError(f"frozen fold {fo['fold']} needs recordings missing from the "
+                                           f"cache: {missing[:5]} - restore the full sqn2-cache first")
+                fo["external_recs"] = ext
+                folds.append(fo)
+            used = {r for fo in folds for k in ("train_recs", "inner_recs", "test_recs") for r in fo[k]}
+            unused = corpus.rec[corpus.rec.cohort.isin(T.TRAIN_COHORTS) & ~corpus.rec.index.isin(used)]
+            log(f"[train] reusing frozen folds from {path}"
+                + (f"; {len(unused)} training-cohort recordings cached later are NOT used: "
+                   f"{list(unused.index)[:10]}" if len(unused) else ""))
+            return folds
     folds = T.make_folds(corpus, k=cfg["n_folds"], seed=cfg["seed"])
-    with open(os.path.join(run_dir, "folds.json"), "w") as f:
+    with open(path, "w") as f:
         json.dump([{k: list(map(str, v)) if isinstance(v, list) else v for k, v in fo.items()}
                    for fo in folds], f, indent=1)
+    return folds
+
+
+def train_all(corpus, cfg, run_dir, log=print):
+    os.makedirs(run_dir, exist_ok=True)
+    folds = load_or_make_folds(corpus, cfg, run_dir, log)
     tr = T.Trainer(corpus, cfg)
     order = [T.PRIMARY_VARIANT] + [v for v in cfg["variants"] if v != T.PRIMARY_VARIANT]
     t0 = time.time()
