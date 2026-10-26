@@ -76,15 +76,18 @@ def _copy_tree(src, dst):
     return n
 
 
-def _attached_inputs(slug, root="/kaggle/input", depth=4):
+def _attached_inputs(slug, root="/kaggle/input", depth=5, alt_names=()):
+    """Folders named ``slug`` (attached dataset) or one of ``alt_names`` (e.g. the
+    ``sqn2_cache`` / ``runs`` folder inside an attached NOTEBOOK OUTPUT) under /kaggle/input."""
+    names = {slug, *alt_names}
     out = []
     if not os.path.isdir(root):
         return out
-    for cur, dirs, _ in os.walk(root):
+    for cur, dirs, files in os.walk(root):
         if cur[len(root):].count(os.sep) >= depth:
             dirs[:] = []
             continue
-        if os.path.basename(cur) == slug and os.listdir(cur):
+        if os.path.basename(cur) in names and os.listdir(cur):
             out.append(cur)
             dirs[:] = []
     return out
@@ -94,7 +97,7 @@ def pull_dataset(user, slug, dest, log=print):
     """Restore a dataset into ``dest``: attached input (any mount path) AND the API
     (newest version; files already present are skipped)."""
     got = False
-    for cand in _attached_inputs(slug):
+    for cand in _attached_inputs(slug, alt_names=(os.path.basename(dest.rstrip("/")),)):
         n = _copy_tree(cand, dest)
         for z in glob.glob(os.path.join(dest, "**", "*.zip"), recursive=True):
             try:
