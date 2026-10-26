@@ -23,6 +23,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -441,11 +442,14 @@ def _gdown():
             return gdown
     except Exception:
         pass
-    subprocess.run(["pip", "install", "-q", "-U", "gdown>=6"], check=False, timeout=300,
-                   capture_output=True)
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-U", "gdown>=6"], check=False,
+                   timeout=300, capture_output=True)
     import importlib
+    for m in [m for m in list(sys.modules) if m == "gdown" or m.startswith("gdown.")]:
+        del sys.modules[m]                        # drop stale submodules (gdown.exceptions etc.)
+    importlib.invalidate_caches()
     import gdown
-    return importlib.reload(gdown)
+    return gdown
 
 
 def _gdown_file(gdown, fid, dst):

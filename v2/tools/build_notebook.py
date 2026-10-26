@@ -90,6 +90,7 @@ for mod, pkg in [("mne", "mne"), ("gdown", "gdown"), ("shap", "shap"), ("xlrd", 
                  ("remotezip", "remotezip")]:
     if importlib.util.find_spec(mod) is None:
         _pip(pkg)
+_pip("-U", "gdown>=6", "kaggle")   # gdown 6: no 50-file folder limit; new kaggle CLI: private-dataset download works
 import torch, numpy as np, pandas as pd
 os.makedirs("sqn2", exist_ok=True)
 for d in (CACHE_DIR, RUN_DIR, OUT_DIR):
@@ -155,29 +156,40 @@ if "data" in RUN_STAGES:
     def _n_cached(grp):
         pre = {"I": "ISRUC1", "II": "ISRUC2", "III": "ISRUC3"}[grp]
         return len({os.path.basename(f).split("_")[1] for f in glob.glob(os.path.join(CACHE_DIR, pre + "_*.npz"))})
-    for grp, raw_dir, drive in (("I", RAW_ISRUC1_DIR, ISRUC1_DRIVE_FOLDER),
-                                ("II", RAW_ISRUC2_DIR, ISRUC2_DRIVE_FOLDER),
-                                ("III", RAW_ISRUC3_DIR, ISRUC3_DRIVE_FOLDER)):
-        if raw_dir:
+    SRC = {"I": (RAW_ISRUC1_DIR, ISRUC1_DRIVE_FOLDER), "II": (RAW_ISRUC2_DIR, ISRUC2_DRIVE_FOLDER),
+           "III": (RAW_ISRUC3_DIR, ISRUC3_DRIVE_FOLDER)}
+    def _need(grp):
+        return len(ISRUC_Q[grp]) if q else ISRUC_N[grp]
+    # 1) Google Drive for every subgroup that has a Drive copy (I, III)
+    for grp, (raw_dir, drive) in SRC.items():
+        if raw_dir or not drive or _n_cached(grp) >= _need(grp):
             continue
-        need = len(ISRUC_Q[grp]) if q else ISRUC_N[grp]
-        ids = list(ISRUC_Q[grp]) if q else None
-        if drive and _n_cached(grp) < need:
+        try:
+            DL.cache_isruc_from_drive_folder(drive, CACHE_DIR, grp, subject_ids=list(ISRUC_Q[grp]) if q else None)
+        except Exception as exc:
+            print(f"ISRUC-{grp} Drive download failed:", exc)
+    # 2) MEGA (free quota ~5 GB / 6 h): subgroups without a Drive copy first (II, 2.2 GB) ...
+    if USE_ISRUC_MEGA:
+        for grp, (raw_dir, drive) in SRC.items():
+            if not raw_dir and not drive and _n_cached(grp) < _need(grp):
+                try:
+                    DL.cache_isruc_from_mega(CACHE_DIR, grp)
+                except Exception as exc:
+                    print(f"ISRUC-{grp} MEGA download failed:", exc)
+        # ... then MEGA only as a fallback when Drive delivered less than 90 %
+        for grp, (raw_dir, drive) in SRC.items():
+            if not raw_dir and drive and _n_cached(grp) < 0.9 * _need(grp):
+                try:
+                    DL.cache_isruc_from_mega(CACHE_DIR, grp)
+                except Exception as exc:
+                    print(f"ISRUC-{grp} MEGA download failed:", exc)
+    for grp, (raw_dir, drive) in SRC.items():
+        if USE_ISRUC_OFFICIAL and not raw_dir and _n_cached(grp) < _need(grp):
             try:
-                DL.cache_isruc_from_drive_folder(drive, CACHE_DIR, grp, subject_ids=ids)
-            except Exception as exc:
-                print(f"ISRUC-{grp} Drive download failed:", exc)
-        if USE_ISRUC_MEGA and _n_cached(grp) < need and not (q and grp == "I" and _n_cached(grp) > 0):
-            try:
-                DL.cache_isruc_from_mega(CACHE_DIR, grp)
-            except Exception as exc:
-                print(f"ISRUC-{grp} MEGA download failed:", exc)
-        if USE_ISRUC_OFFICIAL and _n_cached(grp) < need:
-            try:
-                DL.cache_isruc_official(CACHE_DIR, grp, ids)
+                DL.cache_isruc_official(CACHE_DIR, grp, list(ISRUC_Q[grp]) if q else None)
             except Exception as exc:
                 print(f"ISRUC-{grp} official download failed:", exc)
-        print(f"ISRUC-{grp}: {_n_cached(grp)}/{need} subjects cached")
+        print(f"ISRUC-{grp}: {_n_cached(grp)}/{_need(grp)} subjects cached")
     DL.cache_isruc_details(CACHE_DIR)
     if USE_CAP_PHYSIONET:
         try:
@@ -266,29 +278,34 @@ if "train" in RUN_STAGES:
 '''))
 
 cells.append(md("## Stage D — RQ1–RQ7 analyses against pre-specified criteria"))
-cells.append(code('''if "analyse" not in RUN_STAGES:
+cells.append(code('''ANALYSED = False
+if "analyse" not in RUN_STAGES:
     GH.STATUS["stage"] = "stopped after data stage (training cohorts incomplete or analysis not requested)"
-    if "SYNC" in globals():
-        SYNC.stop(final=True)
-    raise SystemExit("analysis stage skipped (RUN_STAGES / incomplete training cohorts)")
-GH.STATUS["stage"] = "D: RQ1-RQ7 analyses"
-res, summary = P.analyse_all(corpus, CFG, RUN_DIR, OUT_DIR)
-if QUICK_TEST:
-    print("QUICK_TEST run: numbers below are a pipeline check only - do not report them.")
-display(summary)
-display(pd.read_csv(os.path.join(OUT_DIR, "go_no_go_decisions.csv")))
-display(pd.read_csv(os.path.join(OUT_DIR, "rq1_detection_metrics.csv")))
-display(pd.read_csv(os.path.join(OUT_DIR, "rq1_interrater_benchmark.csv")))
-display(pd.read_csv(os.path.join(OUT_DIR, "rq4_component_effects.csv")))
-display(pd.read_csv(os.path.join(OUT_DIR, "rq2_factor_validity.csv")))
-display(pd.read_csv(os.path.join(OUT_DIR, "rq6_reliability_components.csv")))
-display(pd.read_csv(os.path.join(OUT_DIR, "rq7_profile_agreement.csv")))
+    print("Analysis skipped: training cohorts are not complete yet (see the message above). "
+          "This is not an error - the downloaded data is saved; run the notebook again to continue.")
+elif not glob.glob(os.path.join(RUN_DIR, "full_v2__fold*.npz")):
+    print("Analysis skipped: no trained full_v2 runs yet.")
+else:
+    GH.STATUS["stage"] = "D: RQ1-RQ7 analyses"
+    res, summary = P.analyse_all(corpus, CFG, RUN_DIR, OUT_DIR)
+    ANALYSED = True
+    if QUICK_TEST:
+        print("QUICK_TEST run: numbers below are a pipeline check only - do not report them.")
+    display(summary)
+    for f in ("go_no_go_decisions.csv", "rq1_detection_metrics.csv", "rq1_sota_comparison.csv",
+              "rq1_interrater_benchmark.csv", "rq2_rk_grade_validation.csv", "rq2_n3_grade_validity.csv",
+              "rq4_component_effects.csv", "rq2_factor_validity.csv", "rq6_reliability_components.csv",
+              "rq7_profile_agreement.csv"):
+        fp = os.path.join(OUT_DIR, f)
+        if os.path.exists(fp):
+            print(f); display(pd.read_csv(fp))
 '''))
 
-cells.append(code('''from sqn2 import figures as FG
-from IPython.display import Image
-for p in FG.make_all(OUT_DIR):
-    print(os.path.basename(p)); display(Image(p, width=900))
+cells.append(code('''if ANALYSED:
+    from sqn2 import figures as FG
+    from IPython.display import Image
+    for p in FG.make_all(OUT_DIR):
+        print(os.path.basename(p)); display(Image(p, width=900))
 '''))
 
 cells.append(code('''# package outputs (tables, figures, OOF predictions, run metadata)
