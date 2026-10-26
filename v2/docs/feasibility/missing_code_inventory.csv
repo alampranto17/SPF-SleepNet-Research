@@ -1,0 +1,12 @@
+missing_or_wrong_implementation,v1_location,v2_status
+ISRUC channel selection (C4-M1 not accepted; EOG fallback),v1 cell 15 ISRUCIIIAdapter,fixed: data.pick_channel
+epoch order lost during artifact deletion,v1 EEGPreprocessor.create_epochs,fixed: flags + epoch_index
+checkpoint selected on CV test fold,v1 SleepQualityTrainer.train,fixed: inner validation
+fixed 0.5 threshold,v1 evaluate(),fixed: inner-val F1 threshold
+heuristic peak counter as slow-wave density,v1 extract_slow_wave_density,fixed: features.detect_slow_waves
+circular regression target,v1 make_n3_quality_labels + quality head,removed; rule-derived scores outside model
+no adjacent-epoch context model,v1 SleepQualityNet,added: dilated temporal CNN (+/-15 epochs)
+"no reliability components (MC dropout, OOD)",-,"added: train.Trainer, analysis.rq6"
+no XAI agreement metric,-,added: xai.rq5
+no episode / night profile,-,"added: scores.night_profile, analysis.rq7"
+no participant-level CIs for detection,-,added: analysis.participant_bootstrap
