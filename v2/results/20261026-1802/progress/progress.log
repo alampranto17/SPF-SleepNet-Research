@@ -418,3 +418,41 @@ ISRUC-III: 0/10 subjects cached
 [DOD-O 18/55] DODO_e72505f154bc.npz: ok ch=C4_M1 fs=250 raters=5
 [DOD-O 19/55] DODO_a6254c8ae0a5.npz: ok ch=C4_M1 fs=250 raters=5
 [DOD-O 20/55] DODO_4e3c4ac4259d.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 21/55] DODO_5ddbc68c1bc2.npz: ok ch=C4_M1 fs=250 raters=5
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-1802
+[DOD-O 22/55] DODO_100df1087895.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 23/55] DODO_742f1592e33a.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 24/55] DODO_cebd3520fc2b.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 25/55] DODO_52fbe46b7bac.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 26/55] DODO_30e8a05b9ad5.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 27/55] DODO_039ce8add087.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 28/55] DODO_eb95076c61c6.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 29/55] DODO_c985916d0bac.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 30/55] DODO_a0c91989683c.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 31/55] DODO_c11c730fdfce.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 32/55] DODO_02fb158afde1.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 33/55] DODO_18482adfa105.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 34/55] DODO_47f45aa2062b.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 35/55] DODO_2d01dc34fdfc.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 36/55] DODO_b3706da5cdf6.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 37/55] DODO_a65a9e6908cc.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 38/55] DODO_22bea84c955b.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 39/55] DODO_7f5237b10ef4.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 40/55] DODO_2e865ca9eab9.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 41/55] DODO_40e25dd46b15.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 42/55] DODO_e59c45e0f6c1.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 43/55] DODO_79e8a04e9103.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 44/55] DODO_4b72b905195f.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 45/55] DODO_3dd35e7b569f.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 46/55] DODO_2159377ec1d2.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 47/55] DODO_16450f5a89eb.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 48/55] DODO_03341d0d8f57.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 49/55] DODO_90aef91aca1f.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 50/55] DODO_130f3f52e5c9.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 51/55] DODO_aadc9e0c0935.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 52/55] DODO_a79d1f0e5f0f.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 53/55] DODO_325563939647.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 54/55] DODO_c31a47f92603.npz: ok ch=C4_M1 fs=250 raters=5
+[DOD-O 55/55] DODO_d5181c33092a.npz: ok ch=C4_M1 fs=250 raters=5
+
+cached recordings: {'HMC': 151, 'CAP': 106, 'DODO': 55, 'ISRUC1': 35, 'DODH': 25} | total 372 | cache size 1.98 GB | elapsed 113.6 min
