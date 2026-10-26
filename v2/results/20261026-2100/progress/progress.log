@@ -246,3 +246,274 @@
     .. ISRUC-II MEGA: 1.43 GB on disk, 3 min
     .. ISRUC-II MEGA: 1.92 GB on disk, 4 min
     .. ISRUC-II MEGA: 2.21 GB on disk, 5 min
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2100
+    .. ISRUC-II MEGA: 2.36 GB on disk, 6 min
+[ISRUC-II MEGA] ISRUC2_001: ok s1 ch=C4-A1 scorers=2, s2 ch=C4-M1 scorers=2
+[ISRUC-II MEGA] ISRUC2_002: ok s1 ch=C4-M1 scorers=2, s2 ch=C4-M1 scorers=2
+[ISRUC-II MEGA] ISRUC2_003: ok s1 ch=C4-M1 scorers=2, s2 ch=C4-M1 scorers=2
+[ISRUC-II MEGA] ISRUC2_004: ok s1 ch=C4-M1 scorers=2, s2 ch=C4-M1 scorers=2
+[ISRUC-II MEGA] ISRUC2_005: ok s1 ch=C4-A1 scorers=2, s2 ch=C4-M1 scorers=2
+[ISRUC-II MEGA] ISRUC2_006: ok s1 ch=C4-M1 scorers=2, s2 ch=C4-M1 scorers=2
+[ISRUC-II MEGA] ISRUC2_007: ok s1 ch=C4-M1 scorers=2, s2 ch=C4-M1 scorers=2
+[ISRUC-II MEGA] ISRUC2_008: ok s1 ch=C4-M1 scorers=2, s2 ch=C4-M1 scorers=2
+[ISRUC-III MEGA] downloading the official folder with megatools (progress every 60 s)
+    .. ISRUC-III MEGA: 1.17 GB on disk, 1 min
+    .. ISRUC-III MEGA: 1.17 GB on disk, 2 min
+    .. ISRUC-III MEGA: 1.17 GB on disk, 3 min
+    .. ISRUC-III MEGA: 1.45 GB on disk, 4 min
+[ISRUC-III MEGA] ISRUC3_001: ok s1 ch=C4-A1 scorers=2
+[ISRUC-III MEGA] ISRUC3_002: ok s1 ch=C4-A1 scorers=2
+[ISRUC-III MEGA] ISRUC3_003: ok s1 ch=C4-A1 scorers=2
+[ISRUC-III MEGA] ISRUC3_004: ok s1 ch=C4-A1 scorers=2
+[ISRUC-III MEGA] ISRUC3_005: ok s1 ch=C4-A1 scorers=2
+[ISRUC-III MEGA] ISRUC3_006: ok s1 ch=C4-A1 scorers=2
+[ISRUC-III MEGA] ISRUC3_007: ok s1 ch=C4-A1 scorers=2
+[ISRUC-III MEGA] ISRUC3_008: ok s1 ch=C4-A1 scorers=2
+[ISRUC-III MEGA] ISRUC3_009: ok s1 ch=C4-A1 scorers=2
+[ISRUC-III MEGA] ISRUC3_010: ok s1 ch=C4-A1 scorers=2
+ISRUC-I: 65/100 subjects cached
+ISRUC-II: 8/8 subjects cached
+ISRUC-III: 10/10 subjects cached
+[ISRUC details] subgroup I: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[ISRUC details] subgroup II: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[ISRUC details] subgroup III: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[CAP] 108 recordings to cache (~370 MB each; AWS S3 mirror first)
+[CAP 1/108] CAP_ins1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 2/108] CAP_brux1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 3/108] CAP_ins2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 4/108] CAP_brux2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 5/108] CAP_ins3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 6/108] CAP_ins6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 7/108] CAP_ins7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 8/108] CAP_ins8.npz: cached   (0.0 min, ETA 0 min)
+[CAP 9/108] CAP_ins9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 10/108] CAP_n1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 11/108] CAP_n2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 12/108] CAP_n3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 13/108] CAP_n4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 14/108] CAP_n5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 15/108] CAP_n6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 16/108] CAP_n7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 17/108] CAP_n8.npz: cached   (0.0 min, ETA 0 min)
+[CAP 18/108] CAP_n9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 19/108] CAP_n10.npz: cached   (0.0 min, ETA 0 min)
+[CAP 20/108] CAP_n11.npz: cached   (0.0 min, ETA 0 min)
+[CAP 21/108] CAP_n12.npz: cached   (0.0 min, ETA 0 min)
+[CAP 22/108] CAP_n13.npz: cached   (0.0 min, ETA 0 min)
+[CAP 23/108] CAP_n14.npz: cached   (0.0 min, ETA 0 min)
+[CAP 24/108] CAP_n15.npz: cached   (0.0 min, ETA 0 min)
+[CAP 25/108] CAP_n16.npz: cached   (0.0 min, ETA 0 min)
+[CAP 26/108] CAP_narco1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 27/108] CAP_narco2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 28/108] CAP_narco3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 29/108] CAP_narco4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 30/108] CAP_narco5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 31/108] CAP_ins4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 32/108] CAP_nfle2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 33/108] CAP_nfle1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 34/108] CAP_nfle4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 35/108] CAP_nfle5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 36/108] CAP_nfle6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 37/108] CAP_nfle7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 38/108] CAP_nfle8.npz: cached   (0.0 min, ETA 0 min)
+[CAP 39/108] CAP_nfle9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 40/108] CAP_nfle10.npz: cached   (0.0 min, ETA 0 min)
+[CAP 41/108] CAP_nfle11.npz: cached   (0.0 min, ETA 0 min)
+[CAP 42/108] CAP_nfle12.npz: cached   (0.0 min, ETA 0 min)
+[CAP 43/108] CAP_nfle13.npz: cached   (0.0 min, ETA 0 min)
+[CAP 44/108] CAP_nfle14.npz: cached   (0.0 min, ETA 0 min)
+[CAP 45/108] CAP_nfle15.npz: cached   (0.0 min, ETA 0 min)
+[CAP 46/108] CAP_nfle16.npz: cached   (0.0 min, ETA 0 min)
+[CAP 47/108] CAP_nfle17.npz: cached   (0.0 min, ETA 0 min)
+[CAP 48/108] CAP_nfle18.npz: cached   (0.0 min, ETA 0 min)
+[CAP 49/108] CAP_nfle19.npz: cached   (0.0 min, ETA 0 min)
+[CAP 50/108] CAP_nfle20.npz: cached   (0.0 min, ETA 0 min)
+[CAP 51/108] CAP_nfle21.npz: cached   (0.0 min, ETA 0 min)
+[CAP 52/108] CAP_nfle22.npz: cached   (0.0 min, ETA 0 min)
+[CAP 53/108] CAP_nfle23.npz: cached   (0.0 min, ETA 0 min)
+[CAP 54/108] CAP_nfle3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 55/108] CAP_nfle24.npz: cached   (0.0 min, ETA 0 min)
+[CAP 56/108] CAP_nfle26.npz: cached   (0.0 min, ETA 0 min)
+[CAP 57/108] CAP_ins5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 58/108] CAP_nfle28.npz: cached   (0.0 min, ETA 0 min)
+[CAP 59/108] CAP_nfle29.npz: cached   (0.0 min, ETA 0 min)
+[CAP 60/108] CAP_nfle30.npz: cached   (0.0 min, ETA 0 min)
+[CAP 61/108] CAP_nfle31.npz: cached   (0.0 min, ETA 0 min)
+[CAP 62/108] CAP_nfle32.npz: cached   (0.0 min, ETA 0 min)
+[CAP 63/108] CAP_nfle27.npz: cached   (0.0 min, ETA 0 min)
+[CAP 64/108] CAP_nfle34.npz: cached   (0.0 min, ETA 0 min)
+[CAP 65/108] CAP_nfle35.npz: cached   (0.0 min, ETA 0 min)
+[CAP 66/108] CAP_nfle36.npz: cached   (0.0 min, ETA 0 min)
+[CAP 67/108] CAP_nfle37.npz: cached   (0.0 min, ETA 0 min)
+[CAP 68/108] CAP_nfle38.npz: cached   (0.0 min, ETA 0 min)
+[CAP 69/108] CAP_nfle39.npz: cached   (0.0 min, ETA 0 min)
+[CAP 70/108] CAP_nfle40.npz: cached   (0.0 min, ETA 0 min)
+[CAP 71/108] CAP_plm1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 72/108] CAP_plm2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 73/108] CAP_plm3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 74/108] CAP_plm4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 75/108] CAP_plm5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 76/108] CAP_plm6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 77/108] CAP_plm7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 78/108] CAP_plm8.npz: cached   (0.0 min, ETA 0 min)
+[CAP 79/108] CAP_plm9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 80/108] CAP_plm10.npz: cached   (0.0 min, ETA 0 min)
+[CAP 81/108] CAP_rbd1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 82/108] CAP_rbd2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 83/108] CAP_rbd3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 84/108] CAP_rbd4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 85/108] CAP_rbd5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 86/108] CAP_rbd6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 87/108] CAP_rbd7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 88/108] CAP_rbd8.npz: cached   (0.0 min, ETA 0 min)
+[CAP 89/108] CAP_rbd9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 90/108] CAP_rbd10.npz: cached   (0.0 min, ETA 0 min)
+[CAP 91/108] CAP_rbd11.npz: cached   (0.0 min, ETA 0 min)
+[CAP 92/108] CAP_rbd12.npz: cached   (0.0 min, ETA 0 min)
+[CAP 93/108] CAP_rbd13.npz: cached   (0.0 min, ETA 0 min)
+[CAP 94/108] CAP_rbd14.npz: cached   (0.0 min, ETA 0 min)
+[CAP 95/108] CAP_rbd15.npz: cached   (0.0 min, ETA 0 min)
+[CAP 96/108] CAP_rbd16.npz: cached   (0.0 min, ETA 0 min)
+[CAP 97/108] CAP_rbd17.npz: cached   (0.0 min, ETA 0 min)
+[CAP 98/108] CAP_rbd18.npz: cached   (0.0 min, ETA 0 min)
+[CAP 99/108] CAP_rbd19.npz: cached   (0.0 min, ETA 0 min)
+[CAP 100/108] CAP_rbd20.npz: cached   (0.0 min, ETA 0 min)
+[CAP 101/108] CAP_rbd21.npz: cached   (0.0 min, ETA 0 min)
+[CAP 102/108] CAP_rbd22.npz: cached   (0.0 min, ETA 0 min)
+[CAP 103/108] CAP_sdb1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 104/108] CAP_sdb2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 105/108] CAP_sdb3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 106/108] CAP_sdb4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 107/108] CAP_nfle25.npz: ok ch=C4-A1 fs=256 S3=78 S4=71   (0.6 min, ETA 0 min)
+[CAP 108/108] CAP_nfle33.npz: ok ch=C4-A1 fs=512 S3=211 S4=179   (0.7 min, ETA 0 min)
+[DOD] scorer hypnograms: DOD-H 25 records, DOD-O 55 records
+[DOD-H] streaming records from Zenodo with HTTP range requests
+[DOD-H] 25 records
+[DOD-H 1/25] DODH_1da3544e211f.npz: cached
+[DOD-H 2/25] DODH_5bf0f9692846.npz: cached
+[DOD-H 3/25] DODH_a25b2296466e.npz: cached
+[DOD-H 4/25] DODH_119f972649a1.npz: cached
+[DOD-H 5/25] DODH_0d79f4b1ada5.npz: cached
+[DOD-H 6/25] DODH_64959ac4df7b.npz: cached
+[DOD-H 7/25] DODH_1fa6c4012516.npz: cached
+[DOD-H 8/25] DODH_37d0da975488.npz: cached
+[DOD-H 9/25] DODH_7d7788011876.npz: cached
+[DOD-H 10/25] DODH_769df255fbbd.npz: cached
+[DOD-H 11/25] DODH_18ede7144192.npz: cached
+[DOD-H 12/25] DODH_a45689510be6.npz: cached
+[DOD-H 13/25] DODH_bb474ab026a2.npz: cached
+[DOD-H 14/25] DODH_67fa8e296ed0.npz: cached
+[DOD-H 15/25] DODH_844f68ba4a7b.npz: cached
+[DOD-H 16/25] DODH_14c012bd9837.npz: cached
+[DOD-H 17/25] DODH_a30245e325fc.npz: cached
+[DOD-H 18/25] DODH_d3cadb7868b1.npz: cached
+[DOD-H 19/25] DODH_b5d5785dd8de.npz: cached
+[DOD-H 20/25] DODH_7ab8ff5fc9bf.npz: cached
+[DOD-H 21/25] DODH_f2a69bdc2be0.npz: cached
+[DOD-H 22/25] DODH_aa160c7897e0.npz: cached
+[DOD-H 23/25] DODH_25a6b2b0d3be.npz: cached
+[DOD-H 24/25] DODH_095d6e403da0.npz: cached
+[DOD-H 25/25] DODH_3e842aa8fe2c.npz: cached
+[DOD-O] streaming records from Zenodo with HTTP range requests
+[DOD-O] 55 records
+[DOD-O 1/55] DODO_6e2aa9336a12.npz: cached
+[DOD-O 2/55] DODO_c8110476c987.npz: cached
+[DOD-O 3/55] DODO_b3534fa3f7a9.npz: cached
+[DOD-O 4/55] DODO_e8ec8ec41030.npz: cached
+[DOD-O 5/55] DODO_a35a118ef4ce.npz: cached
+[DOD-O 6/55] DODO_b2d3ccddc337.npz: cached
+[DOD-O 7/55] DODO_83c1394e1cfd.npz: cached
+[DOD-O 8/55] DODO_730aba3b6834.npz: cached
+[DOD-O 9/55] DODO_6a7503ac48dd.npz: cached
+[DOD-O 10/55] DODO_fc10ee0bac3a.npz: cached
+[DOD-O 11/55] DODO_f66bc75ec79f.npz: cached
+[DOD-O 12/55] DODO_c03e27b0513c.npz: cached
+[DOD-O 13/55] DODO_5b94ec8a5609.npz: cached
+[DOD-O 14/55] DODO_e6b7cbeffb60.npz: cached
+[DOD-O 15/55] DODO_cc3b4b631449.npz: cached
+[DOD-O 16/55] DODO_ad47bc127b5e.npz: cached
+[DOD-O 17/55] DODO_0416d51fa1ef.npz: cached
+[DOD-O 18/55] DODO_e72505f154bc.npz: cached
+[DOD-O 19/55] DODO_a6254c8ae0a5.npz: cached
+[DOD-O 20/55] DODO_4e3c4ac4259d.npz: cached
+[DOD-O 21/55] DODO_5ddbc68c1bc2.npz: cached
+[DOD-O 22/55] DODO_100df1087895.npz: cached
+[DOD-O 23/55] DODO_742f1592e33a.npz: cached
+[DOD-O 24/55] DODO_cebd3520fc2b.npz: cached
+[DOD-O 25/55] DODO_52fbe46b7bac.npz: cached
+[DOD-O 26/55] DODO_30e8a05b9ad5.npz: cached
+[DOD-O 27/55] DODO_039ce8add087.npz: cached
+[DOD-O 28/55] DODO_eb95076c61c6.npz: cached
+[DOD-O 29/55] DODO_c985916d0bac.npz: cached
+[DOD-O 30/55] DODO_a0c91989683c.npz: cached
+[DOD-O 31/55] DODO_c11c730fdfce.npz: cached
+[DOD-O 32/55] DODO_02fb158afde1.npz: cached
+[DOD-O 33/55] DODO_18482adfa105.npz: cached
+[DOD-O 34/55] DODO_47f45aa2062b.npz: cached
+[DOD-O 35/55] DODO_2d01dc34fdfc.npz: cached
+[DOD-O 36/55] DODO_b3706da5cdf6.npz: cached
+[DOD-O 37/55] DODO_a65a9e6908cc.npz: cached
+[DOD-O 38/55] DODO_22bea84c955b.npz: cached
+[DOD-O 39/55] DODO_7f5237b10ef4.npz: cached
+[DOD-O 40/55] DODO_2e865ca9eab9.npz: cached
+[DOD-O 41/55] DODO_40e25dd46b15.npz: cached
+[DOD-O 42/55] DODO_e59c45e0f6c1.npz: cached
+[DOD-O 43/55] DODO_79e8a04e9103.npz: cached
+[DOD-O 44/55] DODO_4b72b905195f.npz: cached
+[DOD-O 45/55] DODO_3dd35e7b569f.npz: cached
+[DOD-O 46/55] DODO_2159377ec1d2.npz: cached
+[DOD-O 47/55] DODO_16450f5a89eb.npz: cached
+[DOD-O 48/55] DODO_03341d0d8f57.npz: cached
+[DOD-O 49/55] DODO_90aef91aca1f.npz: cached
+[DOD-O 50/55] DODO_130f3f52e5c9.npz: cached
+[DOD-O 51/55] DODO_aadc9e0c0935.npz: cached
+[DOD-O 52/55] DODO_a79d1f0e5f0f.npz: cached
+[DOD-O 53/55] DODO_325563939647.npz: cached
+[DOD-O 54/55] DODO_c31a47f92603.npz: cached
+[DOD-O 55/55] DODO_d5181c33092a.npz: cached
+ISRUC-I: second Drive pass for the 35 missing subjects
+[ISRUC-I Drive] 504 files listed, 100 subjects (ids 1..100)
+[ISRUC-I Drive] files outside subject folders: ['65/65-1.pdf', '65/65-2.pdf', 'FileContainsCmd.txt']
+[ISRUC-I Drive 1/35] ISRUC1_067: FAILED Drive download of 67/67.rec (Drive quota 'too many downloads' or file not public)   (1.4 min, ETA 47 min)
+[ISRUC-I Drive 2/35] ISRUC1_040: FAILED Drive download of 40/40.rec (Drive quota 'too many downloads' or file not public)   (1.4 min, ETA 24 min)
+[ISRUC-I Drive 3/35] ISRUC1_068: FAILED Drive download of 68/68.rec (Drive quota 'too many downloads' or file not public)   (1.5 min, ETA 16 min)
+[ISRUC-I Drive 4/35] ISRUC1_071: FAILED Drive download of 71/71.rec (Drive quota 'too many downloads' or file not public)   (2.9 min, ETA 22 min)
+[ISRUC-I Drive 5/35] ISRUC1_069: FAILED Drive download of 69/69.rec (Drive quota 'too many downloads' or file not public)   (2.9 min, ETA 17 min)
+[ISRUC-I Drive 6/35] ISRUC1_070: FAILED Drive download of 70/70.rec (Drive quota 'too many downloads' or file not public)   (2.9 min, ETA 14 min)
+[ISRUC-I Drive 7/35] ISRUC1_074: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 11 min)
+[ISRUC-I Drive 8/35] ISRUC1_075: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 10 min)
+[ISRUC-I Drive 9/35] ISRUC1_076: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 8 min)
+[ISRUC-I Drive 10/35] ISRUC1_077: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 7 min)
+[ISRUC-I Drive 11/35] ISRUC1_078: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 6 min)
+[ISRUC-I Drive 12/35] ISRUC1_079: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 6 min)
+[ISRUC-I Drive 13/35] ISRUC1_080: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 5 min)
+[ISRUC-I Drive 14/35] ISRUC1_081: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 4 min)
+[ISRUC-I Drive 15/35] ISRUC1_082: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 4 min)
+[ISRUC-I Drive 16/35] ISRUC1_083: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 3 min)
+[ISRUC-I Drive 17/35] ISRUC1_084: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 3 min)
+[ISRUC-I Drive 18/35] ISRUC1_085: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 3 min)
+[ISRUC-I Drive 19/35] ISRUC1_086: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 2 min)
+[ISRUC-I Drive 20/35] ISRUC1_087: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 2 min)
+[ISRUC-I Drive 21/35] ISRUC1_088: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 2 min)
+[ISRUC-I Drive 22/35] ISRUC1_089: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 2 min)
+[ISRUC-I Drive 23/35] ISRUC1_090: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 1 min)
+[ISRUC-I Drive 24/35] ISRUC1_091: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 1 min)
+[ISRUC-I Drive 25/35] ISRUC1_092: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 1 min)
+[ISRUC-I Drive 26/35] ISRUC1_093: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 1 min)
+[ISRUC-I Drive 27/35] ISRUC1_094: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 1 min)
+[ISRUC-I Drive 28/35] ISRUC1_095: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 1 min)
+[ISRUC-I Drive 29/35] ISRUC1_096: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 1 min)
+[ISRUC-I Drive 30/35] ISRUC1_097: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 0 min)
+[ISRUC-I Drive 31/35] ISRUC1_098: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 0 min)
+[ISRUC-I Drive 32/35] ISRUC1_099: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 0 min)
+[ISRUC-I Drive 33/35] ISRUC1_100: SKIPPED (Drive quota - retried in a later pass / run)   (2.9 min, ETA 0 min)
+[ISRUC-I Drive 34/35] ISRUC1_072: FAILED Drive download of 72/72.rec (Drive quota 'too many downloads' or file not public)   (4.2 min, ETA 0 min)
+[ISRUC-I Drive 35/35] ISRUC1_073: FAILED Drive download of 73/73.rec (Drive quota 'too many downloads' or file not public)   (4.2 min, ETA 0 min)
+ISRUC-I: 65/100 subjects cached
+
+cached recordings: {'HMC': 151, 'CAP': 108, 'ISRUC1': 65, 'DODO': 55, 'DODH': 25, 'ISRUC2': 16, 'ISRUC3': 10} | total 430 | cache size 2.27 GB | elapsed 34.7 min
+[kaggle] new version of alampranto/sqn2-cache
+[corpus] 25/430 recordings loaded
+[corpus] 50/430 recordings loaded
+[corpus] 75/430 recordings loaded
+[corpus] 100/430 recordings loaded
