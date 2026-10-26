@@ -45,6 +45,7 @@ AUTO_GITHUB_PUSH = True        # push result tables/figures to GitHub (needs Kag
 GITHUB_REPO = "alampranto17/SPF-SleepNet-Research"
 GITHUB_BRANCH = "v2-kaggle"
 PUSH_QUICK_TEST_RESULTS = False   # quick-test numbers are a pipeline check, not results
+GITHUB_SYNC_EVERY_MIN = 20        # live progress (log, status, cache list, results so far) -> GitHub; 0 = off
 
 # ---- data sources (Sleep-EDF is no longer used) ----
 USE_HMC_PHYSIONET = True              # training cohort (PhysioNet, CC BY 4.0)
@@ -75,6 +76,7 @@ OUT_DIR = f"{WORK}/outputs"
 if QUICK_TEST:
     RUNS_DATASET = RUNS_DATASET + "-quicktest"   # never mix quick-test runs with real runs
 import time as _time; T_START = _time.time()
+RUN_NAME = _time.strftime("%Y%m%d-%H%M") + ("_quicktest" if QUICK_TEST else "")   # GitHub folder v2/results/<RUN_NAME>
 print("WORK =", WORK)
 '''))
 
@@ -115,6 +117,15 @@ importlib.invalidate_caches()
 import sqn2
 from sqn2 import data as D, download as DL, kaggle_io as KIO
 assert hasattr(DL, "cache_isruc_from_mega"), "stale sqn2 package - restart the kernel (Run > Restart)"
+from sqn2 import github_io as GH
+GH.start_log(WORK)                                # everything printed is also kept in progress.log
+if AUTO_GITHUB_PUSH and GITHUB_SYNC_EVERY_MIN:
+    if "SYNC" in globals():
+        SYNC.stop(final=False)
+    GH.STATUS["stage"] = "A: data download"
+    SYNC = GH.ProgressSync(WORK, CACHE_DIR, RUN_DIR, OUT_DIR, RUN_NAME, GITHUB_REPO, GITHUB_BRANCH,
+                           every_min=GITHUB_SYNC_EVERY_MIN, t_start=T_START,
+                           include_results=PUSH_QUICK_TEST_RESULTS or not QUICK_TEST).start()
 KUSER = KIO.setup_credentials() if AUTO_KAGGLE_DATASETS else None
 if AUTO_KAGGLE_DATASETS:
     KIO.pull_dataset(KUSER, CACHE_DATASET, CACHE_DIR)
@@ -189,6 +200,7 @@ if AUTO_KAGGLE_DATASETS and KUSER and len(files) > n_cached_before:
 
 cells.append(md("## Stage B — corpus, data inventory and channel audit"))
 cells.append(code('''from sqn2 import train as T, report as RP
+GH.STATUS["stage"] = "B: corpus and data inventory"
 corpus = T.Corpus(CACHE_DIR, device=DEVICE)
 audit = corpus.rec[["cohort", "participant", "recording", "night", "is_primary", "channel_raw",
                     "derivation", "native_fs", "n"]].reset_index(drop=True)
@@ -231,6 +243,7 @@ if not QUICK_TEST and "train" in RUN_STAGES and (_n_isruc1 < 90 or _n_hmc < 140)
           f"'{CACHE_DATASET}'; run the notebook again (e.g. after the MEGA/Drive quota resets) "
           f"and it continues downloading from where it stopped.")
 if "train" in RUN_STAGES:
+    GH.STATUS["stage"] = "C: training"
     n_runs_before = len(glob.glob(os.path.join(RUN_DIR, "*.npz")))
     try:
         folds = P.train_all(corpus, CFG, RUN_DIR)
@@ -244,7 +257,11 @@ if "train" in RUN_STAGES:
 
 cells.append(md("## Stage D — RQ1–RQ7 analyses against pre-specified criteria"))
 cells.append(code('''if "analyse" not in RUN_STAGES:
+    GH.STATUS["stage"] = "stopped after data stage (training cohorts incomplete or analysis not requested)"
+    if "SYNC" in globals():
+        SYNC.stop(final=True)
     raise SystemExit("analysis stage skipped (RUN_STAGES / incomplete training cohorts)")
+GH.STATUS["stage"] = "D: RQ1-RQ7 analyses"
 res, summary = P.analyse_all(corpus, CFG, RUN_DIR, OUT_DIR)
 if QUICK_TEST:
     print("QUICK_TEST run: numbers below are a pipeline check only - do not report them.")
@@ -281,9 +298,10 @@ if AUTO_GITHUB_PUSH and (PUSH_QUICK_TEST_RESULTS or not QUICK_TEST):
     n_runs = len(glob.glob(os.path.join(RUN_DIR, "*.npz")))
     note = (f"{'QUICK TEST - pipeline check only, not reportable. ' if QUICK_TEST else ''}"
             f"Cohorts: {corpus.rec.cohort.value_counts().to_dict()}; training runs available: {n_runs}.")
-    GH.push_results(OUT_DIR, GITHUB_REPO, GITHUB_BRANCH,
-                    run_name=_time.strftime("%Y%m%d-%H%M") + ("_quicktest" if QUICK_TEST else ""),
-                    note=note)
+    GH.push_results(OUT_DIR, GITHUB_REPO, GITHUB_BRANCH, run_name=RUN_NAME, note=note)
+GH.STATUS["stage"] = "finished"
+if "SYNC" in globals():
+    SYNC.stop(final=True)                         # last progress snapshot
 '''))
 
 cells.append(md("""## Reporting rules for the manuscript
