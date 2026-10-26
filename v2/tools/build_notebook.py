@@ -7,7 +7,7 @@ import nbformat as nbf
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PKG = os.path.join(ROOT, "sqn2")
 MODULES = ["__init__", "data", "download", "features", "scores", "models", "train",
-           "stats", "analysis", "xai", "report", "figures", "pipeline"]
+           "stats", "analysis", "xai", "report", "figures", "pipeline", "kaggle_io"]
 
 md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
 cells = []
@@ -20,11 +20,14 @@ cells.append(md("""# SleepQualityNet v2 — N3 detection and rule-derived N3 EEG
 3. Computes the **rule-derived factor scores** (delta intensity, slow-wave morphology, spectral dominance, N3 continuity), the **Overall N3 EEG Rating**, a cross-fitted **reliability score**, N3 episodes and the **Overnight N3 EEG Profile**.
 4. Answers RQ1–RQ7 against **pre-specified criteria** (`research_question_results.csv`) and writes figures and tables to `/kaggle/working/outputs`.
 
-**How to run on Kaggle (free tier)**
-* *Settings → Accelerator → **GPU T4 ×2*** (P100 may be unsupported by recent PyTorch builds). *Settings → **Internet ON*** (needs a phone-verified account).
-* First do a **quick test**: set `QUICK_TEST = True`, *Run All* (≈20–30 min) and check that every stage finishes.
-* Then set `QUICK_TEST = False`. Recommended: **two commits**. (1) `RUN_STAGES = ["data"]` — downloads (~90 GB streamed, nothing large kept on disk) and builds the cache; then *Output → New Dataset* from `sqn2_cache`. (2) Attach that dataset, set `PREVIOUS_OUTPUT_DIR`, and `RUN_STAGES = ["train", "analyse"]`. Each commit can run up to 12 h in the background.
-* **Resume / reuse:** after a commit, *Output → New Dataset* from `/kaggle/working/sqn2_cache` (and `runs`). Attach it next time and set `PREVIOUS_OUTPUT_DIR` — finished downloads and training runs are skipped.
+**How to run on Kaggle (free tier) — fully automatic**
+* *Settings → Accelerator → **GPU T4 ×2*** and *Settings → **Internet ON*** (phone-verified account).
+* **One-time:** kaggle.com → *Settings → API → Create New Token* downloads `kaggle.json` (`{"username": ..., "key": ...}`). In this notebook: *Add-ons → Secrets → Add* two secrets, **`KAGGLE_USERNAME`** and **`KAGGLE_KEY`**, with those values, and tick them for this notebook. (Never paste the key into a cell.)
+* Then just **Save Version → Save & Run All (Commit)**, every time:
+  - first run: downloads the data, **automatically saves the cache as your private dataset `sqn2-cache`**, then trains and analyses;
+  - every later run: **restores `sqn2-cache` (and finished training runs from `sqn2-runs`) automatically** — no re-download, no re-training of finished runs.
+* Optional first check: `QUICK_TEST = True` (≈30 min; uses separate `sqn2-runs-quicktest`, so it never mixes with the real runs).
+* Without the secrets everything still works, but the cache stays only in the notebook output.
 
 **Scope of claims.** All scores are rule-derived research-prototype descriptors of the EEG signal. They are *not* clinical sleep quality, not validated against expert quality ratings (none exist in these datasets) and not diagnostic. Synthetic data is never used: if a dataset fails to download the notebook stops or reports it.
 """))
@@ -33,7 +36,10 @@ cells.append(code('''# ============================ CONFIGURATION ==============
 QUICK_TEST = False          # True = small subset for a fast end-to-end check (results NOT reportable)
 TIME_BUDGET_H = 10.0        # stop launching new training runs after this many hours (Kaggle limit 12 h)
 
-RUN_STAGES = ["data", "train", "analyse"]   # e.g. ["data"] first, then ["train", "analyse"]
+RUN_STAGES = ["data", "train", "analyse"]   # normally leave all three
+AUTO_KAGGLE_DATASETS = True    # save/restore private datasets via Kaggle Secrets (see top)
+CACHE_DATASET = "sqn2-cache"   # private dataset holding the compact cache (shared by quick/full)
+RUNS_DATASET = "sqn2-runs"     # private dataset holding finished training runs
 
 # ---- data sources (Sleep-EDF is no longer used) ----
 USE_HMC_PHYSIONET = True              # training cohort (PhysioNet, CC BY 4.0)
@@ -49,13 +55,15 @@ RAW_HMC_DIR = None
 RAW_DODH_DIR = None
 RAW_DODO_DIR = None
 RAW_DOD_SCORERS_DIR = None   # local copy of dreem-learning-evaluation/scorers
-# Optional: output of a previous run of this notebook attached as a dataset (resume)
-PREVIOUS_OUTPUT_DIR = None   # e.g. "/kaggle/input/sqn2-cache"
+# Optional manual resume (not needed when AUTO_KAGGLE_DATASETS works)
+PREVIOUS_OUTPUT_DIR = None
 
 WORK = "/kaggle/working" if __import__("os").path.isdir("/kaggle/working") else "./work"
 CACHE_DIR = f"{WORK}/sqn2_cache"
 RUN_DIR = f"{WORK}/runs"
 OUT_DIR = f"{WORK}/outputs"
+if QUICK_TEST:
+    RUNS_DATASET = RUNS_DATASET + "-quicktest"   # never mix quick-test runs with real runs
 import time as _time; T_START = _time.time()
 print("WORK =", WORK)
 '''))
@@ -90,7 +98,12 @@ The cache log printed below is the **channel audit**: every recording must show 
 
 cells.append(code('''import importlib, shutil, glob, json
 import sqn2
-from sqn2 import data as D, download as DL
+from sqn2 import data as D, download as DL, kaggle_io as KIO
+KUSER = KIO.setup_credentials() if AUTO_KAGGLE_DATASETS else None
+if AUTO_KAGGLE_DATASETS:
+    KIO.pull_dataset(KUSER, CACHE_DATASET, CACHE_DIR)
+    KIO.pull_dataset(KUSER, RUNS_DATASET, RUN_DIR)
+n_cached_before = len(glob.glob(os.path.join(CACHE_DIR, "*.npz")))
 if PREVIOUS_OUTPUT_DIR:
     for sub, dst in (("sqn2_cache", CACHE_DIR), ("runs", RUN_DIR)):
         src = os.path.join(PREVIOUS_OUTPUT_DIR, sub)
@@ -138,6 +151,9 @@ assert len(files) > 0, "No recordings cached - check Internet ON and the downloa
 for coh in ("ISRUC1", "HMC"):
     if not any(os.path.basename(f).startswith(coh + "_") for f in files):
         print(f"WARNING: no {coh} recordings cached - training cohort missing")
+if AUTO_KAGGLE_DATASETS and KUSER and len(files) > n_cached_before:
+    KIO.push_dataset(CACHE_DIR, KUSER, CACHE_DATASET, "SleepQualityNet v2 compact EEG cache",
+                     f"{len(files)} recordings")
 '''))
 
 cells.append(md("## Stage B — corpus, data inventory and channel audit"))
@@ -176,7 +192,14 @@ if QUICK_TEST:
     CFG.update(n_folds=3, max_passes=3, patience=2, mc_passes=3, n_boot=100,
                variants=["full_v2", "cnn_feat_pw"], xai_epochs_per_fold=20)
 if "train" in RUN_STAGES:
-    folds = P.train_all(corpus, CFG, RUN_DIR)
+    n_runs_before = len(glob.glob(os.path.join(RUN_DIR, "*.npz")))
+    try:
+        folds = P.train_all(corpus, CFG, RUN_DIR)
+    finally:   # save finished runs even if training stops early
+        n_runs = len(glob.glob(os.path.join(RUN_DIR, "*.npz")))
+        if AUTO_KAGGLE_DATASETS and KUSER and n_runs > n_runs_before:
+            KIO.push_dataset(RUN_DIR, KUSER, RUNS_DATASET, "SleepQualityNet v2 training runs",
+                             f"{n_runs} runs")
     print(f"training stage finished, elapsed {(_time.time()-T_START)/3600:.2f} h")
 '''))
 
