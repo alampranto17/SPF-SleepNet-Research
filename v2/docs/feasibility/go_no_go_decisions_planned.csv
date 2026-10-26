@@ -1,0 +1,11 @@
+phase,planned_decision,condition
+Binary N3 detection,GO,after Kaggle run meets RQ1 criterion
+Delta Intensity Score,GO_WITH_LIMITATIONS,rule-derived; physiology-referenced validation only
+Slow-Wave Morphology Score,GO_WITH_LIMITATIONS,detector not validated against expert wave marks
+Spectral Dominance Score,GO_WITH_LIMITATIONS,
+N3 Continuity Score,GO_WITH_LIMITATIONS,depends on detector
+Reliability Score,GO,validated against errors and inter-scorer disagreement
+Overall N3 EEG Rating,GO_WITH_LIMITATIONS,prototype; weights are design parameters
+Episode-level rating,GO_WITH_LIMITATIONS,
+Whole-night N3 profile,GO,validated against expert-hypnogram profile
+Clinical sleep-quality claim,NO_GO,no clinical or subjective outcome data

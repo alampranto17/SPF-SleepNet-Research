@@ -1,0 +1,8 @@
+dataset,item,status,impact
+all,expert N3-intensity / slow-wave expression ratings,NOT_AVAILABLE,needed to validate factor scores (see expert_annotation_requirements.md)
+all,arousal / respiratory event labels,NOT_AVAILABLE (not loaded),would allow arousal-based validation like SDI/ORP
+all,"subjective sleep quality, clinical outcomes",NOT_AVAILABLE,clinical claims impossible
+ISRUC-I,diagnoses / age / sex,NOT_VERIFIED,not loaded by this pipeline; availability not verified
+Sleep-EDF,age / sex,AVAILABLE via SC-subjects.xls (downloaded),used for RQ2 age test
+all,clock time of epochs,PARTIALLY_AVAILABLE,crop offset stored; clock time not retained
+all,total sleep time from model,NOT_AVAILABLE,binary N3 model has no sleep/wake output

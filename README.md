@@ -1,3 +1,5 @@
+> **Update (v2, Oct 2026):** see [`v2/`](v2/) for SleepQualityNet v2: Kaggle-ready notebook, channel-verified data pipeline, rule-derived N3 factor profile, and pre-specified RQ1–RQ7 analyses. The v1 results below were affected by an ISRUC channel-selection bug (83/100 subjects read from `E1-M2`); details in [`v2/docs/02_v1_audit_and_supervisor_comments.md`](v2/docs/02_v1_audit_and_supervisor_comments.md).
+
 # SleepQualityNet
 
 ### Dual-Path CNN-Attention Framework for N3 Sleep Detection and EEG-Derived Delta-Intensity Estimation
