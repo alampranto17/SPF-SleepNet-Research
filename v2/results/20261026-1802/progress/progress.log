@@ -237,3 +237,73 @@ ISRUC-III Drive download failed: cannot import name 'DownloadCancelled' from 'gd
     .. ISRUC-III MEGA: 0.00 GB on disk, 2 min
     .. ISRUC-III MEGA: 0.00 GB on disk, 3 min
     .. ISRUC-III MEGA: 0.00 GB on disk, 4 min
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-1802
+    .. ISRUC-III MEGA: 0.00 GB on disk, 5 min
+    .. ISRUC-III MEGA: 0.00 GB on disk, 6 min
+    .. ISRUC-III MEGA: 0.00 GB on disk, 7 min
+    .. ISRUC-III MEGA: 0.00 GB on disk, 8 min
+    .. ISRUC-III MEGA: 0.00 GB on disk, 9 min
+    .. ISRUC-III MEGA: 0.00 GB on disk, 10 min
+    .. ISRUC-III MEGA: 0.00 GB on disk, 11 min
+[ISRUC-III MEGA] no progress for 10 min (MEGA transfer quota?) - stopped; subjects already complete are cached, re-run later for the rest
+[ISRUC-III MEGA] megatools exit -9: WARNING: chunk download failed (Server returned 509 (over quota)), re-trying after 128 seconds | 1.rec: 0.00% - 0 bytes of 148.8 MiB (0 bytes/s) | WARNING: chunk download failed (Server returned 509 (over quota)), re-trying after 256 seconds | 1.rec: 0.00% - 0 bytes of 148.8 MiB (0 bytes/s) | WARNING: chunk download failed (Server returned 509 (over quota)), re-trying after 256 seconds (often the MEGA transfer quota - re-run in a few hours; finished subjects are kept)
+ISRUC-III: 0/10 subjects cached
+[ISRUC details] subgroup I: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[ISRUC details] subgroup II: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[ISRUC details] subgroup III: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[CAP] 108 recordings to cache (~370 MB each; AWS S3 mirror first)
+[CAP 1/108] CAP_ins1.npz: ok ch=C4-A1 fs=256 S3=130 S4=0   (0.4 min, ETA 42 min)
+[CAP 2/108] CAP_brux1.npz: ok ch=C4-A1 fs=512 S3=39 S4=99   (0.5 min, ETA 25 min)
+[CAP 3/108] CAP_brux2.npz: ok ch=C4-A1 fs=256 S3=123 S4=166   (0.5 min, ETA 18 min)
+[CAP 4/108] CAP_ins4.npz: ok ch=C4-A1 fs=512 S3=61 S4=97   (0.9 min, ETA 22 min)
+[CAP 5/108] CAP_ins2.npz: ok ch=C4-A1 fs=512 S3=145 S4=0   (1.1 min, ETA 23 min)
+[CAP 6/108] CAP_ins3.npz: ok ch=C4-A1 fs=256 S3=65 S4=107   (1.4 min, ETA 23 min)
+[CAP 7/108] CAP_ins5.npz: ok ch=C4-A1 fs=512 S3=96 S4=98   (1.5 min, ETA 21 min)
+    .. CAP ins6: 147 MB (31% of 470 MB), 4.8 MB/s
+[CAP 8/108] CAP_ins8.npz: ok ch=C4-A1 fs=512 S3=184 S4=0   (2.0 min, ETA 25 min)
+[CAP 9/108] CAP_ins6.npz: ok ch=C4-A1 fs=512 S3=64 S4=122   (2.4 min, ETA 26 min)
+[CAP 10/108] CAP_ins7.npz: ok ch=C4-A1 fs=512 S3=64 S4=61   (2.9 min, ETA 29 min)
+[CAP 11/108] CAP_n2.npz: ok ch=C4-A1 fs=512 S3=83 S4=114   (3.6 min, ETA 32 min)
+[CAP 12/108] CAP_n1.npz: ok ch=C4-A1 fs=512 S3=135 S4=186   (3.8 min, ETA 31 min)
+[CAP 13/108] CAP_ins9.npz: ok ch=C4-A1 fs=512 S3=51 S4=37   (3.9 min, ETA 29 min)
+    .. CAP n5: 403 MB (77% of 523 MB), 13.4 MB/s
+[CAP 14/108] CAP_n3.npz: ok ch=C4-A1 fs=512 S3=112 S4=167   (5.0 min, ETA 34 min)
+[CAP 15/108] CAP_n4.npz: ok ch=C4-A1 fs=200 S3=63 S4=76   (5.0 min, ETA 31 min)
+[CAP 16/108] CAP_n6.npz: ok ch=C3-A2 fs=128 S3=94 S4=112   (5.1 min, ETA 29 min)
+[CAP 17/108] CAP_n7.npz: ok ch=C3-A2 fs=128 S3=62 S4=183   (5.1 min, ETA 27 min)
+[CAP 18/108] CAP_n9.npz: ok ch=C3-A2 fs=128 S3=55 S4=121   (5.2 min, ETA 26 min)
+[CAP 19/108] CAP_n8.npz: ok ch=C3-A2 fs=200 S3=84 S4=140   (5.6 min, ETA 26 min)
+[CAP 20/108] CAP_n10.npz: ok ch=C4-A1 fs=512 S3=45 S4=263   (5.7 min, ETA 25 min)
+[CAP 21/108] CAP_n12.npz: ok ch=C4-A1 fs=100 S3=73 S4=155   (5.7 min, ETA 24 min)
+[CAP 22/108] CAP_n13.npz: ok ch=C4A1 fs=200 S3=40 S4=99   (5.9 min, ETA 23 min)
+[CAP 23/108] CAP_n14.npz: ok ch=C4A1 fs=200 S3=146 S4=131   (6.1 min, ETA 22 min)
+[CAP 24/108] CAP_n5.npz: ok ch=C4-A1 fs=512 S3=134 S4=169   (6.1 min, ETA 21 min)
+[CAP 25/108] CAP_n16.npz: ok ch=C4-A1 fs=100 S3=113 S4=153   (6.1 min, ETA 20 min)
+[CAP 26/108] CAP_n11.npz: ok ch=C4-A1 fs=512 S3=61 S4=282   (6.2 min, ETA 19 min)
+[CAP 27/108] CAP_n15.npz: ok ch=C4A1 fs=200 S3=144 S4=74   (6.2 min, ETA 19 min)
+[CAP 28/108] CAP_narco1.npz: ok ch=C4-A1 fs=512 S3=137 S4=117   (6.7 min, ETA 19 min)
+[CAP 29/108] CAP_narco3.npz: ok ch=C4-A1 fs=512 S3=57 S4=113   (6.8 min, ETA 19 min)
+[CAP 30/108] CAP_narco2.npz: ok ch=C4-A1 fs=512 S3=92 S4=96   (7.0 min, ETA 18 min)
+[CAP 31/108] CAP_narco5.npz: ok ch=C4-A1 fs=512 S3=62 S4=24   (7.2 min, ETA 18 min)
+    .. CAP narco4: 309 MB (57% of 544 MB), 10.3 MB/s
+[CAP 32/108] CAP_nfle1.npz: ok ch=C4-A1 fs=512 S3=76 S4=203   (7.6 min, ETA 18 min)
+    .. CAP narco4: 361 MB (66% of 544 MB), 6.0 MB/s
+[CAP 33/108] CAP_nfle2.npz: ok ch=C4-A1 fs=512 S3=94 S4=149   (8.0 min, ETA 18 min)
+[CAP 34/108] CAP_nfle3.npz: ok ch=C4-A1 fs=512 S3=49 S4=160   (8.2 min, ETA 18 min)
+    .. CAP narco4: 432 MB (79% of 544 MB), 4.7 MB/s
+[CAP 35/108] CAP_nfle4.npz: ok ch=C4-A1 fs=512 S3=122 S4=212   (8.6 min, ETA 18 min)
+    .. CAP narco4: 497 MB (91% of 544 MB), 4.1 MB/s
+[CAP 36/108] CAP_nfle5.npz: ok ch=C4-A1 fs=512 S3=165 S4=84   (8.8 min, ETA 18 min)
+[CAP 37/108] CAP_narco4.npz: ok ch=C4-A1 fs=512 S3=121 S4=214   (9.3 min, ETA 18 min)
+[CAP 38/108] CAP_nfle7.npz: ok ch=C4-A1 fs=512 S3=202 S4=259   (9.6 min, ETA 18 min)
+[CAP 39/108] CAP_nfle8.npz: ok ch=C4-A1 fs=256 S3=181 S4=243   (9.8 min, ETA 17 min)
+[CAP 40/108] CAP_nfle9.npz: ok ch=C4-A1 fs=512 S3=44 S4=137   (10.4 min, ETA 18 min)
+[CAP 41/108] CAP_nfle10.npz: ok ch=C4-A1 fs=256 S3=70 S4=160   (10.9 min, ETA 18 min)
+[CAP 42/108] CAP_nfle11.npz: ok ch=C4-A1 fs=256 S3=215 S4=151   (10.9 min, ETA 17 min)
+[CAP 43/108] CAP_nfle6.npz: ok ch=C4-A1 fs=256 S3=140 S4=96   (10.9 min, ETA 17 min)
+[CAP 44/108] CAP_nfle12.npz: ok ch=C4-A1 fs=512 S3=96 S4=145   (11.7 min, ETA 17 min)
+[CAP 45/108] CAP_nfle13.npz: ok ch=C4-A1 fs=512 S3=128 S4=158   (12.1 min, ETA 17 min)
+[CAP 46/108] CAP_nfle14.npz: ok ch=C4-A1 fs=512 S3=47 S4=115   (12.2 min, ETA 16 min)
+[CAP 47/108] CAP_nfle16.npz: ok ch=C4-A1 fs=512 S3=131 S4=217   (12.7 min, ETA 16 min)
+[CAP 48/108] CAP_nfle17.npz: ok ch=C4-A1 fs=512 S3=77 S4=120   (12.8 min, ETA 16 min)
+[CAP 49/108] CAP_nfle15.npz: ok ch=C4-A1 fs=512 S3=137 S4=137   (12.9 min, ETA 16 min)
