@@ -15,15 +15,15 @@ cells = []
 cells.append(md("""# SleepQualityNet v2 — N3 detection and rule-derived N3 EEG factor profile (Kaggle)
 
 **What this notebook does (end to end, no manual data upload needed):**
-1. Downloads Sleep-EDF Expanded (PhysioNet), ISRUC-Sleep subgroup I and III (official server / Google Drive) and converts each recording to a compact cache (verified EEG channel only, 100 Hz, *all* epochs kept in chronological order, v1 QC rules stored as flags).
-2. Trains the detection model and all ablation variants with **5-fold participant-grouped CV** (inner-validation early stopping and threshold selection — the outer test fold is never used for selection), leave-one-cohort-out models, and evaluates ISRUC-III as an external cohort.
+1. Downloads **HMC** (PhysioNet, ~150 clinical PSGs, AASM v2.4), **ISRUC-Sleep subgroups I/II/III** (official server; II = 8 people × 2 sessions) and **Dreem DOD-H / DOD-O** (Zenodo; 80 recordings scored by 5 experts each), and converts each recording to a compact cache (verified central EEG channel only, 100 Hz, *all* epochs kept in chronological order, every expert's hypnogram, v1 QC rules stored as flags).
+2. Trains the detection model and all ablation variants with **5-fold participant-grouped CV on ISRUC-I + HMC** (inner-validation early stopping and threshold selection — the outer test fold is never used for selection), leave-one-cohort-out models, and evaluates ISRUC-II, ISRUC-III, DOD-H and DOD-O as **external** cohorts.
 3. Computes the **rule-derived factor scores** (delta intensity, slow-wave morphology, spectral dominance, N3 continuity), the **Overall N3 EEG Rating**, a cross-fitted **reliability score**, N3 episodes and the **Overnight N3 EEG Profile**.
 4. Answers RQ1–RQ7 against **pre-specified criteria** (`research_question_results.csv`) and writes figures and tables to `/kaggle/working/outputs`.
 
 **How to run on Kaggle (free tier)**
 * *Settings → Accelerator → **GPU T4 ×2*** (P100 may be unsupported by recent PyTorch builds). *Settings → **Internet ON*** (needs a phone-verified account).
 * First do a **quick test**: set `QUICK_TEST = True`, *Run All* (≈20–30 min) and check that every stage finishes.
-* Then set `QUICK_TEST = False` and use **Save Version → Save & Run All (Commit)**. The commit runs in the background for up to 12 h; outputs are saved with the version.
+* Then set `QUICK_TEST = False`. Recommended: **two commits**. (1) `RUN_STAGES = ["data"]` — downloads (~90 GB streamed, nothing large kept on disk) and builds the cache; then *Output → New Dataset* from `sqn2_cache`. (2) Attach that dataset, set `PREVIOUS_OUTPUT_DIR`, and `RUN_STAGES = ["train", "analyse"]`. Each commit can run up to 12 h in the background.
 * **Resume / reuse:** after a commit, *Output → New Dataset* from `/kaggle/working/sqn2_cache` (and `runs`). Attach it next time and set `PREVIOUS_OUTPUT_DIR` — finished downloads and training runs are skipped.
 
 **Scope of claims.** All scores are rule-derived research-prototype descriptors of the EEG signal. They are *not* clinical sleep quality, not validated against expert quality ratings (none exist in these datasets) and not diagnostic. Synthetic data is never used: if a dataset fails to download the notebook stops or reports it.
@@ -33,17 +33,24 @@ cells.append(code('''# ============================ CONFIGURATION ==============
 QUICK_TEST = False          # True = small subset for a fast end-to-end check (results NOT reportable)
 TIME_BUDGET_H = 10.0        # stop launching new training runs after this many hours (Kaggle limit 12 h)
 
-# ---- data sources ----
-USE_SLEEP_EDF_PHYSIONET = True        # official PhysioNet download (sleep-cassette, night 1 + night 2)
-USE_ISRUC1_OFFICIAL = True            # official ISRUC server (.rar per subject)
+RUN_STAGES = ["data", "train", "analyse"]   # e.g. ["data"] first, then ["train", "analyse"]
+
+# ---- data sources (Sleep-EDF is no longer used) ----
+USE_HMC_PHYSIONET = True              # training cohort (PhysioNet, CC BY 4.0)
+USE_ISRUC_OFFICIAL = True             # ISRUC subgroups I (training), II and III (external)
 ISRUC3_DRIVE_FOLDER = "https://drive.google.com/drive/folders/1b4Df79NxyiOiYjG83bk2c9tGKXVDpZ5F"
-USE_ISRUC3_OFFICIAL_FALLBACK = True   # used if the Drive folder is not shared publicly
+USE_DOD_ZENODO = True                 # Dreem DOD-H / DOD-O, 5 scorers (external)
+DOD_ALLOW_FULL_ZIP_DOWNLOAD = False   # only if range streaming fails AND disk has ~40 GB free
 # Optional: raw folders already attached as Kaggle datasets (leave None to download)
-RAW_ISRUC1_DIR = None     # e.g. "/kaggle/input/isruc-sleep-subgroup-1"
+RAW_ISRUC1_DIR = None
+RAW_ISRUC2_DIR = None
 RAW_ISRUC3_DIR = None
-RAW_SLEEP_EDF_DIR = None
+RAW_HMC_DIR = None
+RAW_DODH_DIR = None
+RAW_DODO_DIR = None
+RAW_DOD_SCORERS_DIR = None   # local copy of dreem-learning-evaluation/scorers
 # Optional: output of a previous run of this notebook attached as a dataset (resume)
-PREVIOUS_OUTPUT_DIR = None   # e.g. "/kaggle/input/sqn2-previous-run"
+PREVIOUS_OUTPUT_DIR = None   # e.g. "/kaggle/input/sqn2-cache"
 
 WORK = "/kaggle/working" if __import__("os").path.isdir("/kaggle/working") else "./work"
 CACHE_DIR = f"{WORK}/sqn2_cache"
@@ -58,7 +65,8 @@ import subprocess, sys, importlib, os
 def _pip(*pkgs):
     subprocess.run([sys.executable, "-m", "pip", "install", "-q", *pkgs], check=False)
 for mod, pkg in [("mne", "mne"), ("gdown", "gdown"), ("shap", "shap"), ("xlrd", "xlrd"),
-                 ("openpyxl", "openpyxl"), ("pyarrow", "pyarrow")]:
+                 ("openpyxl", "openpyxl"), ("pyarrow", "pyarrow"), ("h5py", "h5py"),
+                 ("remotezip", "remotezip")]:
     if importlib.util.find_spec(mod) is None:
         _pip(pkg)
 import torch, numpy as np, pandas as pd
@@ -78,7 +86,7 @@ for m in MODULES:
 
 cells.append(md("""## Stage A — data acquisition and compact cache
 Each recording is processed and deleted immediately after caching, so disk use stays small. Finished recordings are skipped on re-runs.
-The cache log printed below is the **channel audit**: every ISRUC recording must show a central EEG derivation (C4-A1/C4-M1 or C3-A2/C3-M2); recordings without one are skipped (never an EOG fallback)."""))
+The cache log printed below is the **channel audit**: every recording must show a central EEG derivation (C4-A1/C4-M1 or C3-A2/C3-M2); recordings without one are skipped (never an EOG fallback). DOD records are streamed from the remote zip one at a time (HTTP range requests)."""))
 
 cells.append(code('''import importlib, shutil, glob, json
 import sqn2
@@ -91,38 +99,45 @@ if PREVIOUS_OUTPUT_DIR:
                 if not os.path.exists(os.path.join(dst, os.path.basename(f))):
                     shutil.copy2(f, dst)
             print("resumed", sub, "from", src)
-n_sedf = 12 if QUICK_TEST else None
-isruc1_ids = list(range(1, 9)) if QUICK_TEST else list(range(1, 101))
-isruc3_ids = [1, 2] if QUICK_TEST else list(range(1, 11))
-
-if RAW_SLEEP_EDF_DIR or RAW_ISRUC1_DIR or RAW_ISRUC3_DIR:
-    D.build_cache(CACHE_DIR, RAW_ISRUC1_DIR, RAW_ISRUC3_DIR, RAW_SLEEP_EDF_DIR)
-if USE_SLEEP_EDF_PHYSIONET and not RAW_SLEEP_EDF_DIR:
-    DL.cache_sleep_edf_physionet(CACHE_DIR, include_night2=True, max_recordings=n_sedf)
-if USE_ISRUC1_OFFICIAL and not RAW_ISRUC1_DIR:
-    try:
-        DL.cache_isruc_official(CACHE_DIR, "I", isruc1_ids)
-    except Exception as exc:
-        print("ISRUC-I official download failed:", exc)
-if not RAW_ISRUC3_DIR:
-    n3 = len(glob.glob(os.path.join(CACHE_DIR, "ISRUC3_*.npz")))
-    if n3 < len(isruc3_ids) and ISRUC3_DRIVE_FOLDER:
+if "data" in RUN_STAGES:
+    q = QUICK_TEST
+    if any([RAW_ISRUC1_DIR, RAW_ISRUC2_DIR, RAW_ISRUC3_DIR, RAW_HMC_DIR, RAW_DODH_DIR, RAW_DODO_DIR]):
+        D.build_cache(CACHE_DIR, RAW_ISRUC1_DIR, RAW_ISRUC2_DIR, RAW_ISRUC3_DIR, RAW_HMC_DIR,
+                      dodh=RAW_DODH_DIR, dodo=RAW_DODO_DIR, dod_scorers=RAW_DOD_SCORERS_DIR)
+    if USE_HMC_PHYSIONET and not RAW_HMC_DIR:
+        DL.cache_hmc_physionet(CACHE_DIR, max_recordings=10 if q else None)
+    if USE_ISRUC_OFFICIAL:
+        DL.cache_isruc_details(CACHE_DIR)
+        for grp, raw_dir, ids in (("I", RAW_ISRUC1_DIR, range(1, 9) if q else range(1, 101)),
+                                  ("II", RAW_ISRUC2_DIR, range(1, 3) if q else range(1, 9)),
+                                  ("III", RAW_ISRUC3_DIR, range(1, 3) if q else range(1, 11))):
+            if raw_dir:
+                continue
+            try:
+                DL.cache_isruc_official(CACHE_DIR, grp, list(ids))
+            except Exception as exc:
+                print(f"ISRUC-{grp} official download failed:", exc)
+    if ISRUC3_DRIVE_FOLDER and not RAW_ISRUC3_DIR and \
+            len(glob.glob(os.path.join(CACHE_DIR, "ISRUC3_*.npz"))) < (2 if QUICK_TEST else 10):
         try:
             DL.cache_isruc_from_drive_folder(ISRUC3_DRIVE_FOLDER, CACHE_DIR, "III")
         except Exception as exc:
-            print("ISRUC-III Drive download failed (is the folder shared 'Anyone with the link'?):", exc)
-    n3 = len(glob.glob(os.path.join(CACHE_DIR, "ISRUC3_*.npz")))
-    if n3 < len(isruc3_ids) and USE_ISRUC3_OFFICIAL_FALLBACK:
+            print("ISRUC-III Drive download failed (share the folder 'Anyone with the link'):", exc)
+    if USE_DOD_ZENODO and not (RAW_DODH_DIR or RAW_DODO_DIR):
         try:
-            DL.cache_isruc_official(CACHE_DIR, "III", isruc3_ids)
+            DL.cache_dod(CACHE_DIR, max_recordings=3 if q else None,
+                         allow_full_download=DOD_ALLOW_FULL_ZIP_DOWNLOAD)
         except Exception as exc:
-            print("ISRUC-III official download failed:", exc)
+            print("DOD download failed:", exc)
 files = sorted(glob.glob(os.path.join(CACHE_DIR, "*.npz")))
 by = pd.Series([os.path.basename(f).split("_")[0] for f in files]).value_counts()
 print("\\ncached recordings:", by.to_dict(), f"| total {len(files)}",
       f"| cache size {sum(os.path.getsize(f) for f in files)/1e9:.2f} GB",
       f"| elapsed {(_time.time()-T_START)/60:.1f} min")
 assert len(files) > 0, "No recordings cached - check Internet ON and the download messages above."
+for coh in ("ISRUC1", "HMC"):
+    if not any(os.path.basename(f).startswith(coh + "_") for f in files):
+        print(f"WARNING: no {coh} recordings cached - training cohort missing")
 '''))
 
 cells.append(md("## Stage B — corpus, data inventory and channel audit"))
@@ -151,6 +166,8 @@ Order: the primary model (`full_v2`) on all folds first, then the ablation varia
 | cnn_feat_pw (v1 design) | ✓ | ✓ | ✓ | – |
 | cnn_feat_pw_noattn | ✓ | ✓ | mean pool | – |
 | **full_v2** | ✓ | ✓ | ✓ | ✓ |
+
+Training cohorts: ISRUC-I + HMC. External (never trained on): ISRUC-II, ISRUC-III, DOD-H, DOD-O.
 """))
 cells.append(code('''from sqn2 import pipeline as P
 CFG = dict(P.DEFAULT_CFG)
@@ -158,12 +175,15 @@ CFG.update(time_budget_h=TIME_BUDGET_H, _t_start=T_START, verbose=False)
 if QUICK_TEST:
     CFG.update(n_folds=3, max_passes=3, patience=2, mc_passes=3, n_boot=100,
                variants=["full_v2", "cnn_feat_pw"], xai_epochs_per_fold=20)
-folds = P.train_all(corpus, CFG, RUN_DIR)
-print(f"training stage finished, elapsed {(_time.time()-T_START)/3600:.2f} h")
+if "train" in RUN_STAGES:
+    folds = P.train_all(corpus, CFG, RUN_DIR)
+    print(f"training stage finished, elapsed {(_time.time()-T_START)/3600:.2f} h")
 '''))
 
 cells.append(md("## Stage D — RQ1–RQ7 analyses against pre-specified criteria"))
-cells.append(code('''res, summary = P.analyse_all(corpus, CFG, RUN_DIR, OUT_DIR)
+cells.append(code('''if "analyse" not in RUN_STAGES:
+    raise SystemExit("analysis stage not requested (RUN_STAGES)")
+res, summary = P.analyse_all(corpus, CFG, RUN_DIR, OUT_DIR)
 if QUICK_TEST:
     print("QUICK_TEST run: numbers below are a pipeline check only - do not report them.")
 display(summary)
@@ -171,6 +191,8 @@ display(pd.read_csv(os.path.join(OUT_DIR, "go_no_go_decisions.csv")))
 display(pd.read_csv(os.path.join(OUT_DIR, "rq1_detection_metrics.csv")))
 display(pd.read_csv(os.path.join(OUT_DIR, "rq1_interrater_benchmark.csv")))
 display(pd.read_csv(os.path.join(OUT_DIR, "rq4_component_effects.csv")))
+display(pd.read_csv(os.path.join(OUT_DIR, "rq2_factor_validity.csv")))
+display(pd.read_csv(os.path.join(OUT_DIR, "rq6_reliability_components.csv")))
 display(pd.read_csv(os.path.join(OUT_DIR, "rq7_profile_agreement.csv")))
 '''))
 

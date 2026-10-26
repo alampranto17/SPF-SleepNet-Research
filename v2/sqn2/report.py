@@ -21,7 +21,7 @@ def data_inventory(corpus, out_dir):
         e = ep[ep.cohort == coh]
         parts = g.participant.unique()
         has_age = sum(1 for p in parts if p in pm and pm[p].get("age") == pm[p].get("age"))
-        lab2 = (e.label2 >= 0).any()
+        nr = int(g.n_raters.max()) if "n_raters" in g else 1
         rows += [
             (coh, "participants", "AVAILABLE", f"{len(parts)}", "cache meta.participant"),
             (coh, "recordings", "AVAILABLE", f"{len(g)}", "cache meta.recording"),
@@ -36,12 +36,12 @@ def data_inventory(corpus, out_dir):
              f"native {sorted(g.native_fs.unique())} Hz -> analysed at {D.TARGET_FS} Hz", "meta.native_fs"),
             (coh, "sleep-stage labels (scorer 1)", "AVAILABLE",
              f"{int((e.label >= 0).sum()):,} scored epochs", "npz labels"),
-            (coh, "second scorer labels", "AVAILABLE" if lab2 else "NOT_AVAILABLE",
-             f"{int((e.label2 >= 0).sum()):,} epochs" if lab2 else "", "npz labels2"),
+            (coh, "independent expert scorers", "AVAILABLE" if nr >= 2 else "NOT_AVAILABLE",
+             f"{nr} scorer(s); reference = {g.reference.iloc[0] if 'reference' in g else ''}",
+             "npz labels_multi"),
             (coh, "arousal labels", "NOT_AVAILABLE", "not loaded by this pipeline", ""),
             (coh, "respiratory-event labels", "NOT_AVAILABLE", "not loaded by this pipeline", ""),
-            (coh, "movement-event labels", "PARTIALLY_AVAILABLE" if coh == "Sleep-EDF" else "NOT_VERIFIED",
-             "movement-time epochs mapped to unscored (-1)", "STAGE_MAP_*"),
+            (coh, "movement-event labels", "NOT_VERIFIED", "not loaded; unscored epochs = -1", ""),
             (coh, "sleep efficiency / TST / WASO", "PARTIALLY_AVAILABLE",
              "derivable from the expert hypnogram only (no sleep/wake model)", "labels"),
             (coh, "subjective sleep-quality scores", "NOT_AVAILABLE", "", ""),
@@ -61,11 +61,12 @@ def methods_parameters(cfg, out_dir):
         ("Model band-pass", "0.3-35 Hz, 4th-order Butterworth, zero-phase, whole recording", ""),
         ("QC band-pass", "0.5-45 Hz (or 0.95*Nyquist), 4th-order Butterworth, zero-phase", ""),
         ("Epoch length", f"{D.EPOCH_SEC} s ({D.EPOCH_SAMPLES} samples)", ""),
-        ("ISRUC EEG derivation", "C4-A1 = C4-M1 (priority), then C3-A2 = C3-M2; no non-EEG fallback",
-         "A1/M1 are the same mastoid reference"),
-        ("Sleep-EDF derivation", "Fpz-Cz only", ""),
-        ("Sleep-EDF analysis window", "first scored sleep - 30 min to last scored sleep + 30 min", ""),
-        ("Stage mapping", "R&K S3+S4 -> N3; movement/unknown -> unscored (excluded from loss/metrics)", ""),
+        ("EEG derivation (all cohorts)", "C4-A1 = C4-M1 (priority), then C3-A2 = C3-M2; no non-EEG "
+         "fallback", "A1/M1 are the same mastoid reference"),
+        ("HMC analysis window", "first to last scored epoch (AASM v2.4 technician scoring)", ""),
+        ("DOD reference label", "majority vote of 5 scorers; ties -> scorer with highest mean agreement; "
+         "record 5d8e93a5 (no consensus) excluded", "Guillot et al. 2020"),
+        ("Stage mapping", "ISRUC code 4 (old S4) -> N3; unscored/movement -> -1 (excluded from loss/metrics)", ""),
         ("QC flag: amplitude", "max |x| > 300 uV", "v1 rule, stored as flag_artifact"),
         ("QC flag: z-score", "max |x - mean| / SD > 5", "v1 rule"),
         ("QC flag: HF vs delta", "P(30-40 Hz) > 0.5 * P(0.5-4 Hz)", "v1 rule"),
@@ -104,8 +105,9 @@ def methods_parameters(cfg, out_dir):
          "design parameters, not clinically established"),
         ("Continuity window", f"+/-{SC.CONTINUITY_HALF_WINDOW} epochs", ""),
         ("N3 episode", "runs of predicted N3 merged across gaps <= 2 epochs; >= 2 N3 epochs", ""),
-        ("Cross-validation", "5 folds by participant, stratified by cohort; Sleep-EDF night-2 recordings "
-         "evaluated in the participant's test fold only (never trained on)", ""),
+        ("Cross-validation", "5 folds by participant (ISRUC-I + HMC), stratified by cohort", ""),
+        ("External cohorts", "ISRUC-II (test-retest), ISRUC-III, DOD-H, DOD-O: never used for training, "
+         "selection or thresholds; predicted by the 5-fold model ensemble", ""),
         ("Seed", f"{cfg['seed']} (per-fold seed derived deterministically)", ""),
     ]
     df = pd.DataFrame(rows, columns=["parameter", "value", "note"])

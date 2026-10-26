@@ -18,17 +18,23 @@
 1. **An N3-specific, factor-decomposed EEG profile from one channel.** It produces delta intensity, slow-wave morphology (threshold-free amplitude and slope plus AASM coverage), spectral dominance and continuity scores, plus an exactly additive overall rating, only for detected N3 epochs. The literature has general depth scales (SDI, ORP) and single biomarkers (SWA, density), but not this decomposition integrated with detection.
 2. **Validation against references independent of the score's construction:**
    - within-night homeostatic decline;
-   - **inter-scorer disagreement**: ambiguous N2/N3 epochs (ISRUC scorer 1 vs scorer 2) should fall between consensus N2 and consensus N3;
-   - **night-to-night reproducibility** against conventional N3 minutes;
+   - **graded expert agreement**: scores should rise with the fraction of experts (ISRUC 2, DOD 5) who scored the epoch N3;
+   - **test–retest reproducibility** (ISRUC-II, two sessions) against conventional N3 minutes;
    - agreement of the predicted overnight profile with the expert-hypnogram profile.
 3. **A reliability score validated against human disagreement**, with signal quality, model confidence and OOD distance reported separately rather than merged without justification.
-4. **Heterogeneous cross-montage evaluation** (C4-M1 clinical cohort and Fpz-Cz healthy cohort), with leave-one-cohort-out models, an external ISRUC-III cohort and a channel-verified data pipeline.
+4. **Multi-site, multi-device external evaluation.** Training on ISRUC-I (Portugal) + HMC (Netherlands); testing on ISRUC-II/III and Dreem DOD-H/O (France, different PSG devices), with leave-one-cohort-out models and a channel-verified pipeline.
+5. **Graded expert-agreement validation.** On DOD, five experts score every epoch. The factor scores and the reliability score are tested against the *fraction* of experts voting N3, a graded human reference that two-scorer datasets cannot provide.
 
 ## 3. Claims to avoid
 - "First continuous sleep-depth / sleep-quality score" (SDI, ORP, ECG-SDI exist).
 - "Clinically validated", "restorative", "diagnostic", "sleep quality".
 - "Outperforms state of the art" unless an identical protocol is used. Report the published N3 F1 values as context only.
 - "Attention explains the decision" or "causal evidence". Use "perturbation sensitivity" and "attribution".
+
+## Datasets
+- HMC sleep staging database (PhysioNet) — https://physionet.org/content/hmc-sleep-staging/
+- Dreem Open Datasets, Guillot et al. 2020 — https://arxiv.org/pdf/1911.03221 ; Zenodo record — https://zenodo.org/records/15900394
+- ISRUC-Sleep — https://sleeptight.isr.uc.pt/
 
 ## Sources
 - Zhou et al., Continuous Sleep Depth Index Annotation with Deep Learning… — https://arxiv.org/html/2407.04753v2 ; https://www.nature.com/articles/s41746-025-01607-0
