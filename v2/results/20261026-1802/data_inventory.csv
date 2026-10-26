@@ -1,0 +1,86 @@
+dataset,field,status,detail,source
+CAP,participants,AVAILABLE,106,cache meta.participant
+CAP,recordings,AVAILABLE,106,cache meta.recording
+CAP,nights,AVAILABLE,1,meta.night
+CAP,continuous recording / epoch order,AVAILABLE,all epochs of the analysis window kept with epoch_index,npz epoch_index
+CAP,recording start/end,PARTIALLY_AVAILABLE,crop offset (s) relative to file start; clock time not retained,meta.crop_start_s
+CAP,EEG channel,AVAILABLE,"C4-A1:99, C3-A2:4, C4A1:3",meta.channel_raw
+CAP,sampling frequency,AVAILABLE,"native [np.float64(100.0), np.float64(128.0), np.float64(200.0), np.float64(256.0), np.float64(512.0)] Hz -> analysed at 100 Hz",meta.native_fs
+CAP,sleep-stage labels (scorer 1),AVAILABLE,"105,915 scored epochs",npz labels
+CAP,independent expert scorers,NOT_AVAILABLE,"1 scorer(s); reference = single scorer, Rechtschaffen & Kales (S3 and S4 separate)",npz labels_multi
+CAP,arousal labels,NOT_AVAILABLE,not loaded by this pipeline,
+CAP,respiratory-event labels,NOT_AVAILABLE,not loaded by this pipeline,
+CAP,movement-event labels,NOT_VERIFIED,not loaded; unscored epochs = -1,
+CAP,sleep efficiency / TST / WASO,PARTIALLY_AVAILABLE,derivable from the expert hypnogram only (no sleep/wake model),labels
+CAP,subjective sleep-quality scores,NOT_AVAILABLE,,
+CAP,clinical diagnoses,NOT_VERIFIED,not loaded,
+CAP,age / sex,NOT_AVAILABLE,0/106 participants; diagnosis group from record name; age/sex not loaded,participant_metadata.json
+CAP,medication / health outcomes,NOT_AVAILABLE,,
+DOD-H,participants,AVAILABLE,25,cache meta.participant
+DOD-H,recordings,AVAILABLE,25,cache meta.recording
+DOD-H,nights,AVAILABLE,1,meta.night
+DOD-H,continuous recording / epoch order,AVAILABLE,all epochs of the analysis window kept with epoch_index,npz epoch_index
+DOD-H,recording start/end,PARTIALLY_AVAILABLE,crop offset (s) relative to file start; clock time not retained,meta.crop_start_s
+DOD-H,EEG channel,AVAILABLE,C3_M2:25,meta.channel_raw
+DOD-H,sampling frequency,AVAILABLE,native [np.float64(250.0)] Hz -> analysed at 100 Hz,meta.native_fs
+DOD-H,sleep-stage labels (scorer 1),AVAILABLE,"24,665 scored epochs",npz labels
+DOD-H,independent expert scorers,AVAILABLE,5 scorer(s); reference = consensus of 5 scorers,npz labels_multi
+DOD-H,arousal labels,NOT_AVAILABLE,not loaded by this pipeline,
+DOD-H,respiratory-event labels,NOT_AVAILABLE,not loaded by this pipeline,
+DOD-H,movement-event labels,NOT_VERIFIED,not loaded; unscored epochs = -1,
+DOD-H,sleep efficiency / TST / WASO,PARTIALLY_AVAILABLE,derivable from the expert hypnogram only (no sleep/wake model),labels
+DOD-H,subjective sleep-quality scores,NOT_AVAILABLE,,
+DOD-H,clinical diagnoses,NOT_VERIFIED,not loaded,
+DOD-H,age / sex,NOT_AVAILABLE,0/25 participants; NOT_VERIFIED per participant (cohort-level demographics in paper),participant_metadata.json
+DOD-H,medication / health outcomes,NOT_AVAILABLE,,
+DOD-O,participants,AVAILABLE,55,cache meta.participant
+DOD-O,recordings,AVAILABLE,55,cache meta.recording
+DOD-O,nights,AVAILABLE,1,meta.night
+DOD-O,continuous recording / epoch order,AVAILABLE,all epochs of the analysis window kept with epoch_index,npz epoch_index
+DOD-O,recording start/end,PARTIALLY_AVAILABLE,crop offset (s) relative to file start; clock time not retained,meta.crop_start_s
+DOD-O,EEG channel,AVAILABLE,C4_M1:55,meta.channel_raw
+DOD-O,sampling frequency,AVAILABLE,native [np.float64(250.0)] Hz -> analysed at 100 Hz,meta.native_fs
+DOD-O,sleep-stage labels (scorer 1),AVAILABLE,"53,236 scored epochs",npz labels
+DOD-O,independent expert scorers,AVAILABLE,5 scorer(s); reference = consensus of 5 scorers,npz labels_multi
+DOD-O,arousal labels,NOT_AVAILABLE,not loaded by this pipeline,
+DOD-O,respiratory-event labels,NOT_AVAILABLE,not loaded by this pipeline,
+DOD-O,movement-event labels,NOT_VERIFIED,not loaded; unscored epochs = -1,
+DOD-O,sleep efficiency / TST / WASO,PARTIALLY_AVAILABLE,derivable from the expert hypnogram only (no sleep/wake model),labels
+DOD-O,subjective sleep-quality scores,NOT_AVAILABLE,,
+DOD-O,clinical diagnoses,NOT_VERIFIED,not loaded,
+DOD-O,age / sex,NOT_AVAILABLE,0/55 participants; NOT_VERIFIED per participant (cohort-level demographics in paper),participant_metadata.json
+DOD-O,medication / health outcomes,NOT_AVAILABLE,,
+HMC,participants,AVAILABLE,151,cache meta.participant
+HMC,recordings,AVAILABLE,151,cache meta.recording
+HMC,nights,AVAILABLE,1,meta.night
+HMC,continuous recording / epoch order,AVAILABLE,all epochs of the analysis window kept with epoch_index,npz epoch_index
+HMC,recording start/end,PARTIALLY_AVAILABLE,crop offset (s) relative to file start; clock time not retained,meta.crop_start_s
+HMC,EEG channel,AVAILABLE,C4-M1:151,meta.channel_raw
+HMC,sampling frequency,AVAILABLE,native [np.float64(256.0)] Hz -> analysed at 100 Hz,meta.native_fs
+HMC,sleep-stage labels (scorer 1),AVAILABLE,"137,243 scored epochs",npz labels
+HMC,independent expert scorers,NOT_AVAILABLE,1 scorer(s); reference = single technician (AASM v2.4),npz labels_multi
+HMC,arousal labels,NOT_AVAILABLE,not loaded by this pipeline,
+HMC,respiratory-event labels,NOT_AVAILABLE,not loaded by this pipeline,
+HMC,movement-event labels,NOT_VERIFIED,not loaded; unscored epochs = -1,
+HMC,sleep efficiency / TST / WASO,PARTIALLY_AVAILABLE,derivable from the expert hypnogram only (no sleep/wake model),labels
+HMC,subjective sleep-quality scores,NOT_AVAILABLE,,
+HMC,clinical diagnoses,NOT_VERIFIED,not loaded,
+HMC,age / sex,NOT_AVAILABLE,0/151 participants; NOT_AVAILABLE per participant (aggregated demographics only),participant_metadata.json
+HMC,medication / health outcomes,NOT_AVAILABLE,,
+ISRUC-I,participants,AVAILABLE,35,cache meta.participant
+ISRUC-I,recordings,AVAILABLE,35,cache meta.recording
+ISRUC-I,nights,AVAILABLE,1,meta.night
+ISRUC-I,continuous recording / epoch order,AVAILABLE,all epochs of the analysis window kept with epoch_index,npz epoch_index
+ISRUC-I,recording start/end,PARTIALLY_AVAILABLE,crop offset (s) relative to file start; clock time not retained,meta.crop_start_s
+ISRUC-I,EEG channel,AVAILABLE,"C4-M1:18, C4-A1:17",meta.channel_raw
+ISRUC-I,sampling frequency,AVAILABLE,native [np.float64(200.0)] Hz -> analysed at 100 Hz,meta.native_fs
+ISRUC-I,sleep-stage labels (scorer 1),AVAILABLE,"31,770 scored epochs",npz labels
+ISRUC-I,independent expert scorers,AVAILABLE,2 scorer(s); reference = scorer 1,npz labels_multi
+ISRUC-I,arousal labels,NOT_AVAILABLE,not loaded by this pipeline,
+ISRUC-I,respiratory-event labels,NOT_AVAILABLE,not loaded by this pipeline,
+ISRUC-I,movement-event labels,NOT_VERIFIED,not loaded; unscored epochs = -1,
+ISRUC-I,sleep efficiency / TST / WASO,PARTIALLY_AVAILABLE,derivable from the expert hypnogram only (no sleep/wake model),labels
+ISRUC-I,subjective sleep-quality scores,NOT_AVAILABLE,,
+ISRUC-I,clinical diagnoses,NOT_VERIFIED,not loaded,
+ISRUC-I,age / sex,NOT_AVAILABLE,0/35 participants; NOT_AVAILABLE (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable)),participant_metadata.json
+ISRUC-I,medication / health outcomes,NOT_AVAILABLE,,
