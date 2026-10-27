@@ -459,3 +459,6 @@ ISRUC-III  C4-A1           10
 [github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0917
 [github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0917
 [github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0917
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0917
+  attnsleep__fold1: done in 11093s  thr=0.720 T=0.80 innerPR-AUC=0.9239 params=513,072
+[train] attnsleep fold 1 done  (elapsed 385.0 min)
