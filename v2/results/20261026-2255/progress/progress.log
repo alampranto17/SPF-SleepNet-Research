@@ -511,3 +511,8 @@ ISRUC-III  C4-A1           10
 [train] cnn_feat_pw_noattn fold 1 done  (elapsed 51.0 min)
   cnn_feat_pw_noattn__fold2: done in 77s  thr=0.552 T=0.68 innerPR-AUC=0.9280 params=28,065
 [train] cnn_feat_pw_noattn fold 2 done  (elapsed 52.3 min)
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2255
+  cnn_feat_pw_noattn__fold3: done in 105s  thr=0.629 T=0.83 innerPR-AUC=0.9523 params=28,065
+[train] cnn_feat_pw_noattn fold 3 done  (elapsed 54.1 min)
+  cnn_feat_pw_noattn__fold4: done in 100s  thr=0.730 T=1.07 innerPR-AUC=0.9101 params=28,065
+[train] cnn_feat_pw_noattn fold 4 done  (elapsed 55.7 min)
