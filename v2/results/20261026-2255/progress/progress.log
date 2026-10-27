@@ -465,3 +465,24 @@ ISRUC-III  C4-A1           10
 [train] full_v2 fold 4 done  (elapsed 9.5 min)
   cnn__fold0: done in 120s  thr=0.260 T=1.38 innerPR-AUC=0.9037 params=28,450
 [train] cnn fold 0 done  (elapsed 11.5 min)
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2255
+  cnn__fold1: done in 130s  thr=0.425 T=0.97 innerPR-AUC=0.9257 params=28,450
+[train] cnn fold 1 done  (elapsed 13.7 min)
+  cnn__fold2: done in 116s  thr=0.516 T=0.86 innerPR-AUC=0.9224 params=28,450
+[train] cnn fold 2 done  (elapsed 15.6 min)
+  cnn__fold3: done in 111s  thr=0.290 T=1.15 innerPR-AUC=0.9477 params=28,450
+[train] cnn fold 3 done  (elapsed 17.5 min)
+  cnn__fold4: done in 97s  thr=0.549 T=0.92 innerPR-AUC=0.9017 params=28,450
+[train] cnn fold 4 done  (elapsed 19.1 min)
+  cnn_feat__fold0: done in 120s  thr=0.210 T=1.47 innerPR-AUC=0.9000 params=29,666
+[train] cnn_feat fold 0 done  (elapsed 21.1 min)
+  cnn_feat__fold1: done in 131s  thr=0.305 T=1.03 innerPR-AUC=0.9285 params=29,666
+[train] cnn_feat fold 1 done  (elapsed 23.2 min)
+  cnn_feat__fold2: done in 116s  thr=0.550 T=0.86 innerPR-AUC=0.9308 params=29,666
+[train] cnn_feat fold 2 done  (elapsed 25.2 min)
+  cnn_feat__fold3: done in 106s  thr=0.314 T=0.96 innerPR-AUC=0.9518 params=29,666
+[train] cnn_feat fold 3 done  (elapsed 27.0 min)
+  cnn_feat__fold4: done in 102s  thr=0.491 T=0.93 innerPR-AUC=0.9139 params=29,666
+[train] cnn_feat fold 4 done  (elapsed 28.6 min)
+  cnn_pw__fold0: done in 120s  thr=0.630 T=1.29 innerPR-AUC=0.9040 params=28,450
+[train] cnn_pw fold 0 done  (elapsed 30.7 min)
