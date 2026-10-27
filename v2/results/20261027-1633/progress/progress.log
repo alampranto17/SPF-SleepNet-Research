@@ -455,3 +455,18 @@ ISRUC-III  C4-A1           10
   attnsleep__fold3: done in 2408s  thr=0.730 T=1.13 innerPR-AUC=0.9413 params=513,072
 [train] attnsleep fold 3 done  (elapsed 176.9 min)
 [github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-1633
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-1633
+  attnsleep__fold4: done in 3042s  thr=0.733 T=1.06 innerPR-AUC=0.9012 params=513,072
+[train] attnsleep fold 4 done  (elapsed 227.6 min)
+[train] lseqsleepnet fold 0 done  (elapsed 227.6 min)
+[train] lseqsleepnet fold 1 done  (elapsed 227.6 min)
+[train] lseqsleepnet fold 2 done  (elapsed 227.6 min)
+[train] lseqsleepnet fold 3 done  (elapsed 227.6 min)
+[train] lseqsleepnet fold 4 done  (elapsed 227.6 min)
+[kaggle] new version of alampranto/sqn2-runs
+training stage finished, elapsed 3.93 h
+[RQ1] detection
+[RQ2/3] factor scores
+[RQ2b] within-N3 grade (Low / Moderate / High)
+[RQ4] component analysis
+[RQ1b] same-protocol comparison with published models

@@ -1,0 +1,33 @@
+grade,test,cohort,n,median_diff,p,W
+sw_grade,G1 High share early > late,all,405,0.0,1.929634368561154e-22,21994.5
+sw_grade,G1 High share early > late,CAP,99,0.010638297872340425,5.1279529705001674e-08,2044.0
+sw_grade,G1 High share early > late,DOD-H,22,0.011063170704723974,0.013091824048534366,111.0
+sw_grade,G1 High share early > late,DOD-O,53,0.0,5.607056022741542e-05,265.0
+sw_grade,G1 High share early > late,HMC,131,0.0,4.5937877937624467e-07,2354.5
+sw_grade,G1 High share early > late,ISRUC-I,82,0.0,1.7502169860800232e-06,659.0
+sw_grade,G1 High share early > late,ISRUC-II,8,0.009065697029458893,0.03125,15.0
+sw_grade,G1 High share early > late,ISRUC-III,10,0.0,,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),all multi-rater,34775,0.21343574051176983,0.0,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),DOD-H,5789,0.43192697640748656,8.136781121050962e-262,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),DOD-O,7086,0.15964063983292215,1.1483784421267423e-41,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-I,17450,0.2546261585934819,2.5465212847385773e-256,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-II,2745,0.2298976543458186,2.985062041391716e-34,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-III,1705,,,
+sw_grade,"G4 High share test-retest ICC(2,1)",ISRUC-II,8,0.9881914706713516,,
+rating_band,G1 High share early > late,all,405,0.09749455337690638,2.644940894772535e-32,53559.0
+rating_band,G1 High share early > late,CAP,99,0.14018264840182648,7.192094128027837e-10,3693.0
+rating_band,G1 High share early > late,DOD-H,22,0.12116946306930589,0.0012524127960205078,216.0
+rating_band,G1 High share early > late,DOD-O,53,0.05313016667411408,1.327113019456146e-05,855.0
+rating_band,G1 High share early > late,HMC,131,0.10520437793165066,2.298655084910886e-12,6745.0
+rating_band,G1 High share early > late,ISRUC-I,82,0.0711967065787664,2.702500554538561e-07,1740.0
+rating_band,G1 High share early > late,ISRUC-II,8,0.16968294268928558,0.015625,21.0
+rating_band,G1 High share early > late,ISRUC-III,10,0.0,,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),all multi-rater,34775,0.16187419657051252,8.435129206474454e-203,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),DOD-H,5789,0.5271065691550612,0.0,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),DOD-O,7086,0.1798578303677382,1.3680724280134511e-52,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-I,17450,0.29557128192839055,0.0,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-II,2745,0.2715843568968098,1.2867327086542395e-47,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-III,1705,0.13969580139259916,6.936162305292194e-09,
+rating_band,"G4 High share test-retest ICC(2,1)",ISRUC-II,8,0.8163110780124374,,
+sw_grade,G3 expert R&K S4 vs S3 AUROC [expert S3/S4 epochs],CAP,25099,0.7824735186809237,1.692445864939352e-18,
+sw_grade,G3 expert R&K S4 vs S3 AUROC [expert S3/S4 AND detected N3],CAP,20166,0.7431804218329693,3.863675663719266e-18,
