@@ -1,7 +1,7 @@
 {
- "stage": "D: RQ1-RQ7 analyses",
- "updated_utc": "2026-10-27 20:35:00",
- "elapsed_min": 241.1,
+ "stage": "finished",
+ "updated_utc": "2026-10-27 20:43:53",
+ "elapsed_min": 250.0,
  "cached_recordings": {
   "CAP": 108,
   "DODH": 25,
@@ -12,5 +12,5 @@
   "ISRUC3": 10
  },
  "finished_training_runs": 57,
- "disk_free_gb": 17.4
+ "disk_free_gb": 17.0
 }
