@@ -1,0 +1,29 @@
+component,group,error_detection_auroc
+confidence,model_confidence,0.872133926728545
+mc_entropy,model_confidence,0.8786590604453124
+mc_mi,epistemic/OOD,0.7997842038818546
+maha,epistemic/OOD,0.8552364514605943
+qc_score_v1,signal_quality,0.4795468036493376
+qc_hf_ratio,signal_quality,0.2966144017143497
+qc_n_clipped,signal_quality,0.47929929734308835
+flag_any_v1,signal_quality,0.44734318373751136
+COMBINED (cross-fitted logistic),combined,0.8791727999381694
+COMBINED vs expert N3 disagreement [OOF:all],independent_reference,0.8830741946369127
+mc_entropy vs expert N3 disagreement [OOF:all],independent_reference,0.8744195682899893
+COMBINED vs expert N3 disagreement [OOF:ISRUC-I],independent_reference,0.8830741946369127
+mc_entropy vs expert N3 disagreement [OOF:ISRUC-I],independent_reference,0.8744195682899893
+COMBINED [external:CAP],external,0.8525207964950121
+COMBINED [external:DOD-H],external,0.7226136490915142
+COMBINED [external:DOD-O],external,0.5512377957593921
+COMBINED [external:ISRUC-II],external,0.8720304855134344
+COMBINED [external:ISRUC-III],external,0.9412761451785874
+COMBINED vs expert N3 disagreement [external:all],independent_reference,0.6098362301625586
+mc_entropy vs expert N3 disagreement [external:all],independent_reference,0.5854404508465281
+COMBINED vs expert N3 disagreement [external:DOD-H],independent_reference,0.6041611949027987
+mc_entropy vs expert N3 disagreement [external:DOD-H],independent_reference,0.570046941040872
+COMBINED vs expert N3 disagreement [external:DOD-O],independent_reference,0.5357322307494871
+mc_entropy vs expert N3 disagreement [external:DOD-O],independent_reference,0.5245334588995204
+COMBINED vs expert N3 disagreement [external:ISRUC-II],independent_reference,0.8639152987254425
+mc_entropy vs expert N3 disagreement [external:ISRUC-II],independent_reference,0.8498973640638667
+COMBINED vs expert N3 disagreement [external:ISRUC-III],independent_reference,0.9088053156390128
+mc_entropy vs expert N3 disagreement [external:ISRUC-III],independent_reference,0.9185080795764321
