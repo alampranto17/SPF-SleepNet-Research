@@ -1,7 +1,7 @@
 {
  "stage": "C: training",
- "updated_utc": "2026-10-27 17:14:13",
- "elapsed_min": 40.4,
+ "updated_utc": "2026-10-27 17:34:17",
+ "elapsed_min": 60.4,
  "cached_recordings": {
   "CAP": 108,
   "DODH": 25,
@@ -11,6 +11,6 @@
   "ISRUC1": 100,
   "ISRUC3": 10
  },
- "finished_training_runs": 52,
+ "finished_training_runs": 53,
  "disk_free_gb": 17.5
 }
