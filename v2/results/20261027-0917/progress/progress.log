@@ -452,3 +452,4 @@ ISRUC-III  C4-A1           10
   attnsleep__fold0: done in 12010s  thr=0.644 T=1.25 innerPR-AUC=0.8859 params=513,072
 [train] attnsleep fold 0 done  (elapsed 200.2 min)
 [github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0917
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0917
