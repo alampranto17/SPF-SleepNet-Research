@@ -531,3 +531,10 @@ ISRUC-III  C4-A1           10
   deepsleepnet__fold3: done in 1962s  thr=0.507 T=1.03 innerPR-AUC=0.9602 params=25,397,121
 [train] deepsleepnet fold 3 done  (elapsed 188.6 min)
 [github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2255
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2255
+  deepsleepnet__fold4: done in 1932s  thr=0.702 T=1.23 innerPR-AUC=0.9192 params=25,397,121
+[train] deepsleepnet fold 4 done  (elapsed 220.8 min)
+  tinysleepnet__fold0: done in 270s  thr=0.750 T=1.30 innerPR-AUC=0.9157 params=1,515,905
+[train] tinysleepnet fold 0 done  (elapsed 225.3 min)
+  tinysleepnet__fold1: done in 303s  thr=0.747 T=1.11 innerPR-AUC=0.9454 params=1,515,905
+[train] tinysleepnet fold 1 done  (elapsed 230.3 min)
