@@ -438,3 +438,6 @@ ISRUC-III  C4-A1           10
 [train] tinysleepnet fold 3 done  (elapsed 0.0 min)
 [train] tinysleepnet fold 4 done  (elapsed 0.0 min)
 [github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-1633
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-1633
+  attnsleep__fold0: done in 2166s  thr=0.715 T=1.26 innerPR-AUC=0.8869 params=513,072
+[train] attnsleep fold 0 done  (elapsed 36.1 min)
