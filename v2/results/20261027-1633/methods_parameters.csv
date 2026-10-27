@@ -1,0 +1,43 @@
+parameter,value,note
+Analysis sampling rate,100 Hz,polyphase resampling (scipy.resample_poly)
+Model band-pass,"0.3-35 Hz, 4th-order Butterworth, zero-phase, whole recording",
+QC band-pass,"0.5-45 Hz (or 0.95*Nyquist), 4th-order Butterworth, zero-phase",
+Epoch length,30 s (3000 samples),
+EEG derivation (all cohorts),"C4-A1 = C4-M1 (priority), then C3-A2 = C3-M2; no non-EEG fallback",A1/M1 are the same mastoid reference
+HMC analysis window,first to last scored epoch (AASM v2.4 technician scoring),
+DOD reference label,majority vote of 5 scorers; ties -> scorer with highest mean agreement; record 5d8e93a5 (no consensus) excluded,Guillot et al. 2020
+Stage mapping,ISRUC code 4 (old S4) -> N3; unscored/movement -> -1 (excluded from loss/metrics),
+QC flag: amplitude,max |x| > 300 uV,"v1 rule, stored as flag_artifact"
+QC flag: z-score,max |x - mean| / SD > 5,v1 rule
+QC flag: HF vs delta,P(30-40 Hz) > 0.5 * P(0.5-4 Hz),v1 rule
+QC flag: clipping,> 100 samples beyond mean +/- 4 SD per 30 s at 200 Hz (scaled by fs),v1 rule
+QC flag: low quality,score <= 0.6; score = 1 - 0.3[P30-40/P0.5-15 > 0.3] - 0.3[SNR < 3 dB] - 0.4[RMS < 1 uV]; SNR = 10 log10(P0.5-4 / P30-45),v1 rule
+QC usage,flags are NOT used to delete epochs; primary metrics include all scored epochs; clean-only metrics reported as sensitivity analysis,fixes order loss
+Raw-input scaling,divide each recording by the median per-epoch SD of that recording,
+Welch PSD,"4-s Hann windows, 50 % overlap (0.25 Hz resolution)",
+Bands,"sdelta 0.5-2.0 Hz, delta 0.5-4.0 Hz, theta 4.0-8.0 Hz, alpha 8.0-12.0 Hz, sigma 12.0-16.0 Hz, beta 16.0-30.0 Hz",
+Slow-wave detector,0.3-4 Hz 2nd-order zero-phase band-pass; negative half-wave 0.25-1.0 s; full wave 0.5-2.0 s; AASM wave p2p >= 75 uV,zero-crossing full-wave
+Handcrafted detection features,"19: logpow_sdelta, logpow_delta, logpow_theta, logpow_alpha, logpow_sigma, logpow_beta, rel_delta, rel_theta, rel_alpha, rel_sigma, rel_beta, logratio_delta_theta, logratio_delta_alpha, logratio_delta_beta, spectral_entropy, sw_count_per_min, sw_time_frac, log_cand_p2p_med, cand_slope_up_med",
+Feature standardisation,(x - median_train) / IQR_train; clipped to +/-10 IQR (bounds the influence of residual artifacts; fraction clipped is reported),single step; replaces v1 log/2-98 % clip/5-IQR winsor/z chain
+Numerical epsilons,PSD band power +1e-6 uV^2; ratio/log denominators +1e-8..1e-12; IQR floor 1e-6 -> 1.0,all values explicit in code
+Positive-class weight,w+ = N_non-N3 / N_N3 over scored training-fold epochs (inner-validation participants excluded); w+ = 1 in unweighted variants,
+Loss,"binary cross-entropy (no label smoothing, no regression head)",
+Optimiser,"AdamW lr=0.002 wd=0.01; linear warm-up 200 steps, cosine decay",
+Batch,16 chunks x 64 consecutive epochs,identical for all variants
+Augmentation,"per-chunk amplitude scale U(0.9,1.1) and Gaussian noise SD 0.02 (in recording-scaled units), every batch",gain/noise invariance; not tuned on test data
+Early stopping,"inner-validation PR-AUC, patience 5, max 30 passes",
+Inner validation,15 % of training participants per cohort,no outer-test data used for selection
+Decision threshold,maximises F1 on inner-validation participants,
+Calibration,"temperature scaling on inner validation (reported, not used for thresholding)",
+MC dropout,10 stochastic passes,uncertainty for RQ6
+OOD distance,Mahalanobis distance of 64-d embedding to nearest class mean (shared covariance from training embeddings),
+Factor scaling,"percentile of training-fold expert-N3 epochs, same montage family",0-100
+Overall rating weights,"delta_intensity=0.35, sw_morphology=0.3, spectral_dominance=0.2, n3_continuity=0.15","design parameters, not clinically established"
+Continuity window,+/-5 epochs,
+N3 episode,runs of predicted N3 merged across gaps <= 2 epochs; >= 2 N3 epochs,
+Cross-validation,"5 folds by participant (ISRUC-I + HMC), stratified by cohort",
+Within-N3 grade,"slow-wave coverage (0.5-2 Hz full waves, p2p >= 75 uV) per 30-s epoch: Low < 20 %, Moderate 20-50 %, High > 50 % (R&K stage 3 / 4 anchors); secondary: N3 EEG Rating 0-33 / 33-67 / 67-100; detected N3 epochs only",
+Grade reference,"CAP Sleep Database (PhysioNet, 108 PSGs, R&K scoring with S3 and S4 separate, C4-A1/C3-A2): external only, never used for training or thresholds",
+Same-protocol baselines,"DeepSleepNet, TinySleepNet, AttnSleep, L-SeqSleepNet re-implemented at 100 Hz; raw EEG only; identical folds, inner-validation selection, threshold, temperature, loss and positive-class weight as the proposed model",
+External cohorts,"ISRUC-II (test-retest), ISRUC-III, DOD-H, DOD-O: never used for training, selection or thresholds; predicted by the 5-fold model ensemble",
+Seed,42 (per-fold seed derived deterministically),

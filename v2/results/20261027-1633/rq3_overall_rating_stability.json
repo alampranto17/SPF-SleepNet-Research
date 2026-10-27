@@ -1,0 +1,71 @@
+{
+ "weight_sensitivity": {
+  "reasonable(alpha=20*prior)": {
+   "median_rho": 0.9951487222391482,
+   "p05_rho": 0.9794817306866465,
+   "min_rho": 0.9308021165843555
+  },
+  "extreme(alpha=1)": {
+   "median_rho": 0.9683536855610257,
+   "p05_rho": 0.8085376934990506,
+   "min_rho": 0.6601870221234037
+  }
+ },
+ "alternative_weightings": {
+  "prior_vs_equal_rho": 0.9890102999192816,
+  "prior_vs_pca_rho": 0.9983517678861333,
+  "pca_weights_pooled": {
+   "delta_intensity": 0.31489314377914546,
+   "sw_morphology": 0.3054208855604366,
+   "spectral_dominance": 0.2639600974260779,
+   "n3_continuity": 0.11572587323434001
+  }
+ },
+ "missing_factor_rho": {
+  "without_delta_intensity": 0.9771876611862306,
+  "without_sw_morphology": 0.9824899168470335,
+  "without_spectral_dominance": 0.9837631540465516,
+  "without_n3_continuity": 0.9917718385618988
+ },
+ "split_half_spearman_brown": 0.9938062551799681,
+ "test_retest": {
+  "note": "first vs second recording of the same participant (ISRUC-II sessions)",
+  "rating_prior": {
+   "n_participants": 8,
+   "icc21": 0.7625559812288827,
+   "icc31": 0.8017798776699957
+  },
+  "delta_intensity": {
+   "n_participants": 8,
+   "icc21": 0.7914806659541189,
+   "icc31": 0.7971422102604994
+  },
+  "sw_morphology": {
+   "n_participants": 8,
+   "icc21": 0.754132147493127,
+   "icc31": 0.7635941896163415
+  },
+  "spectral_dominance": {
+   "n_participants": 8,
+   "icc21": 0.33940806915921096,
+   "icc31": 0.3863633663708093
+  }
+ },
+ "cohort_rating_ci": {
+  "HMC": {
+   "mean_participant_median": 59.070071981479465,
+   "ci95": [
+    56.54543504466632,
+    61.7399271606145
+   ]
+  },
+  "ISRUC-I": {
+   "mean_participant_median": 50.41918429571533,
+   "ci95": [
+    46.8101006363176,
+    53.92825722200974
+   ]
+  }
+ },
+ "learned_latent_rating": "NOT IMPLEMENTED: no independent target exists; a learned latent rating would be circular/unidentifiable."
+}
