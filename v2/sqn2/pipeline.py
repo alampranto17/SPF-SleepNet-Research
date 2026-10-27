@@ -109,50 +109,69 @@ def train_all(corpus, cfg, run_dir, log=print):
     return folds
 
 
+def _safe(name, fn, log, default=None):
+    """Run one analysis block; on failure log the full traceback and continue."""
+    import traceback
+    try:
+        return fn()
+    except Exception as exc:
+        log(f"[{name}] FAILED: {type(exc).__name__}: {exc}")
+        log(traceback.format_exc()[-2500:])
+        with open(os.path.join(_safe.out_dir, "analysis_errors.txt"), "a") as f:
+            f.write(f"=== {name}\n{traceback.format_exc()}\n")
+        return default
+
+
 def analyse_all(corpus, cfg, run_dir, out_dir, log=print):
     os.makedirs(out_dir, exist_ok=True)
-    RP.data_inventory(corpus, out_dir)
-    RP.methods_parameters(cfg, out_dir)
+    _safe.out_dir = out_dir
+    A.EXCLUSIONS.clear()
+    if os.path.exists(os.path.join(out_dir, "analysis_errors.txt")):
+        os.remove(os.path.join(out_dir, "analysis_errors.txt"))
+    _safe("inventory", lambda: RP.data_inventory(corpus, out_dir), log)
+    _safe("methods", lambda: RP.methods_parameters(cfg, out_dir), log)
     res = {}
     log("[RQ1] detection")
-    r1, ir, oof, ext = A.rq1(corpus, run_dir, out_dir, n_boot=cfg["n_boot"])
+    r1, ir, oof, ext = A.rq1(corpus, run_dir, out_dir, n_boot=cfg["n_boot"])   # required
     res["r1"] = r1
     log("[RQ2/3] factor scores")
     S = A.compute_fold_scores(corpus, oof, run_dir)
-    Sx = A.compute_external_scores(corpus, ext) if ext is not None and len(ext) else None
+    Sx = _safe("external scores", lambda: A.compute_external_scores(corpus, ext), log) \
+        if ext is not None and len(ext) else None
     cols = ["idx", "rec", "epoch_idx", "participant", "cohort", "label", "pred", "n3_vote_frac"]
-    fs = [S.join(oof[cols]).assign(split="OOF")]
-    if Sx is not None:
-        fs.append(Sx.join(ext[cols]).assign(split="external"))
-    pd.concat(fs, ignore_index=True).to_parquet(os.path.join(out_dir, "factor_scores.parquet"))
-    res["r2"] = A.rq2(oof, S, corpus, out_dir, ext, Sx)
+
+    def _save_scores():
+        fs = [S.join(oof[cols]).assign(split="OOF")]
+        if Sx is not None:
+            fs.append(Sx.join(ext[cols]).assign(split="external"))
+        pd.concat(fs, ignore_index=True).to_parquet(os.path.join(out_dir, "factor_scores.parquet"))
+    _safe("factor_scores.parquet", _save_scores, log)
+    res["r2"] = _safe("RQ2", lambda: A.rq2(oof, S, corpus, out_dir, ext, Sx), log)
     log("[RQ2b] within-N3 grade (Low / Moderate / High)")
-    try:
-        res["r2b"] = A.rq2_bands(oof, S, out_dir, ext, Sx, corpus=corpus)
-    except Exception as exc:
-        log(f"[RQ2b] failed: {exc}")
-        res["r2b"] = None
-    res["r3"] = A.rq3(oof, S, out_dir, ext, Sx)
+    res["r2b"] = _safe("RQ2b", lambda: A.rq2_bands(oof, S, out_dir, ext, Sx, corpus=corpus), log)
+    res["r3"] = _safe("RQ3", lambda: A.rq3(oof, S, out_dir, ext, Sx), log)
     log("[RQ4] component analysis")
-    res["r4"] = A.rq4(corpus, run_dir, out_dir)
+    res["r4"] = _safe("RQ4", lambda: A.rq4(corpus, run_dir, out_dir), log)
     log("[RQ1b] same-protocol comparison with published models")
-    try:
-        res["r1b"] = A.sota_comparison(corpus, run_dir, out_dir, n_boot=cfg["n_boot"])
-    except Exception as exc:
-        log(f"[RQ1b] failed: {exc}")
-        res["r1b"] = None
+    res["r1b"] = _safe("RQ1b", lambda: A.sota_comparison(corpus, run_dir, out_dir, n_boot=cfg["n_boot"]), log)
     log("[RQ6] reliability")
-    r6 = A.rq6(oof, out_dir, ext)
+    r6 = _safe("RQ6", lambda: A.rq6(oof, out_dir, ext), log)
     res["r6"] = r6
     log("[RQ7] episodes / overnight profiles")
-    res["r7"] = A.rq7(oof, S, r6[3], out_dir, ext, Sx, r6[4])
+    res["r7"] = _safe("RQ7", lambda: A.rq7(oof, S, r6[3] if r6 else None, out_dir, ext, Sx,
+                                            r6[4] if r6 else None), log)
     log("[RQ5] explainability")
-    try:
-        res["r5"] = X.rq5(corpus, run_dir, out_dir, oof, S, n_per_fold=cfg["xai_epochs_per_fold"])
-    except Exception as exc:  # keep the rest of the report if XAI fails
-        log(f"[RQ5] failed: {exc}")
-        res["r5"] = {"observed": f"FAILED: {exc}", "status": "NOT_RUN"}
-    summ = A.rq_summary(out_dir, res["r1"], res["r2"], res["r3"], res["r4"], res["r5"],
-                        res["r6"], res["r7"], r2b=res.get("r2b"), r1b=res.get("r1b"))
-    RP.go_no_go(summ, out_dir)
+    res["r5"] = _safe("RQ5", lambda: X.rq5(corpus, run_dir, out_dir, oof, S,
+                                            n_per_fold=cfg["xai_epochs_per_fold"]), log,
+                      default={"observed": "FAILED (see analysis_errors.txt)", "status": "NOT_RUN"})
+    summ = _safe("summary", lambda: A.rq_summary(out_dir, res["r1"], res["r2"], res["r3"], res["r4"],
+                                                 res["r5"], res["r6"], res["r7"], r2b=res.get("r2b"),
+                                                 r1b=res.get("r1b")), log)
+    if summ is not None:
+        _safe("go/no-go", lambda: RP.go_no_go(summ, out_dir), log)
+    ex = _safe("exclusions", lambda: A.write_exclusions(out_dir), log)
+    if ex is not None and len(ex):
+        log(f"[analysis] excluded from evaluation: "
+            f"{ex.drop_duplicates(['rec']).groupby('cohort').size().to_dict()} recordings "
+            f"(see evaluation_exclusions.csv)")
     return res, summ

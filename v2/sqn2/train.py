@@ -68,6 +68,13 @@ class Corpus:
             if cohorts and meta["cohort"] not in cohorts:
                 continue
             ep = arr["epochs"].astype(np.float32)
+            # float16 cache: |x| > 65504 uV (amplifier saturation / broken channel) became inf.
+            # Such recordings are flagged (signal_valid=False) and excluded from every evaluation;
+            # the signal is sanitised so no model ever sees non-finite input.
+            fin_ep = np.isfinite(ep).all(axis=1)
+            n_nonfinite = int((~fin_ep).sum())
+            if n_nonfinite:
+                ep = np.nan_to_num(ep, nan=0.0, posinf=0.0, neginf=0.0)
             fpath = os.path.join(feat_dir, os.path.basename(p).replace(".npz", ".parquet"))
             if os.path.exists(fpath):
                 ft = pd.read_parquet(fpath)
@@ -77,12 +84,19 @@ class Corpus:
             n = len(ep)
             sd = ep.std(axis=1)
             scale = float(np.median(sd[sd > 1e-3])) if (sd > 1e-3).any() else 1.0
-            X.append((ep / scale).astype(np.float16))
+            if not np.isfinite(scale) or scale <= 0:
+                scale = 1.0
+            xs = np.clip(ep / scale, -60000.0, 60000.0)        # keep float16 finite
+            X.append(xs.astype(np.float16))
             qc = {k: arr[k] for k in arr if k.startswith(("qc_", "flag_", "rk_"))}
             qcs.append(pd.DataFrame(qc))
             feats.append(ft)
             meta.update({"offset": off, "n": n, "raw_scale": scale,
-                         "montage": montage_family(meta["derivation"])})
+                         "montage": montage_family(meta["derivation"]),
+                         "n_nonfinite_epochs": n_nonfinite, "signal_valid": n_nonfinite == 0})
+            if n_nonfinite:
+                log(f"[corpus] {meta['recording']}: {n_nonfinite} epochs with non-finite signal "
+                    f"(float16 overflow) -> recording excluded from evaluation")
             recs.append(meta)
             lm = arr["labels_multi"].astype(int)
             scored = lm >= 0
@@ -95,7 +109,8 @@ class Corpus:
                 "label": arr["labels"].astype(int),
                 "label2": lm[:, 1] if lm.shape[1] > 1 else np.full(n, -2),
                 "n_raters_epoch": n_r, "n3_vote_frac": frac,
-                "all_votes_n2n3": (scored.any(1) & np.all(~scored | np.isin(lm, [2, 3]), 1))}))
+                "all_votes_n2n3": (scored.any(1) & np.all(~scored | np.isin(lm, [2, 3]), 1)),
+                "signal_valid": np.full(n, n_nonfinite == 0)}))
             self.labels_multi[meta["recording"]] = lm
             off += n
             if (i + 1) % 25 == 0:
@@ -364,7 +379,10 @@ class Trainer:
                 nb += 1
                 step += 1
             pr = self._predict_recs(model, split["inner_recs"], Fs)
-            p_in = 1 / (1 + np.exp(-pr["logit"]))
+            if not np.isfinite(pr["logit"]).all():
+                raise FloatingPointError(f"{tag}: non-finite logits after pass {ep + 1} "
+                                         f"(numerical overflow) - variant skipped")
+            p_in = _sigmoid(pr["logit"])
             ap = average_precision_score(inner_y[inner_mask], p_in[inner_mask]) \
                 if inner_y[inner_mask].any() else 0.0
             hist.append({"pass": ep + 1, "train_loss": tl / max(nb, 1), "inner_pr_auc": ap})
@@ -383,7 +401,7 @@ class Trainer:
         pr = self._predict_recs(model, split["inner_recs"], Fs)
         lg_in = pr["logit"][inner_mask]
         T = fit_temperature(lg_in, inner_y[inner_mask])
-        p_in = 1 / (1 + np.exp(-lg_in))
+        p_in = _sigmoid(lg_in)
         thr = best_f1_threshold(inner_y[inner_mask], p_in)
         # training-embedding statistics for Mahalanobis OOD distance
         sub = rng.choice(lab_tr, size=min(len(lab_tr), 20000), replace=False)
@@ -408,8 +426,8 @@ class Trainer:
         EH = -(mc * np.log(mc + 1e-8) + (1 - mc) * np.log(1 - mc + 1e-8)).mean(1)
         np.savez_compressed(
             path, idx=pt["idx"], logit=pt["logit"].astype(np.float32),
-            prob=(1 / (1 + np.exp(-pt["logit"]))).astype(np.float32),
-            prob_cal=(1 / (1 + np.exp(-pt["logit"] / T))).astype(np.float32),
+            prob=_sigmoid(pt["logit"]).astype(np.float32),
+            prob_cal=_sigmoid(pt["logit"] / T).astype(np.float32),
             mc_mean=pm.astype(np.float32), mc_entropy=H.astype(np.float32),
             mc_mi=(H - EH).astype(np.float32), mc_std=mc.std(1).astype(np.float32),
             maha=maha.astype(np.float32), threshold=thr, temperature=T,
@@ -443,6 +461,11 @@ class Trainer:
                             n_params=0)
         print(f"  {tag}: GBM done thr={thr:.3f}")
         return path
+
+
+def _sigmoid(x):
+    from scipy.special import expit       # numerically stable (no overflow warnings)
+    return expit(np.asarray(x, dtype=np.float64))
 
 
 def _fold_seed(seed, fold):

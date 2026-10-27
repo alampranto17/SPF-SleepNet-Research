@@ -80,6 +80,7 @@ def load_oof(corpus, run_dir, variant):
         ext.append(df[~is_test])
     oof = pd.concat(rows, ignore_index=True)
     oof = oof.join(corpus.ep, on="idx")
+    oof = _drop_invalid(oof, variant, "OOF")
     oof["pred"] = (oof.prob >= oof.threshold).astype(int)
     oof["y"] = (oof.label == 3).astype(int)
     exdf = pd.concat(ext, ignore_index=True) if ext else pd.DataFrame()
@@ -87,10 +88,42 @@ def load_oof(corpus, run_dir, variant):
         num = exdf.drop(columns=["fold"]).groupby("idx").mean()
         num = num.join(corpus.ep, on=num.index.name)
         num = num.reset_index().rename(columns={"index": "idx"})
+        num = _drop_invalid(num, variant, "external")
         num["pred"] = (num.prob >= num.threshold).astype(int)
         num["y"] = (num.label == 3).astype(int)
         exdf = num
     return oof, exdf
+
+
+EXCLUSIONS = []      # filled by load_oof, written by rq1 / write_exclusions
+
+
+def _drop_invalid(df, variant, split):
+    """Remove (i) recordings whose cached signal contained non-finite samples (float16
+    overflow; model-independent data-quality rule) and (ii) any remaining non-finite
+    prediction.  Every exclusion is recorded for the Methods section."""
+    bad = pd.Series(False, index=df.index)
+    if "signal_valid" in df:
+        inv = ~df.signal_valid.fillna(True).astype(bool)
+        for (coh, rec), g in df[inv].groupby(["cohort", "rec"]):
+            EXCLUSIONS.append({"variant": variant, "split": split, "cohort": coh, "rec": rec,
+                               "n_epochs": len(g), "reason": "non-finite signal in cache (float16 overflow)"})
+        bad |= inv
+    nf = ~np.isfinite(df.prob.to_numpy(dtype=float))
+    nf_only = nf & ~bad.to_numpy()
+    if nf_only.any():
+        for (coh, rec), g in df[nf_only].groupby(["cohort", "rec"]):
+            EXCLUSIONS.append({"variant": variant, "split": split, "cohort": coh, "rec": rec,
+                               "n_epochs": len(g), "reason": "non-finite model output"})
+    bad |= nf
+    return df[~bad.to_numpy()].copy()
+
+
+def write_exclusions(out_dir):
+    ex = pd.DataFrame(EXCLUSIONS).drop_duplicates() if EXCLUSIONS else \
+        pd.DataFrame(columns=["variant", "split", "cohort", "rec", "n_epochs", "reason"])
+    ex.to_csv(os.path.join(out_dir, "evaluation_exclusions.csv"), index=False)
+    return ex
 
 
 def scored(df, primary_only=True):
@@ -214,6 +247,7 @@ def rq1(corpus, run_dir, out_dir, n_boot=1000):
     for f in sorted(glob.glob(os.path.join(run_dir, f"{PRIMARY_VARIANT}__foldLOCO_*.npz"))):
         r = load_run(f)
         df = pd.DataFrame({"idx": r["idx"], "prob": r["prob"]}).join(corpus.ep, on="idx")
+        df = _drop_invalid(df, PRIMARY_VARIANT + ":LOCO", "LOCO")
         df["pred"] = (df.prob >= float(r["threshold"])).astype(int)
         df["y"] = (df.label == 3).astype(int)
         for c, g in scored(df, primary_only=False).groupby("cohort"):
@@ -226,6 +260,7 @@ def rq1(corpus, run_dir, out_dir, n_boot=1000):
         ir += interrater_rows(scored(ext, primary_only=False), corpus, "external")
     ir = pd.DataFrame(ir)
     res.to_csv(os.path.join(out_dir, "rq1_detection_metrics.csv"), index=False)
+    write_exclusions(out_dir)
     ir.to_csv(os.path.join(out_dir, "rq1_interrater_benchmark.csv"), index=False)
     oof.to_parquet(os.path.join(out_dir, f"oof_predictions_{PRIMARY_VARIANT}.parquet"))
     if ext is not None and len(ext):
