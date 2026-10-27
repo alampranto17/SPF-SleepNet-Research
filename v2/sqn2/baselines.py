@@ -42,8 +42,8 @@ BASELINE_NOTES = {
     "attnsleep": "Multi-resolution CNN + adaptive feature recalibration (SE, 30 channels) + temporal "
                  "context encoder (2 layers, 5 heads, causal convolutions, d_model 80, d_ff 120), as "
                  "published for 100 Hz; epoch-wise model (no inter-epoch context, as published); binary "
-                 "N3 output; class-weighted BCE instead of class-weighted CE; computed in float32 "
-                 "(mixed precision overflowed in the attention scores).",
+                 "N3 output; class-weighted BCE instead of class-weighted CE; temporal context encoder "
+                 "computed in float32 (mixed precision overflowed in the attention scores).",
     "lseqsleepnet": "Log-magnitude STFT input (2-s Hamming window, 1-s hop, 256-point FFT, 129 bins), "
                     "learnable filterbank (32), epoch encoder BiGRU(64) + attention pooling, long-sequence "
                     "encoder with subsequence-wise and epoch-wise BiGRUs (64) and residual connections, as "
@@ -256,11 +256,12 @@ class AttnSleep(_SeqBaseline):
         self.out = nn.Linear(30 * 80, 1)
 
     def epoch_embed(self, x):
-        # float32 throughout: under fp16 autocast the attention scores overflowed (NaN on T4)
+        x = x.unsqueeze(1)
+        z = self.drop(torch.cat([self.b1(x), self.b2(x)], -1))      # CNN: mixed precision is fine
+        z = self.afr(z)
+        # temporal context encoder in float32: under fp16 the attention scores overflowed (NaN on T4)
         with torch.autocast(x.device.type, enabled=False):
-            x = x.float().unsqueeze(1)
-            z = self.drop(torch.cat([self.b1(x), self.b2(x)], -1))
-            z = self.tce(self.fix(self.afr(z)))
+            z = self.tce(self.fix(z.float()))
             return z.flatten(1)                            # (N, 2400)
 
     def head(self, h):

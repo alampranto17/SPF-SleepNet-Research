@@ -73,14 +73,28 @@ def train_all(corpus, cfg, run_dir, log=print):
     def out_of_time():
         return time.time() - t_start > budget
 
+    last_dur = {}                            # seconds of the last fold actually trained, per variant
+
+    def would_overrun(v):
+        """Do not start a fold that would end after the budget (a Kaggle timeout loses
+        every unsaved run and the analysis)."""
+        if out_of_time():
+            return True
+        est = last_dur.get(v)
+        return est is not None and time.time() - t_start + 1.15 * est > budget
+
     for v in order:                          # primary model first: RQ1/2/3/5/6/7 need it
         for fo in folds:
-            if out_of_time():
-                log(f"[train] TIME BUDGET reached - skipping {v} fold {fo['fold']}; "
-                    f"re-run the notebook with the saved runs to resume")
+            done = os.path.exists(os.path.join(run_dir, f"{v}__fold{fo['fold']}.npz"))
+            if not done and would_overrun(v):
+                log(f"[train] TIME BUDGET: skipping {v} fold {fo['fold']} (would end after the "
+                    f"{budget / 3600:.1f} h budget); re-run the notebook with the saved runs to resume")
                 continue
             try:
+                t_run = time.time()
                 tr.run(v, fo, run_dir, seed=cfg["seed"])
+                if not done:
+                    last_dur[v] = time.time() - t_run
                 log(f"[train] {v} fold {fo['fold']} done  (elapsed {(time.time() - t0) / 60:.1f} min)")
             except Exception as exc:          # one failing model must not stop the others
                 import traceback
