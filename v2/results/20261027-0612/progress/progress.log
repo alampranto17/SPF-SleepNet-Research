@@ -403,3 +403,4 @@ ISRUC-III  C4-A1           10
   full_v2__fold0: done in 3375s  thr=0.623 T=1.37 innerPR-AUC=0.9191 params=96,226
 [train] full_v2 fold 0 done  (elapsed 56.3 min)
 [github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0612
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0612
