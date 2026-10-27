@@ -516,3 +516,6 @@ ISRUC-III  C4-A1           10
 [train] cnn_feat_pw_noattn fold 3 done  (elapsed 54.1 min)
   cnn_feat_pw_noattn__fold4: done in 100s  thr=0.730 T=1.07 innerPR-AUC=0.9101 params=28,065
 [train] cnn_feat_pw_noattn fold 4 done  (elapsed 55.7 min)
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2255
+  deepsleepnet__fold0: done in 2171s  thr=0.684 T=1.20 innerPR-AUC=0.9249 params=25,397,121
+[train] deepsleepnet fold 0 done  (elapsed 91.9 min)
