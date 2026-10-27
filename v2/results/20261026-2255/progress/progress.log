@@ -538,3 +538,52 @@ ISRUC-III  C4-A1           10
 [train] tinysleepnet fold 0 done  (elapsed 225.3 min)
   tinysleepnet__fold1: done in 303s  thr=0.747 T=1.11 innerPR-AUC=0.9454 params=1,515,905
 [train] tinysleepnet fold 1 done  (elapsed 230.3 min)
+[github] pushed 6 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261026-2255
+  tinysleepnet__fold2: done in 169s  thr=0.776 T=0.95 innerPR-AUC=0.9337 params=1,515,905
+[train] tinysleepnet fold 2 done  (elapsed 233.1 min)
+  tinysleepnet__fold3: done in 195s  thr=0.592 T=0.88 innerPR-AUC=0.9541 params=1,515,905
+[train] tinysleepnet fold 3 done  (elapsed 236.4 min)
+  tinysleepnet__fold4: done in 264s  thr=0.787 T=1.29 innerPR-AUC=0.9252 params=1,515,905
+[train] tinysleepnet fold 4 done  (elapsed 240.8 min)
+[train] attnsleep fold 0 FAILED: ValueError: Input contains NaN.
+   ^
+  File "/usr/local/lib/python3.13/dist-packages/sklearn/utils/_param_validation.py", line 189, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/sklearn/metrics/_ranking.py", line 1005, in precision_recall_curve
+    fps, tps, thresholds = _binary_clf_curve(
+                           ~~~~~~~~~~~~~~~~~^
+        y_true, y_score, pos_label=pos_label, sample_weight=sample_weight
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/sklearn/metrics/_ranking.py", line 824, in _binary_clf_curve
+    assert_all_finite(y_score)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/sklearn/utils/validation.py", line 210, in assert_all_finite
+    _assert_all_finite(
+    ~~~~~~~~~~~~~~~~~~^
+        X.data if sp.issparse(X) else X,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        input_name=input_name,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/sklearn/utils/validation.py", line 120, in _assert_all_finite
+    _assert_all_finite_element_wise(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        X,
+        ^^
+    ...<4 lines>...
+        input_name=input_name,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/sklearn/utils/validation.py", line 169, in _assert_all_finite_element_wise
+    raise ValueError(msg_err)
+ValueError: Input contains NaN.
+
+  lseqsleepnet__fold0: done in 285s  thr=0.310 T=1.12 innerPR-AUC=0.9070 params=208,291
+[train] lseqsleepnet fold 0 done  (elapsed 246.0 min)
+  lseqsleepnet__fold1: done in 267s  thr=0.769 T=0.99 innerPR-AUC=0.9387 params=208,291
+[train] lseqsleepnet fold 1 done  (elapsed 250.5 min)
