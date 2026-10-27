@@ -1,1 +1,399 @@
 [github] token loaded from Kaggle secret 'github_token'
+[github] pushed 3 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0612
+[github] live progress sync ON: every 20 min -> alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-0612/progress/
+[kaggle] API credentials loaded for user 'alampranto'
+[kaggle] restored 467 files from attached input /kaggle/input/datasets/alampranto/sqn2-cache
+[kaggle] CLI download of alampranto/sqn2-cache failed (To search for one, try 'kaggle search <query>'.); trying kagglehub
+[kaggle] kagglehub path /kaggle/input/datasets/alampranto/sqn2-cache -> /kaggle/input/datasets/alampranto/sqn2-cache (467 files)
+[kaggle] restored 0 files from private dataset alampranto/sqn2-cache via kagglehub
+[kaggle] CLI download of alampranto/sqn2-runs failed (To search for one, try 'kaggle search <query>'.); trying kagglehub
+[kaggle] kagglehub download failed too: POST failed with: {"errors":["New Datasets cannot be attached in non-interactive sessions. Found no versions attached for Dataset [alampranto/sqn2-runs]."],"error":{"code":9},"wasSuccessful":false}
+[kaggle] no existing/accessible dataset alampranto/sqn2-runs - starting fresh (or attach it: Add Input > Your Datasets > sqn2-runs)
+[HMC] 151 recordings to cache (~110 MB each; AWS S3 mirror first, physionet.org fallback). One line per finished recording, progress every 30 s.
+[HMC 1/151] HMC_SN003.npz: cached   (0.0 min, ETA 0 min)
+[HMC 2/151] HMC_SN002.npz: cached   (0.0 min, ETA 0 min)
+[HMC 3/151] HMC_SN001.npz: cached   (0.0 min, ETA 0 min)
+[HMC 4/151] HMC_SN006.npz: cached   (0.0 min, ETA 0 min)
+[HMC 5/151] HMC_SN004.npz: cached   (0.0 min, ETA 0 min)
+[HMC 6/151] HMC_SN008.npz: cached   (0.0 min, ETA 0 min)
+[HMC 7/151] HMC_SN009.npz: cached   (0.0 min, ETA 0 min)
+[HMC 8/151] HMC_SN010.npz: cached   (0.0 min, ETA 0 min)
+[HMC 9/151] HMC_SN011.npz: cached   (0.0 min, ETA 0 min)
+[HMC 10/151] HMC_SN012.npz: cached   (0.0 min, ETA 0 min)
+[HMC 11/151] HMC_SN013.npz: cached   (0.0 min, ETA 0 min)
+[HMC 12/151] HMC_SN015.npz: cached   (0.0 min, ETA 0 min)
+[HMC 13/151] HMC_SN016.npz: cached   (0.0 min, ETA 0 min)
+[HMC 14/151] HMC_SN017.npz: cached   (0.0 min, ETA 0 min)
+[HMC 15/151] HMC_SN018.npz: cached   (0.0 min, ETA 0 min)
+[HMC 16/151] HMC_SN019.npz: cached   (0.0 min, ETA 0 min)
+[HMC 17/151] HMC_SN020.npz: cached   (0.0 min, ETA 0 min)
+[HMC 18/151] HMC_SN021.npz: cached   (0.0 min, ETA 0 min)
+[HMC 19/151] HMC_SN022.npz: cached   (0.0 min, ETA 0 min)
+[HMC 20/151] HMC_SN023.npz: cached   (0.0 min, ETA 0 min)
+[HMC 21/151] HMC_SN024.npz: cached   (0.0 min, ETA 0 min)
+[HMC 22/151] HMC_SN025.npz: cached   (0.0 min, ETA 0 min)
+[HMC 23/151] HMC_SN026.npz: cached   (0.0 min, ETA 0 min)
+[HMC 24/151] HMC_SN027.npz: cached   (0.0 min, ETA 0 min)
+[HMC 25/151] HMC_SN028.npz: cached   (0.0 min, ETA 0 min)
+[HMC 26/151] HMC_SN029.npz: cached   (0.0 min, ETA 0 min)
+[HMC 27/151] HMC_SN030.npz: cached   (0.0 min, ETA 0 min)
+[HMC 28/151] HMC_SN031.npz: cached   (0.0 min, ETA 0 min)
+[HMC 29/151] HMC_SN032.npz: cached   (0.0 min, ETA 0 min)
+[HMC 30/151] HMC_SN033.npz: cached   (0.0 min, ETA 0 min)
+[HMC 31/151] HMC_SN034.npz: cached   (0.0 min, ETA 0 min)
+[HMC 32/151] HMC_SN035.npz: cached   (0.0 min, ETA 0 min)
+[HMC 33/151] HMC_SN036.npz: cached   (0.0 min, ETA 0 min)
+[HMC 34/151] HMC_SN037.npz: cached   (0.0 min, ETA 0 min)
+[HMC 35/151] HMC_SN038.npz: cached   (0.0 min, ETA 0 min)
+[HMC 36/151] HMC_SN039.npz: cached   (0.0 min, ETA 0 min)
+[HMC 37/151] HMC_SN040.npz: cached   (0.0 min, ETA 0 min)
+[HMC 38/151] HMC_SN041.npz: cached   (0.0 min, ETA 0 min)
+[HMC 39/151] HMC_SN042.npz: cached   (0.0 min, ETA 0 min)
+[HMC 40/151] HMC_SN007.npz: cached   (0.0 min, ETA 0 min)
+[HMC 41/151] HMC_SN044.npz: cached   (0.0 min, ETA 0 min)
+[HMC 42/151] HMC_SN005.npz: cached   (0.0 min, ETA 0 min)
+[HMC 43/151] HMC_SN046.npz: cached   (0.0 min, ETA 0 min)
+[HMC 44/151] HMC_SN043.npz: cached   (0.0 min, ETA 0 min)
+[HMC 45/151] HMC_SN048.npz: cached   (0.0 min, ETA 0 min)
+[HMC 46/151] HMC_SN049.npz: cached   (0.0 min, ETA 0 min)
+[HMC 47/151] HMC_SN050.npz: cached   (0.0 min, ETA 0 min)
+[HMC 48/151] HMC_SN045.npz: cached   (0.0 min, ETA 0 min)
+[HMC 49/151] HMC_SN052.npz: cached   (0.0 min, ETA 0 min)
+[HMC 50/151] HMC_SN053.npz: cached   (0.0 min, ETA 0 min)
+[HMC 51/151] HMC_SN047.npz: cached   (0.0 min, ETA 0 min)
+[HMC 52/151] HMC_SN055.npz: cached   (0.0 min, ETA 0 min)
+[HMC 53/151] HMC_SN056.npz: cached   (0.0 min, ETA 0 min)
+[HMC 54/151] HMC_SN057.npz: cached   (0.0 min, ETA 0 min)
+[HMC 55/151] HMC_SN058.npz: cached   (0.0 min, ETA 0 min)
+[HMC 56/151] HMC_SN059.npz: cached   (0.0 min, ETA 0 min)
+[HMC 57/151] HMC_SN060.npz: cached   (0.0 min, ETA 0 min)
+[HMC 58/151] HMC_SN061.npz: cached   (0.0 min, ETA 0 min)
+[HMC 59/151] HMC_SN054.npz: cached   (0.0 min, ETA 0 min)
+[HMC 60/151] HMC_SN063.npz: cached   (0.0 min, ETA 0 min)
+[HMC 61/151] HMC_SN051.npz: cached   (0.0 min, ETA 0 min)
+[HMC 62/151] HMC_SN066.npz: cached   (0.0 min, ETA 0 min)
+[HMC 63/151] HMC_SN062.npz: cached   (0.0 min, ETA 0 min)
+[HMC 64/151] HMC_SN068.npz: cached   (0.0 min, ETA 0 min)
+[HMC 65/151] HMC_SN069.npz: cached   (0.0 min, ETA 0 min)
+[HMC 66/151] HMC_SN070.npz: cached   (0.0 min, ETA 0 min)
+[HMC 67/151] HMC_SN071.npz: cached   (0.0 min, ETA 0 min)
+[HMC 68/151] HMC_SN072.npz: cached   (0.0 min, ETA 0 min)
+[HMC 69/151] HMC_SN073.npz: cached   (0.0 min, ETA 0 min)
+[HMC 70/151] HMC_SN074.npz: cached   (0.0 min, ETA 0 min)
+[HMC 71/151] HMC_SN075.npz: cached   (0.0 min, ETA 0 min)
+[HMC 72/151] HMC_SN065.npz: cached   (0.0 min, ETA 0 min)
+[HMC 73/151] HMC_SN077.npz: cached   (0.0 min, ETA 0 min)
+[HMC 74/151] HMC_SN067.npz: cached   (0.0 min, ETA 0 min)
+[HMC 75/151] HMC_SN079.npz: cached   (0.0 min, ETA 0 min)
+[HMC 76/151] HMC_SN080.npz: cached   (0.0 min, ETA 0 min)
+[HMC 77/151] HMC_SN081.npz: cached   (0.0 min, ETA 0 min)
+[HMC 78/151] HMC_SN082.npz: cached   (0.0 min, ETA 0 min)
+[HMC 79/151] HMC_SN083.npz: cached   (0.0 min, ETA 0 min)
+[HMC 80/151] HMC_SN084.npz: cached   (0.0 min, ETA 0 min)
+[HMC 81/151] HMC_SN085.npz: cached   (0.0 min, ETA 0 min)
+[HMC 82/151] HMC_SN086.npz: cached   (0.0 min, ETA 0 min)
+[HMC 83/151] HMC_SN087.npz: cached   (0.0 min, ETA 0 min)
+[HMC 84/151] HMC_SN088.npz: cached   (0.0 min, ETA 0 min)
+[HMC 85/151] HMC_SN089.npz: cached   (0.0 min, ETA 0 min)
+[HMC 86/151] HMC_SN090.npz: cached   (0.0 min, ETA 0 min)
+[HMC 87/151] HMC_SN091.npz: cached   (0.0 min, ETA 0 min)
+[HMC 88/151] HMC_SN092.npz: cached   (0.0 min, ETA 0 min)
+[HMC 89/151] HMC_SN093.npz: cached   (0.0 min, ETA 0 min)
+[HMC 90/151] HMC_SN094.npz: cached   (0.0 min, ETA 0 min)
+[HMC 91/151] HMC_SN076.npz: cached   (0.0 min, ETA 0 min)
+[HMC 92/151] HMC_SN096.npz: cached   (0.0 min, ETA 0 min)
+[HMC 93/151] HMC_SN097.npz: cached   (0.0 min, ETA 0 min)
+[HMC 94/151] HMC_SN098.npz: cached   (0.0 min, ETA 0 min)
+[HMC 95/151] HMC_SN078.npz: cached   (0.0 min, ETA 0 min)
+[HMC 96/151] HMC_SN100.npz: cached   (0.0 min, ETA 0 min)
+[HMC 97/151] HMC_SN101.npz: cached   (0.0 min, ETA 0 min)
+[HMC 98/151] HMC_SN102.npz: cached   (0.0 min, ETA 0 min)
+[HMC 99/151] HMC_SN103.npz: cached   (0.0 min, ETA 0 min)
+[HMC 100/151] HMC_SN104.npz: cached   (0.0 min, ETA 0 min)
+[HMC 101/151] HMC_SN105.npz: cached   (0.0 min, ETA 0 min)
+[HMC 102/151] HMC_SN106.npz: cached   (0.0 min, ETA 0 min)
+[HMC 103/151] HMC_SN107.npz: cached   (0.0 min, ETA 0 min)
+[HMC 104/151] HMC_SN108.npz: cached   (0.0 min, ETA 0 min)
+[HMC 105/151] HMC_SN109.npz: cached   (0.0 min, ETA 0 min)
+[HMC 106/151] HMC_SN110.npz: cached   (0.0 min, ETA 0 min)
+[HMC 107/151] HMC_SN111.npz: cached   (0.0 min, ETA 0 min)
+[HMC 108/151] HMC_SN112.npz: cached   (0.0 min, ETA 0 min)
+[HMC 109/151] HMC_SN113.npz: cached   (0.0 min, ETA 0 min)
+[HMC 110/151] HMC_SN095.npz: cached   (0.0 min, ETA 0 min)
+[HMC 111/151] HMC_SN115.npz: cached   (0.0 min, ETA 0 min)
+[HMC 112/151] HMC_SN116.npz: cached   (0.0 min, ETA 0 min)
+[HMC 113/151] HMC_SN117.npz: cached   (0.0 min, ETA 0 min)
+[HMC 114/151] HMC_SN118.npz: cached   (0.0 min, ETA 0 min)
+[HMC 115/151] HMC_SN099.npz: cached   (0.0 min, ETA 0 min)
+[HMC 116/151] HMC_SN120.npz: cached   (0.0 min, ETA 0 min)
+[HMC 117/151] HMC_SN121.npz: cached   (0.0 min, ETA 0 min)
+[HMC 118/151] HMC_SN122.npz: cached   (0.0 min, ETA 0 min)
+[HMC 119/151] HMC_SN123.npz: cached   (0.0 min, ETA 0 min)
+[HMC 120/151] HMC_SN124.npz: cached   (0.0 min, ETA 0 min)
+[HMC 121/151] HMC_SN125.npz: cached   (0.0 min, ETA 0 min)
+[HMC 122/151] HMC_SN126.npz: cached   (0.0 min, ETA 0 min)
+[HMC 123/151] HMC_SN119.npz: cached   (0.0 min, ETA 0 min)
+[HMC 124/151] HMC_SN128.npz: cached   (0.0 min, ETA 0 min)
+[HMC 125/151] HMC_SN129.npz: cached   (0.0 min, ETA 0 min)
+[HMC 126/151] HMC_SN127.npz: cached   (0.0 min, ETA 0 min)
+[HMC 127/151] HMC_SN131.npz: cached   (0.0 min, ETA 0 min)
+[HMC 128/151] HMC_SN132.npz: cached   (0.0 min, ETA 0 min)
+[HMC 129/151] HMC_SN133.npz: cached   (0.0 min, ETA 0 min)
+[HMC 130/151] HMC_SN134.npz: cached   (0.0 min, ETA 0 min)
+[HMC 131/151] HMC_SN136.npz: cached   (0.0 min, ETA 0 min)
+[HMC 132/151] HMC_SN137.npz: cached   (0.0 min, ETA 0 min)
+[HMC 133/151] HMC_SN138.npz: cached   (0.0 min, ETA 0 min)
+[HMC 134/151] HMC_SN139.npz: cached   (0.0 min, ETA 0 min)
+[HMC 135/151] HMC_SN140.npz: cached   (0.0 min, ETA 0 min)
+[HMC 136/151] HMC_SN130.npz: cached   (0.0 min, ETA 0 min)
+[HMC 137/151] HMC_SN142.npz: cached   (0.0 min, ETA 0 min)
+[HMC 138/151] HMC_SN143.npz: cached   (0.0 min, ETA 0 min)
+[HMC 139/151] HMC_SN144.npz: cached   (0.0 min, ETA 0 min)
+[HMC 140/151] HMC_SN145.npz: cached   (0.0 min, ETA 0 min)
+[HMC 141/151] HMC_SN146.npz: cached   (0.0 min, ETA 0 min)
+[HMC 142/151] HMC_SN141.npz: cached   (0.0 min, ETA 0 min)
+[HMC 143/151] HMC_SN114.npz: cached   (0.0 min, ETA 0 min)
+[HMC 144/151] HMC_SN149.npz: cached   (0.0 min, ETA 0 min)
+[HMC 145/151] HMC_SN147.npz: cached   (0.0 min, ETA 0 min)
+[HMC 146/151] HMC_SN151.npz: cached   (0.0 min, ETA 0 min)
+[HMC 147/151] HMC_SN152.npz: cached   (0.0 min, ETA 0 min)
+[HMC 148/151] HMC_SN153.npz: cached   (0.0 min, ETA 0 min)
+[HMC 149/151] HMC_SN154.npz: cached   (0.0 min, ETA 0 min)
+[HMC 150/151] HMC_SN150.npz: cached   (0.0 min, ETA 0 min)
+[HMC 151/151] HMC_SN148.npz: cached   (0.0 min, ETA 0 min)
+ISRUC-I: 100/100 subjects cached
+ISRUC-II: 8/8 subjects cached
+ISRUC-III: 10/10 subjects cached
+[ISRUC details] subgroup I: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[ISRUC details] subgroup II: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[ISRUC details] subgroup III: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[CAP] 108 recordings to cache (~370 MB each; AWS S3 mirror first)
+[CAP 1/108] CAP_ins1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 2/108] CAP_brux1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 3/108] CAP_ins3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 4/108] CAP_brux2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 5/108] CAP_ins2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 6/108] CAP_ins6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 7/108] CAP_ins7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 8/108] CAP_ins8.npz: cached   (0.0 min, ETA 0 min)
+[CAP 9/108] CAP_ins4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 10/108] CAP_n1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 11/108] CAP_n2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 12/108] CAP_n3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 13/108] CAP_n4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 14/108] CAP_n5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 15/108] CAP_ins5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 16/108] CAP_n7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 17/108] CAP_n8.npz: cached   (0.0 min, ETA 0 min)
+[CAP 18/108] CAP_ins9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 19/108] CAP_n6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 20/108] CAP_n10.npz: cached   (0.0 min, ETA 0 min)
+[CAP 21/108] CAP_n12.npz: cached   (0.0 min, ETA 0 min)
+[CAP 22/108] CAP_n13.npz: cached   (0.0 min, ETA 0 min)
+[CAP 23/108] CAP_n11.npz: cached   (0.0 min, ETA 0 min)
+[CAP 24/108] CAP_n15.npz: cached   (0.0 min, ETA 0 min)
+[CAP 25/108] CAP_n16.npz: cached   (0.0 min, ETA 0 min)
+[CAP 26/108] CAP_narco1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 27/108] CAP_narco2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 28/108] CAP_narco3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 29/108] CAP_narco4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 30/108] CAP_narco5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 31/108] CAP_nfle1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 32/108] CAP_nfle2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 33/108] CAP_nfle3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 34/108] CAP_nfle4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 35/108] CAP_nfle5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 36/108] CAP_nfle6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 37/108] CAP_nfle7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 38/108] CAP_nfle8.npz: cached   (0.0 min, ETA 0 min)
+[CAP 39/108] CAP_nfle9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 40/108] CAP_n9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 41/108] CAP_n14.npz: cached   (0.0 min, ETA 0 min)
+[CAP 42/108] CAP_nfle12.npz: cached   (0.0 min, ETA 0 min)
+[CAP 43/108] CAP_nfle13.npz: cached   (0.0 min, ETA 0 min)
+[CAP 44/108] CAP_nfle14.npz: cached   (0.0 min, ETA 0 min)
+[CAP 45/108] CAP_nfle15.npz: cached   (0.0 min, ETA 0 min)
+[CAP 46/108] CAP_nfle16.npz: cached   (0.0 min, ETA 0 min)
+[CAP 47/108] CAP_nfle17.npz: cached   (0.0 min, ETA 0 min)
+[CAP 48/108] CAP_nfle18.npz: cached   (0.0 min, ETA 0 min)
+[CAP 49/108] CAP_nfle19.npz: cached   (0.0 min, ETA 0 min)
+[CAP 50/108] CAP_nfle20.npz: cached   (0.0 min, ETA 0 min)
+[CAP 51/108] CAP_nfle21.npz: cached   (0.0 min, ETA 0 min)
+[CAP 52/108] CAP_nfle22.npz: cached   (0.0 min, ETA 0 min)
+[CAP 53/108] CAP_nfle23.npz: cached   (0.0 min, ETA 0 min)
+[CAP 54/108] CAP_nfle24.npz: cached   (0.0 min, ETA 0 min)
+[CAP 55/108] CAP_nfle25.npz: cached   (0.0 min, ETA 0 min)
+[CAP 56/108] CAP_nfle26.npz: cached   (0.0 min, ETA 0 min)
+[CAP 57/108] CAP_nfle27.npz: cached   (0.0 min, ETA 0 min)
+[CAP 58/108] CAP_nfle28.npz: cached   (0.0 min, ETA 0 min)
+[CAP 59/108] CAP_nfle29.npz: cached   (0.0 min, ETA 0 min)
+[CAP 60/108] CAP_nfle30.npz: cached   (0.0 min, ETA 0 min)
+[CAP 61/108] CAP_nfle31.npz: cached   (0.0 min, ETA 0 min)
+[CAP 62/108] CAP_nfle32.npz: cached   (0.0 min, ETA 0 min)
+[CAP 63/108] CAP_nfle33.npz: cached   (0.0 min, ETA 0 min)
+[CAP 64/108] CAP_nfle34.npz: cached   (0.0 min, ETA 0 min)
+[CAP 65/108] CAP_nfle35.npz: cached   (0.0 min, ETA 0 min)
+[CAP 66/108] CAP_nfle36.npz: cached   (0.0 min, ETA 0 min)
+[CAP 67/108] CAP_nfle37.npz: cached   (0.0 min, ETA 0 min)
+[CAP 68/108] CAP_nfle38.npz: cached   (0.0 min, ETA 0 min)
+[CAP 69/108] CAP_nfle39.npz: cached   (0.0 min, ETA 0 min)
+[CAP 70/108] CAP_nfle40.npz: cached   (0.0 min, ETA 0 min)
+[CAP 71/108] CAP_plm1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 72/108] CAP_nfle10.npz: cached   (0.0 min, ETA 0 min)
+[CAP 73/108] CAP_nfle11.npz: cached   (0.0 min, ETA 0 min)
+[CAP 74/108] CAP_plm4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 75/108] CAP_plm5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 76/108] CAP_plm6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 77/108] CAP_plm7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 78/108] CAP_plm8.npz: cached   (0.0 min, ETA 0 min)
+[CAP 79/108] CAP_plm9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 80/108] CAP_plm10.npz: cached   (0.0 min, ETA 0 min)
+[CAP 81/108] CAP_rbd1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 82/108] CAP_rbd2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 83/108] CAP_rbd3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 84/108] CAP_rbd4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 85/108] CAP_rbd5.npz: cached   (0.0 min, ETA 0 min)
+[CAP 86/108] CAP_rbd6.npz: cached   (0.0 min, ETA 0 min)
+[CAP 87/108] CAP_rbd7.npz: cached   (0.0 min, ETA 0 min)
+[CAP 88/108] CAP_plm3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 89/108] CAP_rbd9.npz: cached   (0.0 min, ETA 0 min)
+[CAP 90/108] CAP_rbd10.npz: cached   (0.0 min, ETA 0 min)
+[CAP 91/108] CAP_rbd11.npz: cached   (0.0 min, ETA 0 min)
+[CAP 92/108] CAP_rbd12.npz: cached   (0.0 min, ETA 0 min)
+[CAP 93/108] CAP_rbd13.npz: cached   (0.0 min, ETA 0 min)
+[CAP 94/108] CAP_rbd14.npz: cached   (0.0 min, ETA 0 min)
+[CAP 95/108] CAP_rbd15.npz: cached   (0.0 min, ETA 0 min)
+[CAP 96/108] CAP_rbd16.npz: cached   (0.0 min, ETA 0 min)
+[CAP 97/108] CAP_rbd17.npz: cached   (0.0 min, ETA 0 min)
+[CAP 98/108] CAP_rbd18.npz: cached   (0.0 min, ETA 0 min)
+[CAP 99/108] CAP_rbd19.npz: cached   (0.0 min, ETA 0 min)
+[CAP 100/108] CAP_rbd20.npz: cached   (0.0 min, ETA 0 min)
+[CAP 101/108] CAP_plm2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 102/108] CAP_rbd22.npz: cached   (0.0 min, ETA 0 min)
+[CAP 103/108] CAP_sdb1.npz: cached   (0.0 min, ETA 0 min)
+[CAP 104/108] CAP_sdb2.npz: cached   (0.0 min, ETA 0 min)
+[CAP 105/108] CAP_sdb3.npz: cached   (0.0 min, ETA 0 min)
+[CAP 106/108] CAP_sdb4.npz: cached   (0.0 min, ETA 0 min)
+[CAP 107/108] CAP_rbd21.npz: cached   (0.0 min, ETA 0 min)
+[CAP 108/108] CAP_rbd8.npz: cached   (0.0 min, ETA 0 min)
+[DOD] scorer hypnograms: DOD-H 25 records, DOD-O 55 records
+[DOD-H] streaming records from Zenodo with HTTP range requests
+[DOD-H] 25 records
+[DOD-H 1/25] DODH_1da3544e211f.npz: cached
+[DOD-H 2/25] DODH_5bf0f9692846.npz: cached
+[DOD-H 3/25] DODH_a25b2296466e.npz: cached
+[DOD-H 4/25] DODH_119f972649a1.npz: cached
+[DOD-H 5/25] DODH_0d79f4b1ada5.npz: cached
+[DOD-H 6/25] DODH_64959ac4df7b.npz: cached
+[DOD-H 7/25] DODH_1fa6c4012516.npz: cached
+[DOD-H 8/25] DODH_37d0da975488.npz: cached
+[DOD-H 9/25] DODH_7d7788011876.npz: cached
+[DOD-H 10/25] DODH_769df255fbbd.npz: cached
+[DOD-H 11/25] DODH_18ede7144192.npz: cached
+[DOD-H 12/25] DODH_a45689510be6.npz: cached
+[DOD-H 13/25] DODH_bb474ab026a2.npz: cached
+[DOD-H 14/25] DODH_67fa8e296ed0.npz: cached
+[DOD-H 15/25] DODH_844f68ba4a7b.npz: cached
+[DOD-H 16/25] DODH_14c012bd9837.npz: cached
+[DOD-H 17/25] DODH_a30245e325fc.npz: cached
+[DOD-H 18/25] DODH_d3cadb7868b1.npz: cached
+[DOD-H 19/25] DODH_b5d5785dd8de.npz: cached
+[DOD-H 20/25] DODH_7ab8ff5fc9bf.npz: cached
+[DOD-H 21/25] DODH_f2a69bdc2be0.npz: cached
+[DOD-H 22/25] DODH_aa160c7897e0.npz: cached
+[DOD-H 23/25] DODH_25a6b2b0d3be.npz: cached
+[DOD-H 24/25] DODH_095d6e403da0.npz: cached
+[DOD-H 25/25] DODH_3e842aa8fe2c.npz: cached
+[DOD-O] streaming records from Zenodo with HTTP range requests
+[DOD-O] 55 records
+[DOD-O 1/55] DODO_6e2aa9336a12.npz: cached
+[DOD-O 2/55] DODO_c8110476c987.npz: cached
+[DOD-O 3/55] DODO_b3534fa3f7a9.npz: cached
+[DOD-O 4/55] DODO_e8ec8ec41030.npz: cached
+[DOD-O 5/55] DODO_a35a118ef4ce.npz: cached
+[DOD-O 6/55] DODO_b2d3ccddc337.npz: cached
+[DOD-O 7/55] DODO_83c1394e1cfd.npz: cached
+[DOD-O 8/55] DODO_730aba3b6834.npz: cached
+[DOD-O 9/55] DODO_6a7503ac48dd.npz: cached
+[DOD-O 10/55] DODO_fc10ee0bac3a.npz: cached
+[DOD-O 11/55] DODO_f66bc75ec79f.npz: cached
+[DOD-O 12/55] DODO_c03e27b0513c.npz: cached
+[DOD-O 13/55] DODO_5b94ec8a5609.npz: cached
+[DOD-O 14/55] DODO_e6b7cbeffb60.npz: cached
+[DOD-O 15/55] DODO_cc3b4b631449.npz: cached
+[DOD-O 16/55] DODO_ad47bc127b5e.npz: cached
+[DOD-O 17/55] DODO_0416d51fa1ef.npz: cached
+[DOD-O 18/55] DODO_e72505f154bc.npz: cached
+[DOD-O 19/55] DODO_a6254c8ae0a5.npz: cached
+[DOD-O 20/55] DODO_4e3c4ac4259d.npz: cached
+[DOD-O 21/55] DODO_5ddbc68c1bc2.npz: cached
+[DOD-O 22/55] DODO_100df1087895.npz: cached
+[DOD-O 23/55] DODO_742f1592e33a.npz: cached
+[DOD-O 24/55] DODO_cebd3520fc2b.npz: cached
+[DOD-O 25/55] DODO_52fbe46b7bac.npz: cached
+[DOD-O 26/55] DODO_30e8a05b9ad5.npz: cached
+[DOD-O 27/55] DODO_039ce8add087.npz: cached
+[DOD-O 28/55] DODO_eb95076c61c6.npz: cached
+[DOD-O 29/55] DODO_c985916d0bac.npz: cached
+[DOD-O 30/55] DODO_a0c91989683c.npz: cached
+[DOD-O 31/55] DODO_c11c730fdfce.npz: cached
+[DOD-O 32/55] DODO_02fb158afde1.npz: cached
+[DOD-O 33/55] DODO_18482adfa105.npz: cached
+[DOD-O 34/55] DODO_47f45aa2062b.npz: cached
+[DOD-O 35/55] DODO_2d01dc34fdfc.npz: cached
+[DOD-O 36/55] DODO_b3706da5cdf6.npz: cached
+[DOD-O 37/55] DODO_a65a9e6908cc.npz: cached
+[DOD-O 38/55] DODO_22bea84c955b.npz: cached
+[DOD-O 39/55] DODO_7f5237b10ef4.npz: cached
+[DOD-O 40/55] DODO_2e865ca9eab9.npz: cached
+[DOD-O 41/55] DODO_40e25dd46b15.npz: cached
+[DOD-O 42/55] DODO_e59c45e0f6c1.npz: cached
+[DOD-O 43/55] DODO_79e8a04e9103.npz: cached
+[DOD-O 44/55] DODO_4b72b905195f.npz: cached
+[DOD-O 45/55] DODO_3dd35e7b569f.npz: cached
+[DOD-O 46/55] DODO_2159377ec1d2.npz: cached
+[DOD-O 47/55] DODO_16450f5a89eb.npz: cached
+[DOD-O 48/55] DODO_03341d0d8f57.npz: cached
+[DOD-O 49/55] DODO_90aef91aca1f.npz: cached
+[DOD-O 50/55] DODO_130f3f52e5c9.npz: cached
+[DOD-O 51/55] DODO_aadc9e0c0935.npz: cached
+[DOD-O 52/55] DODO_a79d1f0e5f0f.npz: cached
+[DOD-O 53/55] DODO_325563939647.npz: cached
+[DOD-O 54/55] DODO_c31a47f92603.npz: cached
+[DOD-O 55/55] DODO_d5181c33092a.npz: cached
+
+cached recordings: {'HMC': 151, 'CAP': 108, 'ISRUC1': 100, 'DODO': 55, 'DODH': 25, 'ISRUC2': 16, 'ISRUC3': 10} | total 465 | cache size 2.44 GB | elapsed 1.8 min
+[corpus] CAP_n13: 762 epochs with non-finite signal (float16 overflow) -> recording excluded from evaluation
+[corpus] CAP_n14: 612 epochs with non-finite signal (float16 overflow) -> recording excluded from evaluation
+[corpus] CAP_n15: 657 epochs with non-finite signal (float16 overflow) -> recording excluded from evaluation
+[corpus] 25/465 recordings loaded
+[corpus] 50/465 recordings loaded
+[corpus] 75/465 recordings loaded
+[corpus] 100/465 recordings loaded
+[corpus] 125/465 recordings loaded
+[corpus] 150/465 recordings loaded
+[corpus] 175/465 recordings loaded
+[corpus] 200/465 recordings loaded
+[corpus] 225/465 recordings loaded
+[corpus] 250/465 recordings loaded
+[corpus] 275/465 recordings loaded
+[corpus] 300/465 recordings loaded
+[corpus] 325/465 recordings loaded
+[corpus] 350/465 recordings loaded
+[corpus] 375/465 recordings loaded
+[corpus] 400/465 recordings loaded
+[corpus] 425/465 recordings loaded
+[corpus] 450/465 recordings loaded
+[corpus] 465 recordings, 437,430 epochs, 457 participants; X on cpu (2.62 GB)
+cohort     channel_raw
+CAP        C3-A2            4
+           C4-A1          101
+           C4A1             3
+DOD-H      C3_M2           25
+DOD-O      C4_M1           55
+HMC        C4-M1          151
+ISRUC-I    C4-A1           18
+           C4-M1           82
+ISRUC-II   C4-A1            2
+           C4-M1           14
+ISRUC-III  C4-A1           10
