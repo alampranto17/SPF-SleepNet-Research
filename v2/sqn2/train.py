@@ -417,8 +417,7 @@ class Trainer:
         icov = np.linalg.inv(cov)
         eval_recs = list(split["test_recs"]) + list(split["external_recs"])
         pt = self._predict_recs(model, eval_recs, Fs, mc=cfg["mc_passes"])
-        d = np.stack([np.einsum("ij,jk,ik->i", pt["emb"] - mu, icov, pt["emb"] - mu)
-                      for mu in mus], 1)
+        d = np.stack([_mahal_sq(pt["emb"], mu, icov, self.dev) for mu in mus], 1)
         maha = np.sqrt(np.min(d, 1))
         mc = pt["mc_p"]
         pm = mc.mean(1)
@@ -461,6 +460,24 @@ class Trainer:
                             n_params=0)
         print(f"  {tag}: GBM done thr={thr:.3f}")
         return path
+
+
+def _mahal_sq(E, mu, icov, dev=None, chunk=65536):
+    """Squared Mahalanobis distance row by row, chunked BLAS / GPU matmul.
+    (np.einsum('ij,jk,ik->i') was O(n d^2) unoptimised: hours for d = 2400.)"""
+    out = np.empty(len(E), dtype=np.float64)
+    use_gpu = dev is not None and getattr(dev, "type", str(dev)) == "cuda" and torch.cuda.is_available()
+    if use_gpu:
+        ic = torch.as_tensor(icov, dtype=torch.float32, device=dev)
+        m = torch.as_tensor(mu, dtype=torch.float32, device=dev)
+    for i in range(0, len(E), chunk):
+        if use_gpu:
+            D = torch.as_tensor(E[i:i + chunk], dtype=torch.float32, device=dev) - m
+            out[i:i + chunk] = ((D @ ic) * D).sum(1).double().cpu().numpy()
+        else:
+            D = np.asarray(E[i:i + chunk], dtype=np.float64) - mu
+            out[i:i + chunk] = np.einsum("ij,ij->i", D @ icov, D)
+    return out
 
 
 def _sigmoid(x):
