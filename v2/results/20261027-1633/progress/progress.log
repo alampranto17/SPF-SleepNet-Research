@@ -470,3 +470,31 @@ training stage finished, elapsed 3.93 h
 [RQ2b] within-N3 grade (Low / Moderate / High)
 [RQ4] component analysis
 [RQ1b] same-protocol comparison with published models
+[github] pushed 26 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-1633
+[RQ6] reliability
+[RQ7] episodes / overnight profiles
+[RQ5] explainability
+[analysis] excluded from evaluation: {'CAP': 3} recordings (see evaluation_exclusions.csv)
+go_no_go_decisions.csv
+rq1_detection_metrics.csv
+rq1_sota_comparison.csv
+rq1_interrater_benchmark.csv
+rq2_rk_grade_validation.csv
+rq2_n3_grade_validity.csv
+rq4_component_effects.csv
+rq2_factor_validity.csv
+rq6_reliability_components.csv
+rq7_profile_agreement.csv
+fig_rq1_pr_curves.png
+fig_rq2_early_vs_late.png
+fig_rq2_graded_expert_agreement.png
+fig_rq4_component_forest.png
+fig_rq6_risk_coverage.png
+fig_rq7_profiles.png
+fig_example_overnight_profile.png
+fig_rq5_band_explanations.png
+fig_rq1_sota.png
+fig_rq2b_n3_grade.png
+wrote /kaggle/working/sqn2_v2_outputs.zip 410.4 MB | total elapsed 4.17 h
+[github] token loaded from Kaggle secret 'github_token'
+[github] pushed 45 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261027-1633
