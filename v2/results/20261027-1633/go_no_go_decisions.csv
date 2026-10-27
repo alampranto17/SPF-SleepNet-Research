@@ -1,0 +1,12 @@
+phase,decision,basis
+Binary N3 detection,GO_WITH_LIMITATIONS,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+Delta Intensity Score,GO_WITH_LIMITATIONS,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+Slow-Wave Morphology Score,GO_WITH_LIMITATIONS,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+Spectral Dominance Score,GO_WITH_LIMITATIONS,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+N3 Continuity Score,GO_WITH_LIMITATIONS,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+Reliability Score,GO,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+Overall N3 EEG Rating,GO_WITH_LIMITATIONS,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+Episode-level rating,GO_WITH_LIMITATIONS,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+Whole-night N3 profile,GO,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+Within-N3 grade (Low/Moderate/High),HOLD,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
+Clinical sleep-quality claim,NO_GO,mechanical mapping from research_question_results.csv; scores remain rule-derived research-prototype descriptors without expert or clinical validation
