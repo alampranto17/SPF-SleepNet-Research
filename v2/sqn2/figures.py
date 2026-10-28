@@ -60,8 +60,7 @@ def fig_pr_curves(out_dir):
     ax.set_title("N3 detection (OOF: ISRUC-I, HMC; others external)")
     ax.legend(loc="lower left", fontsize=8)
     ax.set_xlim(0, 1)
-    lo = float(np.nanmin([np.nanmin(v) for v in vals if len(v)] or [0]))
-    ax.set_ylim(max(0.0, np.floor((lo - 0.05) * 10) / 10), 1.02)
+    ax.set_ylim(0, 1.02)
     return _save(fig, out_dir, "fig_rq1_pr_curves.png")
 
 
