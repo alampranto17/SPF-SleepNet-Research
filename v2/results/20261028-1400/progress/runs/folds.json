@@ -1,0 +1,212 @@
+[
+ {
+  "fold": 0,
+  "train_recs": [
+   "HMC_SN001",
+   "HMC_SN002",
+   "HMC_SN003",
+   "HMC_SN007",
+   "ISRUC1_003",
+   "ISRUC1_005",
+   "ISRUC1_006",
+   "ISRUC1_008"
+  ],
+  "inner_recs": [
+   "HMC_SN005",
+   "ISRUC1_007"
+  ],
+  "test_recs": [
+   "HMC_SN004",
+   "HMC_SN006",
+   "HMC_SN008",
+   "ISRUC1_001",
+   "ISRUC1_002",
+   "ISRUC1_004"
+  ],
+  "external_recs": [
+   "CAP_ins1",
+   "CAP_n1",
+   "CAP_n2",
+   "CAP_nfle1",
+   "CAP_rbd1",
+   "DODH_0000000004e1",
+   "DODH_00000000275d",
+   "DODH_000000003997",
+   "DODH_00000000463b",
+   "DODO_000000000c65",
+   "DODO_000000009343",
+   "DODO_00000000b00b",
+   "DODO_00000000d23a",
+   "ISRUC2_001_s1",
+   "ISRUC2_001_s2",
+   "ISRUC2_002_s1",
+   "ISRUC2_002_s2",
+   "ISRUC2_003_s1",
+   "ISRUC2_003_s2",
+   "ISRUC3_001",
+   "ISRUC3_002"
+  ],
+  "train_participants": [
+   "HMC_SN001",
+   "HMC_SN002",
+   "HMC_SN003",
+   "HMC_SN007",
+   "ISRUC1_003",
+   "ISRUC1_005",
+   "ISRUC1_006",
+   "ISRUC1_008"
+  ],
+  "inner_participants": [
+   "HMC_SN005",
+   "ISRUC1_007"
+  ],
+  "test_participants": [
+   "HMC_SN004",
+   "HMC_SN006",
+   "HMC_SN008",
+   "ISRUC1_001",
+   "ISRUC1_002",
+   "ISRUC1_004"
+  ]
+ },
+ {
+  "fold": 1,
+  "train_recs": [
+   "HMC_SN002",
+   "HMC_SN003",
+   "HMC_SN004",
+   "HMC_SN006",
+   "ISRUC1_001",
+   "ISRUC1_002",
+   "ISRUC1_004",
+   "ISRUC1_006"
+  ],
+  "inner_recs": [
+   "HMC_SN008",
+   "ISRUC1_008"
+  ],
+  "test_recs": [
+   "HMC_SN001",
+   "HMC_SN005",
+   "HMC_SN007",
+   "ISRUC1_003",
+   "ISRUC1_005",
+   "ISRUC1_007"
+  ],
+  "external_recs": [
+   "CAP_ins1",
+   "CAP_n1",
+   "CAP_n2",
+   "CAP_nfle1",
+   "CAP_rbd1",
+   "DODH_0000000004e1",
+   "DODH_00000000275d",
+   "DODH_000000003997",
+   "DODH_00000000463b",
+   "DODO_000000000c65",
+   "DODO_000000009343",
+   "DODO_00000000b00b",
+   "DODO_00000000d23a",
+   "ISRUC2_001_s1",
+   "ISRUC2_001_s2",
+   "ISRUC2_002_s1",
+   "ISRUC2_002_s2",
+   "ISRUC2_003_s1",
+   "ISRUC2_003_s2",
+   "ISRUC3_001",
+   "ISRUC3_002"
+  ],
+  "train_participants": [
+   "HMC_SN002",
+   "HMC_SN003",
+   "HMC_SN004",
+   "HMC_SN006",
+   "ISRUC1_001",
+   "ISRUC1_002",
+   "ISRUC1_004",
+   "ISRUC1_006"
+  ],
+  "inner_participants": [
+   "HMC_SN008",
+   "ISRUC1_008"
+  ],
+  "test_participants": [
+   "HMC_SN001",
+   "HMC_SN005",
+   "HMC_SN007",
+   "ISRUC1_003",
+   "ISRUC1_005",
+   "ISRUC1_007"
+  ]
+ },
+ {
+  "fold": 2,
+  "train_recs": [
+   "HMC_SN001",
+   "HMC_SN004",
+   "HMC_SN005",
+   "HMC_SN007",
+   "HMC_SN008",
+   "ISRUC1_001",
+   "ISRUC1_002",
+   "ISRUC1_003",
+   "ISRUC1_005",
+   "ISRUC1_007"
+  ],
+  "inner_recs": [
+   "HMC_SN006",
+   "ISRUC1_004"
+  ],
+  "test_recs": [
+   "HMC_SN002",
+   "HMC_SN003",
+   "ISRUC1_006",
+   "ISRUC1_008"
+  ],
+  "external_recs": [
+   "CAP_ins1",
+   "CAP_n1",
+   "CAP_n2",
+   "CAP_nfle1",
+   "CAP_rbd1",
+   "DODH_0000000004e1",
+   "DODH_00000000275d",
+   "DODH_000000003997",
+   "DODH_00000000463b",
+   "DODO_000000000c65",
+   "DODO_000000009343",
+   "DODO_00000000b00b",
+   "DODO_00000000d23a",
+   "ISRUC2_001_s1",
+   "ISRUC2_001_s2",
+   "ISRUC2_002_s1",
+   "ISRUC2_002_s2",
+   "ISRUC2_003_s1",
+   "ISRUC2_003_s2",
+   "ISRUC3_001",
+   "ISRUC3_002"
+  ],
+  "train_participants": [
+   "HMC_SN001",
+   "HMC_SN004",
+   "HMC_SN005",
+   "HMC_SN007",
+   "HMC_SN008",
+   "ISRUC1_001",
+   "ISRUC1_002",
+   "ISRUC1_003",
+   "ISRUC1_005",
+   "ISRUC1_007"
+  ],
+  "inner_participants": [
+   "HMC_SN006",
+   "ISRUC1_004"
+  ],
+  "test_participants": [
+   "HMC_SN002",
+   "HMC_SN003",
+   "ISRUC1_006",
+   "ISRUC1_008"
+  ]
+ }
+]
