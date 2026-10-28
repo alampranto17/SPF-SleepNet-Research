@@ -1,0 +1,958 @@
+[github] pushed 5 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261028-1400
+[github] live progress sync ON: every 20 min -> alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261028-1400/progress/
+[kaggle] no API secrets found (ModuleNotFoundError); automatic datasets OFF. Add secrets KAGGLE_USERNAME and KAGGLE_KEY to enable.
+[kaggle] no API credentials - sqn2-cache not restored
+[kaggle] no API credentials - sqn2-runs not restored
+[HMC] RECORDS from physionet-open.s3.amazonaws.com failed: <urlopen error Tunnel connection failed: 403 Forbidden>
+[HMC] RECORDS from physionet.org failed: <urlopen error Tunnel connection failed: 403 Forbidden>
+HMC download failed: <urlopen error Tunnel connection failed: 403 Forbidden>
+[drive] embeddedfolderview failed for 1KiEl4xk0gRTNG9Oeg-gCfzKGKU0gnjGH: <urlopen error Tunnel connection failed: 403 Forbidden>
+[drive] falling back to gdown 6.4.2 folder listing
+ISRUC-I Drive download failed: HTTPSConnectionPool(host='drive.google.com', port=443): Max retries exceeded with url: /embeddedfolderview?id=1KiEl4xk0gRTNG9Oeg-gCfzKGKU0gnjGH (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+[drive] embeddedfolderview failed for 1b4Df79NxyiOiYjG83bk2c9tGKXVDpZ5F: <urlopen error Tunnel connection failed: 403 Forbidden>
+[drive] falling back to gdown 6.4.2 folder listing
+ISRUC-III Drive download failed: HTTPSConnectionPool(host='drive.google.com', port=443): Max retries exceeded with url: /embeddedfolderview?id=1b4Df79NxyiOiYjG83bk2c9tGKXVDpZ5F (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+[MEGA] static megatools download failed (download failed https://xff.cz/megatools/builds/builds/megatools-1.11.5.20250706-linux-x86_64.tar.gz: <urlopen error Tunnel connection failed: 403 Forbidden>); trying apt
+[ISRUC-II MEGA] megatools unavailable - skipped
+[MEGA] static megatools download failed (download failed https://xff.cz/megatools/builds/builds/megatools-1.11.5.20250706-linux-x86_64.tar.gz: <urlopen error Tunnel connection failed: 403 Forbidden>); trying apt
+[ISRUC-I MEGA] megatools unavailable - skipped
+[MEGA] static megatools download failed (download failed https://xff.cz/megatools/builds/builds/megatools-1.11.5.20250706-linux-x86_64.tar.gz: <urlopen error Tunnel connection failed: 403 Forbidden>); trying apt
+[ISRUC-III MEGA] megatools unavailable - skipped
+ISRUC-I: 8/100 subjects cached
+ISRUC-II: 3/8 subjects cached
+ISRUC-III: 2/10 subjects cached
+[ISRUC details] subgroup I: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[ISRUC details] subgroup II: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[ISRUC details] subgroup III: not available (Details spreadsheet not found locally and the old ISRUC server is retired (age/sex for this subgroup unavailable))
+[CAP] RECORDS from physionet-open.s3.amazonaws.com failed: <urlopen error Tunnel connection failed: 403 Forbidden>
+[CAP] RECORDS from physionet.org failed: <urlopen error Tunnel connection failed: 403 Forbidden>
+[CAP] 108 recordings to cache (~370 MB each; AWS S3 mirror first)
+[CAP 1/108] CAP_ins1.npz: cached   (0.0 min, ETA 0 min)
+    !! CAP brux1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP brux1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 2/108] CAP_brux1.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/brux1.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (0.5 min, ETA 28 min)
+    !! CAP brux2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 3/108] CAP_brux2.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/brux2.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (0.5 min, ETA 19 min)
+    !! CAP ins2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 4/108] CAP_ins2.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/ins2.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (0.5 min, ETA 14 min)
+    !! CAP ins4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 5/108] CAP_ins3.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/ins3.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (1.1 min, ETA 22 min)
+    !! CAP ins5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 6/108] CAP_ins5.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/ins5.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (1.1 min, ETA 18 min)
+    !! CAP ins6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 7/108] CAP_ins4.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/ins4.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (1.1 min, ETA 15 min)
+    !! CAP ins7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 8/108] CAP_ins6.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/ins6.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (1.6 min, ETA 20 min)
+    !! CAP ins7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 9/108] CAP_ins8.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/ins8.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (1.6 min, ETA 18 min)
+[CAP 10/108] CAP_n1.npz: cached   (1.6 min, ETA 16 min)
+[CAP 11/108] CAP_n2.npz: cached   (1.6 min, ETA 14 min)
+    !! CAP ins7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 12/108] CAP_ins7.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/ins7.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (1.6 min, ETA 13 min)
+    !! CAP n3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP ins9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 13/108] CAP_ins9.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/ins9.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (2.1 min, ETA 16 min)
+    !! CAP n4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 14/108] CAP_n3.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n3.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (2.1 min, ETA 14 min)
+    !! CAP n5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 15/108] CAP_n4.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n4.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (2.1 min, ETA 13 min)
+    !! CAP n6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 16/108] CAP_n5.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n5.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (2.7 min, ETA 15 min)
+    !! CAP n6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 17/108] CAP_n6.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n6.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (2.7 min, ETA 14 min)
+    !! CAP n7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 18/108] CAP_n7.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n7.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (2.7 min, ETA 13 min)
+    !! CAP n8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 19/108] CAP_n9.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n9.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (3.2 min, ETA 15 min)
+    !! CAP n8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 20/108] CAP_n8.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n8.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (3.2 min, ETA 14 min)
+    !! CAP n11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 21/108] CAP_n10.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n10.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (3.2 min, ETA 13 min)
+    !! CAP n13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 22/108] CAP_n11.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n11.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (3.7 min, ETA 15 min)
+    !! CAP n12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 23/108] CAP_n12.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n12.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (3.7 min, ETA 14 min)
+    !! CAP n13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 24/108] CAP_n13.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n13.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (3.7 min, ETA 13 min)
+    !! CAP n15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 25/108] CAP_n14.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n14.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (4.2 min, ETA 14 min)
+    !! CAP n16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 26/108] CAP_n15.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n15.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (4.3 min, ETA 13 min)
+    !! CAP narco1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP n16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 27/108] CAP_n16.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/n16.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (4.3 min, ETA 13 min)
+    !! CAP narco2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 28/108] CAP_narco1.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/narco1.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (4.8 min, ETA 14 min)
+    !! CAP narco3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 29/108] CAP_narco2.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/narco2.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (4.8 min, ETA 13 min)
+    !! CAP narco4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 30/108] CAP_narco3.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/narco3.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (4.8 min, ETA 12 min)
+[CAP 31/108] CAP_nfle1.npz: cached   (4.8 min, ETA 12 min)
+    !! CAP narco4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 32/108] CAP_narco4.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/narco4.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (5.3 min, ETA 13 min)
+    !! CAP narco5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP narco5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 33/108] CAP_narco5.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/narco5.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (5.3 min, ETA 12 min)
+    !! CAP nfle3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 34/108] CAP_nfle2.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle2.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (5.3 min, ETA 12 min)
+    !! CAP nfle5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 35/108] CAP_nfle3.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle3.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (5.8 min, ETA 12 min)
+    !! CAP nfle4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 36/108] CAP_nfle4.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle4.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (5.8 min, ETA 12 min)
+    !! CAP nfle6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 37/108] CAP_nfle5.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle5.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (5.8 min, ETA 11 min)
+    !! CAP nfle8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 38/108] CAP_nfle6.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle6.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (6.4 min, ETA 12 min)
+    !! CAP nfle9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 39/108] CAP_nfle7.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle7.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (6.4 min, ETA 11 min)
+    !! CAP nfle9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 40/108] CAP_nfle8.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle8.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (6.4 min, ETA 11 min)
+    !! CAP nfle11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 41/108] CAP_nfle9.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle9.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (6.9 min, ETA 11 min)
+    !! CAP nfle12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 42/108] CAP_nfle10.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle10.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (6.9 min, ETA 11 min)
+    !! CAP nfle13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 43/108] CAP_nfle11.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle11.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (6.9 min, ETA 10 min)
+    !! CAP nfle14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 44/108] CAP_nfle12.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle12.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (7.4 min, ETA 11 min)
+    !! CAP nfle15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 45/108] CAP_nfle13.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle13.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (7.4 min, ETA 10 min)
+    !! CAP nfle16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 46/108] CAP_nfle14.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle14.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (7.4 min, ETA 10 min)
+    !! CAP nfle17 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle17 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle17 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle17 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle17 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle17 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 47/108] CAP_nfle15.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle15.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (8.0 min, ETA 10 min)
+    !! CAP nfle18 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle18 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 48/108] CAP_nfle16.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle16.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (8.0 min, ETA 10 min)
+    !! CAP nfle19 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle17 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle17 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 49/108] CAP_nfle17.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle17.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (8.0 min, ETA 10 min)
+    !! CAP nfle19 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle20 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle20 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle18 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle18 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle19 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle19 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle20 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle20 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle18 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle18 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle19 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle19 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle20 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle20 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle18 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle18 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 50/108] CAP_nfle18.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle18.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (8.5 min, ETA 10 min)
+    !! CAP nfle21 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle21 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle19 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle19 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 51/108] CAP_nfle19.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle19.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (8.5 min, ETA 9 min)
+    !! CAP nfle20 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle22 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle20 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 52/108] CAP_nfle20.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle20.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (8.5 min, ETA 9 min)
+    !! CAP nfle22 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle23 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle23 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle21 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle21 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle22 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle22 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle23 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle23 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle21 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle21 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle22 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle22 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle23 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle23 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle21 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle21 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 53/108] CAP_nfle21.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle21.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (9.0 min, ETA 9 min)
+    !! CAP nfle24 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle24 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle22 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle22 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 54/108] CAP_nfle22.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle22.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (9.0 min, ETA 9 min)
+    !! CAP nfle23 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle25 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle23 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 55/108] CAP_nfle23.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle23.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (9.0 min, ETA 9 min)
+    !! CAP nfle25 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle26 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle26 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle24 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle24 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle25 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle25 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle26 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle26 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle24 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle24 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle25 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle25 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle26 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle26 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle24 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle24 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 56/108] CAP_nfle24.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle24.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (9.5 min, ETA 9 min)
+    !! CAP nfle27 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle27 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle25 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle25 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 57/108] CAP_nfle25.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle25.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (9.6 min, ETA 9 min)
+    !! CAP nfle28 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle28 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle26 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle26 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 58/108] CAP_nfle26.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle26.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (9.6 min, ETA 8 min)
+    !! CAP nfle29 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle29 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle27 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle27 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle28 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle28 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle29 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle29 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle27 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle27 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle28 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle28 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle29 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle29 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle27 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle27 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 59/108] CAP_nfle27.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle27.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (10.1 min, ETA 8 min)
+    !! CAP nfle30 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle30 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle28 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle28 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 60/108] CAP_nfle28.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle28.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (10.1 min, ETA 8 min)
+    !! CAP nfle31 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle31 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle29 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle29 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 61/108] CAP_nfle29.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle29.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (10.1 min, ETA 8 min)
+    !! CAP nfle32 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle32 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle30 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle30 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle31 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle31 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle32 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle32 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle30 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle30 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle31 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle31 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle32 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle32 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle30 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle30 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 62/108] CAP_nfle30.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle30.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (10.6 min, ETA 8 min)
+    !! CAP nfle33 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle31 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle33 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle31 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 63/108] CAP_nfle31.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle31.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (10.6 min, ETA 8 min)
+    !! CAP nfle34 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle34 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle32 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle32 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 64/108] CAP_nfle32.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle32.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (10.6 min, ETA 7 min)
+    !! CAP nfle35 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle35 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle33 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle33 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle34 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle34 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle35 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle35 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle33 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle33 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle34 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle34 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle35 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle35 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle33 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle33 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 65/108] CAP_nfle33.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle33.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (11.1 min, ETA 7 min)
+    !! CAP nfle36 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle34 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle34 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 66/108] CAP_nfle34.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle34.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (11.1 min, ETA 7 min)
+    !! CAP nfle36 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle37 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle37 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle35 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle35 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 67/108] CAP_nfle35.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle35.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (11.2 min, ETA 7 min)
+    !! CAP nfle38 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle38 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle36 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle36 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle37 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle37 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle38 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle38 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle36 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle36 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle37 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle37 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle38 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle38 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle36 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle36 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 68/108] CAP_nfle36.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle36.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (11.7 min, ETA 7 min)
+    !! CAP nfle37 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle39 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle37 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 69/108] CAP_nfle37.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle37.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (11.7 min, ETA 7 min)
+    !! CAP nfle39 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle40 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle40 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle38 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle38 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 70/108] CAP_nfle38.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle38.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (11.7 min, ETA 6 min)
+    !! CAP plm1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle39 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle39 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle40 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle40 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle39 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle40 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle39 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle40 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle39 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle40 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP nfle39 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 71/108] CAP_nfle39.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle39.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (12.2 min, ETA 6 min)
+    !! CAP nfle40 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 72/108] CAP_nfle40.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/nfle40.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (12.2 min, ETA 6 min)
+    !! CAP plm2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 73/108] CAP_plm1.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm1.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (12.2 min, ETA 6 min)
+    !! CAP plm4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 74/108] CAP_plm3.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm3.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (12.7 min, ETA 6 min)
+    !! CAP plm2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 75/108] CAP_plm2.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm2.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (12.7 min, ETA 6 min)
+    !! CAP plm5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 76/108] CAP_plm4.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm4.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (12.8 min, ETA 5 min)
+    !! CAP plm7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 77/108] CAP_plm5.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm5.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (13.3 min, ETA 5 min)
+    !! CAP plm8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 78/108] CAP_plm6.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm6.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (13.3 min, ETA 5 min)
+    !! CAP plm9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 79/108] CAP_plm7.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm7.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (13.3 min, ETA 5 min)
+    !! CAP plm10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 80/108] CAP_plm8.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm8.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (13.8 min, ETA 5 min)
+[CAP 81/108] CAP_rbd1.npz: cached   (13.8 min, ETA 5 min)
+    !! CAP rbd2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 82/108] CAP_plm9.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm9.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (13.8 min, ETA 4 min)
+    !! CAP rbd3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP plm10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 83/108] CAP_plm10.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/plm10.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (13.8 min, ETA 4 min)
+    !! CAP rbd4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 84/108] CAP_rbd2.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd2.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (14.3 min, ETA 4 min)
+    !! CAP rbd5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 85/108] CAP_rbd3.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd3.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (14.3 min, ETA 4 min)
+    !! CAP rbd6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 86/108] CAP_rbd4.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd4.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (14.4 min, ETA 4 min)
+    !! CAP rbd7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd5 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd5 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 87/108] CAP_rbd5.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd5.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (14.9 min, ETA 4 min)
+    !! CAP rbd8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd6 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd6 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 88/108] CAP_rbd6.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd6.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (14.9 min, ETA 3 min)
+    !! CAP rbd9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd7 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd7 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 89/108] CAP_rbd7.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd7.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (14.9 min, ETA 3 min)
+    !! CAP rbd10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd8 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd8 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 90/108] CAP_rbd8.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd8.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (15.4 min, ETA 3 min)
+    !! CAP rbd9 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd9 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 91/108] CAP_rbd9.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd9.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (15.4 min, ETA 3 min)
+    !! CAP rbd11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd10 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd10 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 92/108] CAP_rbd10.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd10.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (15.4 min, ETA 3 min)
+    !! CAP rbd13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd11 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd11 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 93/108] CAP_rbd11.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd11.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (15.9 min, ETA 3 min)
+    !! CAP rbd12 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd12 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 94/108] CAP_rbd12.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd12.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (15.9 min, ETA 2 min)
+    !! CAP rbd14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd13 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd13 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 95/108] CAP_rbd13.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd13.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (16.0 min, ETA 2 min)
+    !! CAP rbd16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd14 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd14 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 96/108] CAP_rbd14.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd14.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (16.5 min, ETA 2 min)
+    !! CAP rbd15 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd17 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd15 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 97/108] CAP_rbd15.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd15.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (16.5 min, ETA 2 min)
+    !! CAP rbd18 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd17 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd18 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd16 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd16 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 98/108] CAP_rbd16.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd16.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (16.5 min, ETA 2 min)
+    !! CAP rbd19 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd19 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd17 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd18 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd17 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd18 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd19 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd19 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd17 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd18 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd17 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd18 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd19 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd19 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd17 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd18 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd17 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 99/108] CAP_rbd17.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd17.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (17.0 min, ETA 2 min)
+    !! CAP rbd18 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 100/108] CAP_rbd18.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd18.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (17.0 min, ETA 1 min)
+    !! CAP rbd21 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd20 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd21 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd20 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd19 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd19 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 101/108] CAP_rbd19.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd19.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (17.0 min, ETA 1 min)
+    !! CAP rbd22 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd22 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd21 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd20 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd21 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd20 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd22 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd22 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd21 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd20 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd21 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd20 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd22 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd22 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd20 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd21 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd20 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 102/108] CAP_rbd20.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd20.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (17.5 min, ETA 1 min)
+    !! CAP rbd21 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 103/108] CAP_rbd21.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd21.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (17.5 min, ETA 1 min)
+    !! CAP sdb2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd22 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP rbd22 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 104/108] CAP_rbd22.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/rbd22.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (17.6 min, ETA 1 min)
+    !! CAP sdb3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb2 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb1 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb2 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 105/108] CAP_sdb2.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/sdb2.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (18.0 min, ETA 1 min)
+    !! CAP sdb1 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 106/108] CAP_sdb1.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/sdb1.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (18.1 min, ETA 0 min)
+    !! CAP sdb4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb3 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb3 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 107/108] CAP_sdb3.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/sdb3.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (18.1 min, ETA 0 min)
+    !! CAP sdb4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
