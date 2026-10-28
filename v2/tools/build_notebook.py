@@ -10,28 +10,66 @@ MODULES = ["__init__", "data", "download", "features", "scores", "models", "base
            "stats", "analysis", "xai", "report", "figures", "pipeline", "kaggle_io", "github_io"]
 
 md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
+MODULE_ROLE = {
+    "__init__": "package marker and version",
+    "data": "EDF/h5 readers, channel selection and re-referencing, filtering, resampling, DOD scorer alignment, compact cache",
+    "download": "HMC, ISRUC (Drive/MEGA), CAP and DOD downloaders with mirrors, resume and quota handling",
+    "features": "handcrafted EEG features (band powers, ratios, slow-wave detector)",
+    "scores": "rule-derived factor scores, Overall N3 EEG Rating, episodes and overnight profile",
+    "models": "SleepQualityNet v2 network (CNN, feature fusion, attention, dilated temporal context)",
+    "baselines": "DeepSleepNet, TinySleepNet, AttnSleep, L-SeqSleepNet re-implemented under the same protocol",
+    "train": "corpus, participant-grouped folds, trainer, temperature scaling, MC dropout, OOD distance",
+    "stats": "bootstrap CIs, paired tests, Holm correction, ICC, agreement statistics",
+    "analysis": "pre-specified criteria and RQ1-RQ7 analyses, exclusions",
+    "xai": "SHAP surrogate, input-gradient saliency, attention and band-perturbation explanations",
+    "report": "data inventory, methods parameters, go/no-go table",
+    "figures": "all figures",
+    "pipeline": "training order, time budget, fold freezing, analysis orchestration",
+    "kaggle_io": "save/restore private Kaggle datasets",
+    "github_io": "live progress log and result push to GitHub",
+}
+MODULE_TABLE = ("## 2. Package source (`sqn2`)\n"
+                "The cells in this section write the SleepQualityNet v2 package to `./sqn2/`. They are collapsed "
+                "(click to expand) and identical to the `v2/sqn2/` folder of the GitHub repository.\n\n"
+                "| module | role |\n|---|---|\n" +
+                "\n".join(f"| `{m}.py` | {r} |" for m, r in MODULE_ROLE.items()))
+HIDDEN = {"jupyter": {"source_hidden": True}, "collapsed": True}
 cells = []
 
-cells.append(md("""# SleepQualityNet v2 — N3 detection and rule-derived N3 EEG factor profile (Kaggle)
+cells.append(md("""# SleepQualityNet v2: single-channel N3 detection with a rule-derived N3 EEG factor profile
 
-**What this notebook does (end to end, no manual data upload needed):**
-1. Downloads **HMC** (PhysioNet, ~150 clinical PSGs, AASM v2.4), **ISRUC-Sleep subgroups I/II/III** (official server; II = 8 people × 2 sessions) and **Dreem DOD-H / DOD-O** (Zenodo; 80 recordings scored by 5 experts each), and converts each recording to a compact cache (verified central EEG channel only, 100 Hz, *all* epochs kept in chronological order, every expert's hypnogram, v1 QC rules stored as flags).
-2. Trains the detection model and all ablation variants with **5-fold participant-grouped CV on ISRUC-I + HMC** (inner-validation early stopping and threshold selection — the outer test fold is never used for selection), leave-one-cohort-out models, and evaluates ISRUC-II, ISRUC-III, DOD-H and DOD-O as **external** cohorts.
-3. Computes the **rule-derived factor scores** (delta intensity, slow-wave morphology, spectral dominance, N3 continuity), the **Overall N3 EEG Rating**, a cross-fitted **reliability score**, N3 episodes and the **Overnight N3 EEG Profile**.
-4. Answers RQ1–RQ7 against **pre-specified criteria** (`research_question_results.csv`) and writes figures and tables to `/kaggle/working/outputs`.
+**Execution notebook (Kaggle).** This notebook reproduces every number, table and figure of the v2 study from public data, end to end: data download → compact cache → participant-grouped training → pre-specified analyses RQ1–RQ7 → figures → archive. A separate, CPU-only notebook (`SleepQualityNet_v2_results.ipynb`) presents the saved results in manuscript order without re-running anything.
 
-**How to run on Kaggle (free tier) — fully automatic**
-* *Settings → Accelerator → **GPU T4 ×2*** and *Settings → **Internet ON*** (phone-verified account).
-* **One-time:** kaggle.com → *Settings → API → Create New Token* downloads `kaggle.json` (`{"username": ..., "key": ...}`). In this notebook: *Add-ons → Secrets → Add* two secrets, **`KAGGLE_USERNAME`** and **`KAGGLE_KEY`**, with those values, and tick them for this notebook. (Never paste the key into a cell.)
-* Then just **Save Version → Save & Run All (Commit)**, every time:
-  - first run: downloads the data, **automatically saves the cache as your private dataset `sqn2-cache`**, then trains and analyses;
-  - every later run: **restores `sqn2-cache` (and finished training runs from `sqn2-runs`) automatically** — no re-download, no re-training of finished runs.
-* Optional first check: `QUICK_TEST = True` (≈30 min; uses separate `sqn2-runs-quicktest`, so it never mixes with the real runs).
-* **Results to GitHub (optional):** add a secret named **`github_token`** (`GITHUB_TOKEN` also works): a *fine-grained* token for `SPF-SleepNet-Research` only, with *Contents: Read and write*. At the end of each full run the tables, figures and `research_question_results.csv` are pushed to `v2/results/<date>/` on the `v2-kaggle` branch.
-* Without the secrets everything still works, but outputs stay only in the notebook output.
+### Notebook map
+| § | Section | What it does | Typical time (GPU T4 ×2) |
+|:-:|---|---|---|
+| 0 | Configuration | all user-settable options in one cell | – |
+| 1 | Environment and reproducibility | installs packages, records versions, GPU and seeds (`environment.json`) | 1–2 min |
+| 2 | Package source | writes the `sqn2` package (hidden cells; identical to the GitHub repository) | seconds |
+| 3 | Data acquisition | HMC, ISRUC-I/II/III, CAP, DOD-H/O → compact 100 Hz cache; channel audit | restored from `sqn2-cache` in minutes (first build: hours) |
+| 4 | Cohort inventory | corpus, Table-1 style inventory, channel audit | 2–5 min |
+| 5 | Model training | 5-fold participant CV: primary model, ablations, published baselines, GBM, leave-one-cohort-out | skipped when runs are restored from `sqn2-runs` |
+| 6 | Pre-specified analyses | RQ1–RQ7 + RQ1b (baselines) + RQ2b (within-N3 grade), evaluated mechanically against fixed criteria | 1.5–2 h |
+| 7 | Figures | all manuscript and supplementary figures, grouped by research question | 2–5 min |
+| 8 | Export | zip archive, GitHub push of tables and figures (no EEG data) | 1–2 min |
+| 9 | Reporting rules and availability statements | wording rules, data/code availability, reproducibility checklist | – |
 
-**Scope of claims.** All scores are rule-derived research-prototype descriptors of the EEG signal. They are *not* clinical sleep quality, not validated against expert quality ratings (none exist in these datasets) and not diagnostic. Synthetic data is never used: if a dataset fails to download the notebook stops or reports it.
+### Study design in one paragraph
+Training cohorts **ISRUC-Sleep I** (100 participants) and **HMC** (151 clinical PSGs, AASM). External cohorts, never used for training or model selection: **ISRUC-II** (8 participants × 2 sessions; test–retest), **ISRUC-III** (10 healthy), **Dreem DOD-H** (25 healthy) and **DOD-O** (55 OSA), each DOD night scored by 5 experts, and **CAP** (R&K scoring; used only as the S3/S4 reference for the within-N3 grade). One verified central EEG derivation (C4-M1/A1 or C3-M2/A2), 0.3–35 Hz zero-phase band-pass, 100 Hz. Folds are participant-grouped and frozen at the first training session; early stopping, temperature scaling and the decision threshold use an inner validation split only.
+
+### How to run (Kaggle, free tier)
+1. *Settings → Accelerator → **GPU T4 ×2***, *Internet → **On***.
+2. *Add input*: your private datasets **`sqn2-cache`** and **`sqn2-runs`** (latest versions). Inputs cannot be attached during a Commit run, so attach them first.
+3. *Add-ons → Secrets* (one time): `KAGGLE_USERNAME`, `KAGGLE_KEY` and optionally `github_token` (fine-grained, this repository only, *Contents: read and write*). Never paste a key into a cell.
+4. *Save Version → Save & Run All (Commit)*. Finished training runs are skipped automatically; progress is pushed to GitHub every 20 min.
+
+`QUICK_TEST = True` runs a 30-min pipeline check on a small subset. Its numbers are never reportable and are kept in a separate `sqn2-runs-quicktest` dataset.
+
+### Scope of claims
+All factor scores, the N3 EEG Rating and the within-N3 grade are **rule-derived research-prototype descriptors of the EEG signal**. They are not clinical or restorative sleep quality, are not validated against expert quality ratings (none exist in these datasets) and are not diagnostic. No synthetic data is used anywhere in this notebook.
 """))
+
+cells.append(md("## 0. Configuration\nEvery option that changes what the notebook does is in this cell. The defaults reproduce the reported study."))
 
 cells.append(code('''# ============================ CONFIGURATION ============================
 QUICK_TEST = False          # True = small subset for a fast end-to-end check (results NOT reportable)
@@ -87,6 +125,7 @@ RUN_NAME = _time.strftime("%Y%m%d-%H%M") + ("_quicktest" if QUICK_TEST else "") 
 print("WORK =", WORK)
 '''))
 
+cells.append(md("## 1. Environment and reproducibility\nInstalls the few packages Kaggle lacks and records the exact software and hardware environment in `outputs/environment.json`, which is pushed with the results."))
 cells.append(code('''# ============================ SETUP ============================
 import subprocess, sys, importlib, os
 def _pip(*pkgs):
@@ -107,12 +146,34 @@ print("torch", torch.__version__, "| device", DEVICE,
 pd.set_option("display.width", 220); pd.set_option("display.max_colwidth", 160)
 '''))
 
-cells.append(md("## Package source (written to `./sqn2/`)\nThe code below is the full SleepQualityNet v2 package; it is also kept in the GitHub repository."))
+cells.append(code('''# ---- record the environment (software versions, hardware, seeds) ----
+import platform, json, importlib.metadata as _md
+def _ver(pkg):
+    try:
+        return _md.version(pkg)
+    except Exception:
+        return None
+ENV = {
+    "run_name": RUN_NAME, "quick_test": QUICK_TEST, "python": platform.python_version(),
+    "platform": platform.platform(),
+    "packages": {k: _ver(k) for k in ("torch", "numpy", "scipy", "pandas", "scikit-learn", "lightgbm",
+                                      "mne", "shap", "h5py", "pyarrow", "matplotlib", "statsmodels")},
+    "cuda": torch.version.cuda if DEVICE == "cuda" else None,
+    "cudnn": torch.backends.cudnn.version() if DEVICE == "cuda" else None,
+    "gpus": [torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())] if DEVICE == "cuda" else [],
+    "global_seed": 42, "seed_note": "fold seed = 42*1000 + (sum of ord(fold id) mod 997); folds frozen in runs/folds.json",
+}
+with open(os.path.join(OUT_DIR, "environment.json"), "w") as f:
+    json.dump(ENV, f, indent=2)
+print(json.dumps(ENV, indent=2))
+'''))
+
+cells.append(md(MODULE_TABLE))
 for m in MODULES:
     src = open(os.path.join(PKG, f"{m}.py")).read()
-    cells.append(code(f"%%writefile sqn2/{m}.py\n{src}"))
+    cells.append(code(f"%%writefile sqn2/{m}.py\n{src}", metadata=dict(HIDDEN)))
 
-cells.append(md("""## Stage A — data acquisition and compact cache
+cells.append(md("""## 3. Data acquisition and compact cache
 Each recording is processed and deleted immediately after caching, so disk use stays small. Finished recordings are skipped on re-runs.
 The cache log printed below is the **channel audit**: every recording must show a central EEG derivation (C4-A1/C4-M1 or C3-A2/C3-M2); recordings without one are skipped (never an EOG fallback). DOD records are streamed from the remote zip one at a time (HTTP range requests)."""))
 
@@ -247,7 +308,8 @@ if AUTO_KAGGLE_DATASETS and KUSER and (len(files) > n_cached_before or globals()
                      f"{len(files)} recordings")
 '''))
 
-cells.append(md("## Stage B — corpus, data inventory and channel audit"))
+cells.append(md("""## 4. Cohort inventory and channel audit
+Builds the training/evaluation corpus from the cache and writes `channel_audit.csv` (EEG derivation and native sampling rate of every recording) and `data_inventory.csv` (participants, recordings, epochs, N3 share and available metadata per cohort; the basis of Table 1)."""))
 cells.append(code('''from sqn2 import train as T, report as RP
 GH.STATUS["stage"] = "B: corpus and data inventory"
 corpus = T.Corpus(CACHE_DIR, device=DEVICE)
@@ -263,7 +325,7 @@ display(summ)
 display(RP.data_inventory(corpus, OUT_DIR).head(40))
 '''))
 
-cells.append(md("""## Stage C — training (5-fold participant CV, ablations, GBM baseline, leave-one-cohort-out)
+cells.append(md("""## 5. Model training (5-fold participant-grouped CV, ablations, baselines, GBM, leave-one-cohort-out)
 Order: the primary model (`full_v2`) on all folds first, then the ablation variants, the features-only GBM and the LOCO models. Each finished run is saved to `runs/` and skipped on re-runs.
 
 | variant | features | pos-weight | attention | context (±15 epochs) |
@@ -311,7 +373,21 @@ if "train" in RUN_STAGES:
     print(f"training stage finished, elapsed {(_time.time()-T_START)/3600:.2f} h")
 '''))
 
-cells.append(md("## Stage D — RQ1–RQ7 analyses against pre-specified criteria"))
+cells.append(md("""## 6. Pre-specified analyses (RQ1–RQ7)
+Every research question has a success criterion fixed before the results were seen (`sqn2/analysis.py::CRITERIA`). The analysis evaluates each criterion mechanically and writes the verdict (SUPPORTED / PARTIALLY_SUPPORTED / NOT_SUPPORTED / ANSWERED) to `research_question_results.csv`. Recordings or epochs removed from evaluation (non-finite signal, DOD label alignment below 0.6 agreement) are listed with the reason in `evaluation_exclusions.csv`; any analysis that fails is logged in `analysis_errors.txt` instead of stopping the notebook.
+
+| RQ | Question |
+|:-:|---|
+| RQ1 | Participant-independent binary N3 detection from one EEG channel, internally and in external cohorts |
+| RQ1b | Same-protocol comparison with DeepSleepNet, TinySleepNet, AttnSleep and L-SeqSleepNet |
+| RQ2 | Physiological validity of the factor scores (early vs late night, N3 vs N2, graded multi-expert agreement) |
+| RQ2b | Low / Moderate / High within-N3 slow-wave grade against expert R&K S3 vs S4 (CAP) |
+| RQ3 | Stability of the Overall N3 EEG Rating (weights, participants, cohorts, test–retest) |
+| RQ4 | Contribution of feature fusion, class weighting, attention and temporal context |
+| RQ5 | Agreement of explanation methods with the physiology of N3 |
+| RQ6 | Reliability score for rejecting untrustworthy epochs |
+| RQ7 | N3 episodes and the Overnight N3 EEG Profile against expert hypnograms |
+"""))
 cells.append(code('''ANALYSED = False
 if "analyse" not in RUN_STAGES:
     GH.STATUS["stage"] = "stopped after data stage (training cohorts incomplete or analysis not requested)"
@@ -335,13 +411,31 @@ else:
             print(f); display(pd.read_csv(fp))
 '''))
 
+cells.append(md("""## 7. Figures
+All figures are written to `outputs/figures/` (300 dpi PNG) and displayed below, grouped by research question. A figure whose inputs are missing is skipped with a message; the others are still produced."""))
 cells.append(code('''if ANALYSED:
     from sqn2 import figures as FG
-    from IPython.display import Image
-    for p in FG.make_all(OUT_DIR):
-        print(os.path.basename(p)); display(Image(p, width=900))
+    from IPython.display import Image, Markdown
+    FIGS = FG.make_all(OUT_DIR)
+    GROUPS = [("rq1_", "RQ1 / RQ1b - N3 detection and same-protocol baselines"),
+              ("rq2_", "RQ2 - factor-score validity"), ("rq2b_", "RQ2b - within-N3 slow-wave grade"),
+              ("rq4_", "RQ4 - component contributions"), ("rq5_", "RQ5 - explanations"),
+              ("rq6_", "RQ6 - reliability"), ("rq7_", "RQ7 - episodes and overnight profiles"),
+              ("example_", "Illustrative night")]
+    shown = set()
+    for key, title in GROUPS:
+        group = [p for p in FIGS if os.path.basename(p).startswith("fig_" + key) and p not in shown]
+        if group:
+            display(Markdown(f"### {title}"))
+        for p in group:
+            shown.add(p)
+            display(Markdown(f"`{os.path.basename(p)}`")); display(Image(p, width=900))
+    for p in FIGS:
+        if p not in shown:
+            display(Markdown(f"`{os.path.basename(p)}`")); display(Image(p, width=900))
 '''))
 
+cells.append(md("## 8. Export\nWrites `sqn2_v2_outputs.zip` (tables, figures, out-of-fold predictions, run metadata, frozen folds) to the notebook output and pushes the tables and figures to `v2/results/<RUN_NAME>/` on GitHub. EEG signals and per-epoch predictions are **not** pushed to the public repository (ISRUC licence: research use only)."))
 cells.append(code('''# package outputs (tables, figures, OOF predictions, run metadata)
 import zipfile
 zp = os.path.join(WORK, "sqn2_v2_outputs.zip")
@@ -365,12 +459,33 @@ if "SYNC" in globals():
     SYNC.stop(final=True)                         # last progress snapshot
 '''))
 
-cells.append(md("""## Reporting rules for the manuscript
-* Report `research_question_results.csv` **as it comes out**, including criteria that are not met; do not re-run with changed settings selected on these test results.
-* Primary metrics = all scored epochs of primary recordings (QC-flagged epochs included); clean-only metrics are a sensitivity analysis.
-* Allowed wording: *N3 EEG Rating, factor-level EEG score, Delta Intensity / Slow-Wave Morphology / Spectral Dominance / N3 Continuity / Signal Reliability Score, Overnight N3 EEG Profile, rule-derived research prototype*.
-* Not allowed: *clinical/restorative sleep quality, validated N3 quality, diagnostic or medical-grade score*.
-* Exact parameter values for the Methods section are in `methods_parameters.csv`.
+cells.append(md("""## 9. Reporting rules and availability statements
+
+### Reporting rules
+* Report `research_question_results.csv` **as it comes out**, including criteria that are not met. Settings are never changed after looking at test results.
+* Primary metrics use all scored epochs of primary recordings (QC-flagged epochs included); clean-only metrics are a sensitivity analysis.
+* Every exclusion in `evaluation_exclusions.csv` is reported in the Methods with its reason.
+* Allowed wording: *N3 EEG Rating, factor-level EEG score, Delta Intensity / Slow-Wave Morphology / Spectral Dominance / N3 Continuity / Signal Reliability Score, Overnight N3 EEG Profile, N3 slow-wave grade, rule-derived research prototype*.
+* Not allowed: *clinical or restorative sleep quality, validated N3 quality, diagnostic or medical-grade score, personalised clinical recommendation*.
+* Attention and feature fusion are reported as components that did **not** significantly change detection accuracy (RQ4), not as improvements.
+* Exact parameter values for the Methods section are in `methods_parameters.csv`; software versions in `environment.json`.
+
+### Data availability (draft statement)
+All recordings are public: HMC and the CAP Sleep Database (PhysioNet), ISRUC-Sleep subgroups I–III (research-use licence) and the Dreem Open Datasets DOD-H/DOD-O (Zenodo; scorer hypnograms from the Dreem `dreem-learning-evaluation` repository). The notebook downloads them from these sources; no data are redistributed.
+
+### Code availability (draft statement)
+The complete code (`sqn2` package, this notebook and the results notebook) is in the GitHub repository `alampranto17/SPF-SleepNet-Research` (folder `v2/`), together with the result tables and figures of every full run.
+
+### Reproducibility checklist
+| item | where |
+|---|---|
+| participant-grouped, frozen folds | `runs/folds.json` (in the output archive) |
+| no test-fold model selection | inner split for early stopping, temperature and threshold (§5) |
+| fixed seeds | `environment.json`, `methods_parameters.csv` |
+| pre-specified criteria | `sqn2/analysis.py::CRITERIA`, `research_question_results.csv` |
+| exclusions with reasons | `evaluation_exclusions.csv` |
+| software and hardware | `environment.json` |
+| same protocol for every baseline | §5, `sqn2/baselines.py::BASELINE_NOTES` |
 """))
 
 nb = nbf.v4.new_notebook()

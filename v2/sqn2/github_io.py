@@ -15,7 +15,7 @@ import tempfile
 import threading
 import time
 
-RESULT_PATTERNS = ("*.csv", "*.json", "figures/*.png")
+RESULT_PATTERNS = ("*.csv", "*.json", "analysis_errors.txt", "figures/*.png")
 MAX_FILE_MB = 20
 
 
