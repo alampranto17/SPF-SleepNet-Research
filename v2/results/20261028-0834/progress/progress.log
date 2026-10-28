@@ -470,3 +470,93 @@ cached recordings: {'HMC': 151, 'CAP': 108, 'ISRUC1': 100, 'DODO': 55, 'DODH': 2
 [corpus] 375/465 recordings loaded
 [corpus] 400/465 recordings loaded
 [corpus] 425/465 recordings loaded
+[corpus] 450/465 recordings loaded
+[github] pushed 5 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261028-0834
+[corpus] 465 recordings, 437,430 epochs, 457 participants; X on cuda (2.62 GB)
+cohort     channel_raw
+CAP        C3-A2            4
+           C4-A1          101
+           C4A1             3
+DOD-H      C3_M2           25
+DOD-O      C4_M1           55
+HMC        C4-M1          151
+ISRUC-I    C4-A1           18
+           C4-M1           82
+ISRUC-II   C4-A1            2
+           C4-M1           14
+ISRUC-III  C4-A1           10
+[train] reusing frozen folds from /kaggle/working/runs/folds.json
+[train] full_v2 fold 0 done  (elapsed 0.0 min)
+[train] full_v2 fold 1 done  (elapsed 0.0 min)
+[train] full_v2 fold 2 done  (elapsed 0.0 min)
+[train] full_v2 fold 3 done  (elapsed 0.0 min)
+[train] full_v2 fold 4 done  (elapsed 0.0 min)
+[train] cnn fold 0 done  (elapsed 0.0 min)
+[train] cnn fold 1 done  (elapsed 0.0 min)
+[train] cnn fold 2 done  (elapsed 0.0 min)
+[train] cnn fold 3 done  (elapsed 0.0 min)
+[train] cnn fold 4 done  (elapsed 0.0 min)
+[train] cnn_feat fold 0 done  (elapsed 0.0 min)
+[train] cnn_feat fold 1 done  (elapsed 0.0 min)
+[train] cnn_feat fold 2 done  (elapsed 0.0 min)
+[train] cnn_feat fold 3 done  (elapsed 0.0 min)
+[train] cnn_feat fold 4 done  (elapsed 0.0 min)
+[train] cnn_pw fold 0 done  (elapsed 0.0 min)
+[train] cnn_pw fold 1 done  (elapsed 0.0 min)
+[train] cnn_pw fold 2 done  (elapsed 0.0 min)
+[train] cnn_pw fold 3 done  (elapsed 0.0 min)
+[train] cnn_pw fold 4 done  (elapsed 0.0 min)
+[train] cnn_feat_pw fold 0 done  (elapsed 0.0 min)
+[train] cnn_feat_pw fold 1 done  (elapsed 0.0 min)
+[train] cnn_feat_pw fold 2 done  (elapsed 0.0 min)
+[train] cnn_feat_pw fold 3 done  (elapsed 0.0 min)
+[train] cnn_feat_pw fold 4 done  (elapsed 0.0 min)
+[train] cnn_feat_pw_noattn fold 0 done  (elapsed 0.0 min)
+[train] cnn_feat_pw_noattn fold 1 done  (elapsed 0.0 min)
+[train] cnn_feat_pw_noattn fold 2 done  (elapsed 0.0 min)
+[train] cnn_feat_pw_noattn fold 3 done  (elapsed 0.0 min)
+[train] cnn_feat_pw_noattn fold 4 done  (elapsed 0.0 min)
+[train] deepsleepnet fold 0 done  (elapsed 0.0 min)
+[train] deepsleepnet fold 1 done  (elapsed 0.0 min)
+[train] deepsleepnet fold 2 done  (elapsed 0.0 min)
+[train] deepsleepnet fold 3 done  (elapsed 0.0 min)
+[train] deepsleepnet fold 4 done  (elapsed 0.0 min)
+[train] tinysleepnet fold 0 done  (elapsed 0.0 min)
+[train] tinysleepnet fold 1 done  (elapsed 0.0 min)
+[train] tinysleepnet fold 2 done  (elapsed 0.0 min)
+[train] tinysleepnet fold 3 done  (elapsed 0.0 min)
+[train] tinysleepnet fold 4 done  (elapsed 0.0 min)
+[train] attnsleep fold 0 done  (elapsed 0.0 min)
+[train] attnsleep fold 1 done  (elapsed 0.0 min)
+[train] attnsleep fold 2 done  (elapsed 0.0 min)
+[train] attnsleep fold 3 done  (elapsed 0.0 min)
+[train] attnsleep fold 4 done  (elapsed 0.0 min)
+[train] lseqsleepnet fold 0 done  (elapsed 0.0 min)
+[train] lseqsleepnet fold 1 done  (elapsed 0.0 min)
+[train] lseqsleepnet fold 2 done  (elapsed 0.0 min)
+[train] lseqsleepnet fold 3 done  (elapsed 0.0 min)
+[train] lseqsleepnet fold 4 done  (elapsed 0.0 min)
+training stage finished, elapsed 1.68 h
+[RQ1] detection
+[analysis] run/cache alignment: 7/7 checked runs map exactly onto the current cache (run_alignment_check.csv)
+[RQ2/3] factor scores
+[RQ2b] within-N3 grade (Low / Moderate / High)
+[RQ4] component analysis
+[RQ1b] same-protocol comparison with published models
+[RQ6] reliability
+[RQ7] episodes / overnight profiles
+[RQ5] explainability
+[analysis] excluded from evaluation: {'CAP': 3} recordings (see evaluation_exclusions.csv)
+go_no_go_decisions.csv
+rq1_detection_metrics.csv
+rq1_sota_comparison.csv
+rq1_interrater_benchmark.csv
+rq2_rk_grade_validation.csv
+rq2_n3_grade_validity.csv
+rq4_component_effects.csv
+rq2_factor_validity.csv
+rq6_reliability_components.csv
+rq7_profile_agreement.csv
+wrote /kaggle/working/sqn2_v2_outputs.zip 411.7 MB | total elapsed 1.92 h
+[github] token loaded from Kaggle secret 'github_token'
+[github] pushed 56 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261028-0834
