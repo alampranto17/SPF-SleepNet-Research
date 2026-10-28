@@ -251,10 +251,12 @@ def fig_n3_grade(out_dir):
     p2 = os.path.join(out_dir, "rq2_sw_grade_by_expert_vote_fraction.csv")
     if os.path.exists(p2):
         v = pd.read_csv(p2)
-        v = v[v.cohort.isin(["DOD-H", "DOD-O"])] if v.cohort.isin(["DOD-H", "DOD-O"]).any() else v
+        if v.cohort.isin(["DOD-H", "DOD-O"]).any():
+            # 5 scorers -> votes are multiples of 20 %; other values come from epochs a scorer left unscored
+            v = v[v.cohort.isin(["DOD-H", "DOD-O"]) & np.isclose((v.vote * 5) % 1, 0, atol=1e-6)]
         g = v.groupby("vote")[[n for n in names if n in v.columns]].mean()
         g.index = [f"{x:.0%}" for x in g.index]
-        panels.append(("Fraction of experts voting N3", g))
+        panels.append(("Fraction of DOD experts voting N3", g))
     if not panels:
         raise FileNotFoundError("no grade tables")
     fig, axes = plt.subplots(1, len(panels), figsize=(4.2 * len(panels), 3.2), squeeze=False)
@@ -269,7 +271,10 @@ def fig_n3_grade(out_dir):
         ax.set_xlabel("Share of detected N3 epochs")
         ax.set_title(title)
         ax.grid(axis="y", visible=False)
-    axes[0][-1].legend(title="N3 slow-wave grade", loc="lower right", fontsize=8)
+    h, l = axes[0][-1].get_legend_handles_labels()
+    fig.legend(h, l, title="N3 slow-wave grade", loc="lower center", ncol=3, fontsize=8, frameon=False,
+               bbox_to_anchor=(0.5, -0.02))
+    fig.subplots_adjust(bottom=0.28)
     return _save(fig, out_dir, "fig_rq2b_n3_grade.png")
 
 
