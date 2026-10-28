@@ -140,6 +140,7 @@ def analyse_all(corpus, cfg, run_dir, out_dir, log=print):
     os.makedirs(out_dir, exist_ok=True)
     _safe.out_dir = out_dir
     A.EXCLUSIONS.clear()
+    A.RUN_ALIGNMENT.clear()
     if os.path.exists(os.path.join(out_dir, "analysis_errors.txt")):
         os.remove(os.path.join(out_dir, "analysis_errors.txt"))
     _safe("inventory", lambda: RP.data_inventory(corpus, out_dir), log)
@@ -148,6 +149,10 @@ def analyse_all(corpus, cfg, run_dir, out_dir, log=print):
     log("[RQ1] detection")
     r1, ir, oof, ext = A.rq1(corpus, run_dir, out_dir, n_boot=cfg["n_boot"])   # required
     res["r1"] = r1
+    al = _safe("run alignment", lambda: A.write_run_alignment(out_dir), log)
+    if al is not None and len(al):
+        log(f"[analysis] run/cache alignment: {int(al.aligned.sum())}/{len(al)} checked runs map exactly "
+            f"onto the current cache (run_alignment_check.csv)")
     log("[RQ2/3] factor scores")
     S = A.compute_fold_scores(corpus, oof, run_dir)
     Sx = _safe("external scores", lambda: A.compute_external_scores(corpus, ext), log) \
@@ -183,6 +188,10 @@ def analyse_all(corpus, cfg, run_dir, out_dir, log=print):
                                                  r1b=res.get("r1b")), log)
     if summ is not None:
         _safe("go/no-go", lambda: RP.go_no_go(summ, out_dir), log)
+    al = _safe("run alignment", lambda: A.write_run_alignment(out_dir), log)
+    if al is not None and (~al.aligned.astype(bool)).any():
+        log(f"[analysis] WARNING: {int((~al.aligned.astype(bool)).sum())} run(s) skipped because their epoch "
+            f"indices do not match the current cache (run_alignment_check.csv)")
     ex = _safe("exclusions", lambda: A.write_exclusions(out_dir), log)
     if ex is not None and len(ex):
         log(f"[analysis] excluded from evaluation: "
