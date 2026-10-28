@@ -418,6 +418,41 @@ def dod_short_id(rid):
     return f"{rid[:8]}{rid[-4:]}"
 
 
+def align_scorers_to_h5(hyps, h5_hyp, max_extra=60):
+    """Lag (epochs) such that scorer epoch ``i + lag`` corresponds to signal epoch ``i``.
+
+    The Zenodo DOD-O signals are cropped at the start relative to the scorer hypnograms
+    of the dreem-learning-evaluation repository; the hypnogram stored INSIDE each h5 file
+    is aligned with its signal.  The lag maximising agreement between the scorer majority
+    vote and that h5 hypnogram is used (labels only - the signal is never consulted)."""
+    cons = consensus_labels(np.stack([np.clip(np.asarray(h, int)[:min(map(len, hyps))], -1, 4)
+                                      for h in hyps], 1))
+    h5_hyp = np.asarray(h5_hyp, int)
+    lo, hi = -max_extra, max(0, len(cons) - len(h5_hyp)) + max_extra
+    best = (-1.0, 0)
+    for lag in range(lo, hi + 1):
+        a = cons[max(0, lag):]
+        b = h5_hyp[max(0, -lag):]
+        L = min(len(a), len(b))
+        m = (a[:L] >= 0) & (b[:L] >= 0)
+        if m.sum() > 100:
+            best = max(best, (float((a[:L][m] == b[:L][m]).mean()), lag))
+    return best[1], best[0]
+
+
+def shift_hypnograms(hyps, lag, n):
+    """Scorer hypnograms re-indexed to signal epochs 0..n-1 (missing -> -1)."""
+    multi = np.full((n, len(hyps)), -1, np.int8)
+    for j, h in enumerate(hyps):
+        h = np.clip(np.asarray(h, int), -1, 4)
+        src0 = lag
+        dst = np.arange(n)
+        src = dst + src0
+        ok = (src >= 0) & (src < len(h))
+        multi[dst[ok], j] = h[src[ok]]
+    return multi
+
+
 def load_dod(h5_path, scorer_hyps=None, cohort="DOD-H"):
     """Dreem DOD .h5 record.  ``scorer_hyps``: {scorer_name: list of stage codes}."""
     import h5py
@@ -441,11 +476,12 @@ def load_dod(h5_path, scorer_hyps=None, cohort="DOD-H"):
                 h5_hyp = np.asarray(ds[k][()]).astype(int).ravel()
     n_sig = len(sig) // int(round(EPOCH_SEC * fs))
     hyps = [np.asarray(v, int) for _, v in sorted((scorer_hyps or {}).items())]
+    lag, agree = 0, None
     if hyps:
         n = min([n_sig] + [len(h) for h in hyps])
-        multi = np.full((n, len(hyps)), -1, np.int8)
-        for j, h in enumerate(hyps):
-            multi[:, j] = np.clip(h[:n], -1, 4)
+        if h5_hyp is not None:
+            lag, agree = align_scorers_to_h5(hyps, h5_hyp)
+        multi = shift_hypnograms(hyps, lag, n)
         labels = consensus_labels(multi)
         ref = f"consensus of {len(hyps)} scorers"
     elif h5_hyp is not None:
@@ -464,8 +500,25 @@ def load_dod(h5_path, scorer_hyps=None, cohort="DOD-H"):
             "night": 1, "is_primary": True, "channel_raw": ch_key,
             "derivation": standard_derivation(ch_key), "native_fs": fs, "n_epochs": int(n),
             "crop_start_s": 0.0, "n_raters": len(hyps) if hyps else 1, "reference": ref,
-            "source_file": Path(h5_path).name, "record_uuid": rid}
+            "source_file": Path(h5_path).name, "record_uuid": rid,
+            "scorer_lag_epochs": int(lag), "scorer_vs_h5_agreement": agree}
     return epochs, labels[:n], multi[:n], qc, meta
+
+
+def relabel_dod_cache(npz_path, scorer_hyps, h5_hyp):
+    """Re-align the scorer labels of an existing DOD cache file in place (signal, epoch
+    count and QC untouched, so saved model predictions stay valid)."""
+    arr, meta = load_cache(npz_path)
+    hyps = [np.asarray(v, int) for _, v in sorted(scorer_hyps.items())]
+    n = len(arr["labels"])
+    lag, agree = align_scorers_to_h5(hyps, h5_hyp)
+    multi = shift_hypnograms(hyps, lag, n)
+    labels = consensus_labels(multi)
+    qc = {k: arr[k] for k in arr if k.startswith(("qc_", "flag_", "rk_"))}
+    meta.update({"scorer_lag_epochs": int(lag), "scorer_vs_h5_agreement": agree,
+                 "relabelled": True})
+    save_cache(npz_path, arr["epochs"], labels, multi, qc, meta)
+    return lag, agree
 
 
 # ---------------------------------------------------------------------------

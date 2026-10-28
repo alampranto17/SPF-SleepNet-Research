@@ -30,6 +30,8 @@ import time
 import urllib.request
 import zipfile
 
+import numpy as np
+
 from . import data as D
 
 # PhysioNet open data is mirrored on AWS S3 (physionet-open). From Kaggle the S3
@@ -727,6 +729,66 @@ def dod_scorers(tmp, log=print):
                 out[ds].setdefault(rec, {})[scorer] = json.loads(zf.read(n))
     log(f"[DOD] scorer hypnograms: DOD-H {len(out['dodh'])} records, "
         f"DOD-O {len(out['dodo'])} records")
+    return out
+
+
+def relabel_dod(cache_dir, which=("DOD-O", "DOD-H"), workers=4, log=print, force=False,
+                max_recordings=None):
+    """Align the 5 scorer hypnograms of every cached DOD record to its signal using the
+    hypnogram stored inside the h5 file (only labels change; signals / epoch counts stay)."""
+    import h5py
+    tmp = tempfile.mkdtemp(prefix="sqn2_relabel_")
+    scorers = dod_scorers(tmp, log)
+    out = []
+    for cohort in which:
+        key = "dodh" if cohort == "DOD-H" else "dodo"
+        pre = D.COHORT_PREFIX[cohort]
+        todo = []
+        for f in sorted(glob.glob(os.path.join(cache_dir, f"{pre}_*.npz"))):
+            _, meta = D.load_cache(f)
+            if meta.get("relabelled") and not force:
+                continue
+            todo.append((f, meta.get("record_uuid")))
+        if max_recordings is not None:
+            todo = todo[:max_recordings]
+        if not todo:
+            log(f"[{cohort} relabel] nothing to do")
+            continue
+        names = {}
+        rz0 = _open_remote_zip(DOD_ZIP[cohort], log)
+        for n in rz0.namelist():
+            b = os.path.basename(n)
+            if n.endswith(".h5") and not b.startswith("._") and "__MACOSX" not in n:
+                names[os.path.splitext(b)[0]] = n
+        log(f"[{cohort} relabel] {len(todo)} records; streaming only to read each h5 hypnogram")
+
+        def make(item):
+            f, rid = item
+
+            def job():
+                name = os.path.basename(f)
+                if rid not in names or rid not in scorers[key]:
+                    return name, "SKIPPED (record not in zip or no scorer hypnograms)"
+                d = tempfile.mkdtemp(dir=tmp)
+                try:
+                    rz = _open_remote_zip(DOD_ZIP[cohort], log)
+                    p = rz.extract(names[rid], d)
+                    with h5py.File(p, "r") as h5:
+                        h5hyp = np.asarray(h5["hypnogram"][()]).astype(int).ravel()
+                    lag, agree = D.relabel_dod_cache(f, scorers[key][rid], h5hyp)
+                    out.append({"cohort": cohort, "record": name, "lag_epochs": lag, "agreement": agree})
+                    flag = "" if agree is not None and agree >= 0.6 else "  <-- LOW AGREEMENT"
+                    return name, f"lag={lag:+d} epochs ({lag * 0.5:+.0f} min), scorer-vs-h5 agreement={agree:.3f}{flag}"
+                except Exception as exc:
+                    return name, f"FAILED {exc}"
+                finally:
+                    shutil.rmtree(d, ignore_errors=True)
+            return job
+        _run_jobs([make(t) for t in todo], workers, log, f"{cohort} relabel")
+    shutil.rmtree(tmp, ignore_errors=True)
+    if out:
+        import pandas as _pd
+        _pd.DataFrame(out).to_csv(os.path.join(cache_dir, "dod_label_alignment.csv"), index=False)
     return out
 
 
