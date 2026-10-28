@@ -1,0 +1,21 @@
+grade,test,cohort,n,median_diff,p,W
+sw_grade,G1 High share early > late,all,13,0.2286612758310872,0.000244140625,90.0
+sw_grade,G1 High share early > late,CAP,5,0.21804511278195493,0.03125,15.0
+sw_grade,G1 High share early > late,ISRUC-I,3,0.22333333333333327,,
+sw_grade,G1 High share early > late,ISRUC-II,3,0.2286612758310872,,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),all multi-rater,1437,-0.022818846162037026,0.3873837554574272,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-I,660,-0.03874955540190932,0.32023241678715847,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-II,584,-0.01817337834811984,0.6611871083690245,
+sw_grade,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-III,193,0.03744547214176799,0.6051483478285896,
+sw_grade,"G4 High share test-retest ICC(2,1)",ISRUC-II,3,0.3120810931003356,,
+rating_band,G1 High share early > late,all,13,0.44,0.0001220703125,91.0
+rating_band,G1 High share early > late,CAP,5,0.39473684210526316,0.03125,15.0
+rating_band,G1 High share early > late,ISRUC-I,3,0.4533333333333333,,
+rating_band,G1 High share early > late,ISRUC-II,3,0.45222929936305734,,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),all multi-rater,1437,0.09921054048980173,0.00016530354983032775,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-I,660,0.11260591718963069,0.0037719145635714507,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-II,584,0.09593408733844341,0.02040940706441105,
+rating_band,G2 grade ~ fraction of experts voting N3 (Spearman),ISRUC-III,193,0.054397188790737204,0.452437656697786,
+rating_band,"G4 High share test-retest ICC(2,1)",ISRUC-II,3,0.38973335251920715,,
+sw_grade,G3 expert R&K S4 vs S3 AUROC [expert S3/S4 epochs],CAP,480,0.5010156955344122,0.3125,
+sw_grade,G3 expert R&K S4 vs S3 AUROC [expert S3/S4 AND detected N3],CAP,478,0.5010067055342542,0.3125,

@@ -1,0 +1,19 @@
+{
+ "n_epochs": 128,
+ "n_participants": 16,
+ "median_delta_drop": 0.07644322514533997,
+ "median_alpha_drop(control)": 0.0015139877796173096,
+ "frac_epochs_delta_drop_positive": 1.0,
+ "frac_participants_top_band_delta_perturbation": 1.0,
+ "frac_participants_top_band_delta_IG": 0.8125,
+ "frac_participants_delta_top_both": 0.8125,
+ "median_rank_rho_perturb_vs_ig": 0.19999999999999998,
+ "top_band_agreement_rate": 0.8125,
+ "shap_surrogate_fidelity_r2": 0.9273373017038122,
+ "shap_top_group": "sigma",
+ "attention_sw_spearman_median": -0.05942428406007005,
+ "attention_sw_enrichment_median": 0.9976473777524887,
+ "exact_decomposition_max_abs_error": 0.0,
+ "observed": "delta top in 81% of participants for both perturbation and IG (perturb 100%, IG 81%); SHAP top group=sigma (fidelity R2=0.93); attention-SW rho=-0.06",
+ "status": "PARTIALLY_SUPPORTED"
+}
