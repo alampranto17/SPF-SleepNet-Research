@@ -1,0 +1,23 @@
+component,group,error_detection_auroc
+confidence,model_confidence,0.8471630945390487
+mc_entropy,model_confidence,0.8959146488895029
+mc_mi,epistemic/OOD,0.8167129373769473
+maha,epistemic/OOD,0.9857928050844531
+qc_score_v1,signal_quality,0.28583101619978585
+qc_hf_ratio,signal_quality,0.307435408103347
+qc_n_clipped,signal_quality,0.529369667714414
+flag_any_v1,signal_quality,0.32533418534765635
+COMBINED (cross-fitted logistic),combined,0.9849854063762911
+COMBINED vs expert N3 disagreement [OOF:all],independent_reference,0.8201042452143773
+mc_entropy vs expert N3 disagreement [OOF:all],independent_reference,0.641967959148576
+COMBINED vs expert N3 disagreement [OOF:ISRUC-I],independent_reference,0.8201042452143773
+mc_entropy vs expert N3 disagreement [OOF:ISRUC-I],independent_reference,0.641967959148576
+COMBINED [external:CAP],external,0.9908544983747452
+COMBINED [external:ISRUC-II],external,0.9843348329048843
+COMBINED [external:ISRUC-III],external,0.9860308285163777
+COMBINED vs expert N3 disagreement [external:all],independent_reference,0.8275868964441546
+mc_entropy vs expert N3 disagreement [external:all],independent_reference,0.6755626122324918
+COMBINED vs expert N3 disagreement [external:ISRUC-II],independent_reference,0.8312256195216609
+mc_entropy vs expert N3 disagreement [external:ISRUC-II],independent_reference,0.6696748383495371
+COMBINED vs expert N3 disagreement [external:ISRUC-III],independent_reference,0.8160667963683528
+mc_entropy vs expert N3 disagreement [external:ISRUC-III],independent_reference,0.6978761348897535
