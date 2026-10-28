@@ -60,7 +60,8 @@ def fig_pr_curves(out_dir):
     ax.set_title("N3 detection (OOF: ISRUC-I, HMC; others external)")
     ax.legend(loc="lower left", fontsize=8)
     ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1.02)
+    lo = float(np.nanmin([np.nanmin(v) for v in vals if len(v)] or [0]))
+    ax.set_ylim(max(0.0, np.floor((lo - 0.05) * 10) / 10), 1.02)
     return _save(fig, out_dir, "fig_rq1_pr_curves.png")
 
 
@@ -272,10 +273,259 @@ def fig_n3_grade(out_dir):
     return _save(fig, out_dir, "fig_rq2b_n3_grade.png")
 
 
+# ---------------------------------------------------------------------------
+# Additional paper figures
+# ---------------------------------------------------------------------------
+BLUES = ["#eef4fc", "#cfe0f7", "#9fc2ee", "#5d9ce3", "#2a78d6", "#1a4f91"]   # one hue, light -> dark
+STAGES = ["W", "N1", "N2", "N3", "REM"]
+
+
+def _pred_sets(out_dir):
+    """[(name, df)] : pooled cross-validation (training cohorts) + each external cohort."""
+    sets = []
+    oof = pd.read_parquet(os.path.join(out_dir, "oof_predictions_full_v2.parquet"))
+    oof = oof[(oof.label >= 0) & oof.is_primary]
+    sets.append(("Cross-validation\n(ISRUC-I + HMC)", oof))
+    ep = os.path.join(out_dir, "external_predictions.parquet")
+    if os.path.exists(ep):
+        e = pd.read_parquet(ep)
+        e = e[e.label >= 0]
+        for c in ("ISRUC-II", "ISRUC-III", "CAP", "DOD-H", "DOD-O"):
+            g = e[e.cohort == c]
+            if len(g):
+                sets.append((c, g))
+    return sets
+
+
+def _cmap():
+    from matplotlib.colors import LinearSegmentedColormap
+    return LinearSegmentedColormap.from_list("blues1", BLUES)
+
+
+def fig_confusion_matrices(out_dir):
+    sets = _pred_sets(out_dir)
+    n = len(sets)
+    cols = min(3, n)
+    rows = int(np.ceil(n / cols))
+    fig, axes = plt.subplots(rows, cols, figsize=(3.0 * cols, 2.8 * rows), squeeze=False)
+    cm_ = _cmap()
+    for ax, (name, g) in zip(axes.ravel(), sets):
+        y, pr = g.y.to_numpy().astype(int), g.pred.to_numpy().astype(int)
+        M = np.array([[((y == a) & (pr == b)).sum() for b in (0, 1)] for a in (0, 1)])
+        R = M / np.maximum(M.sum(1, keepdims=True), 1)
+        ax.imshow(R, cmap=cm_, vmin=0, vmax=1)
+        for i in range(2):
+            for j in range(2):
+                ax.text(j, i, f"{R[i, j]:.0%}\n(n={M[i, j]:,})", ha="center", va="center", fontsize=8,
+                        color="white" if R[i, j] > 0.55 else INK)
+        ax.set_xticks([0, 1], ["non-N3", "N3"])
+        ax.set_yticks([0, 1], ["non-N3", "N3"])
+        ax.set_xlabel("Predicted")
+        ax.set_ylabel("Expert")
+        ax.set_title(name, fontsize=9)
+        ax.grid(False)
+    for ax in axes.ravel()[n:]:
+        ax.axis("off")
+    fig.suptitle("N3 detection confusion matrices (row-normalised)", fontweight="bold", fontsize=10)
+    fig.tight_layout()
+    return _save(fig, out_dir, "fig_rq1_confusion_matrices.png")
+
+
+def fig_stage_confusion(out_dir):
+    """Share of each EXPERT stage predicted as N3: where do false positives come from?"""
+    sets = _pred_sets(out_dir)
+    tab = []
+    for name, g in sets:
+        row = [(g.pred[g.label == k].mean() if (g.label == k).any() else np.nan) for k in range(5)]
+        tab.append(row)
+    T = np.array(tab, dtype=float)
+    fig, ax = plt.subplots(figsize=(5.2, 0.42 * len(sets) + 1.4))
+    ax.imshow(T, cmap=_cmap(), vmin=0, vmax=1, aspect="auto")
+    for i in range(T.shape[0]):
+        for j in range(5):
+            if not np.isnan(T[i, j]):
+                ax.text(j, i, f"{T[i, j]:.0%}", ha="center", va="center", fontsize=8,
+                        color="white" if T[i, j] > 0.55 else INK)
+    ax.set_xticks(range(5), STAGES)
+    ax.set_yticks(range(len(sets)), [s[0].replace("\n", " ") for s in sets], fontsize=8)
+    ax.set_xlabel("Expert sleep stage")
+    ax.set_title("Epochs detected as N3, by expert stage", fontsize=10)
+    ax.grid(False)
+    return _save(fig, out_dir, "fig_rq1_n3_by_expert_stage.png")
+
+
+def fig_roc_curves(out_dir):
+    from sklearn.metrics import roc_curve, roc_auc_score
+    fig, ax = plt.subplots(figsize=(3.6, 3.2))
+    for name, g in _pred_sets(out_dir):
+        if g.y.nunique() < 2:
+            continue
+        f, t, _ = roc_curve(g.y, g.prob)
+        lab = name.split("\n")[0]
+        col = C1 if lab.startswith("Cross") else COHORT_COLOR.get(lab, INK2)
+        ax.plot(f, t, color=col, lw=1.6, label=f"{lab} (AUC={roc_auc_score(g.y, g.prob):.3f})")
+    ax.plot([0, 1], [0, 1], color=INK2, lw=1, ls="--")
+    ax.set_xlabel("False-positive rate")
+    ax.set_ylabel("True-positive rate")
+    ax.set_title("ROC curves")
+    ax.legend(loc="lower right", fontsize=7)
+    return _save(fig, out_dir, "fig_rq1_roc_curves.png")
+
+
+def fig_calibration(out_dir, bins=10):
+    sets = _pred_sets(out_dir)
+    fig, ax = plt.subplots(figsize=(3.6, 3.4))
+    ax.plot([0, 1], [0, 1], color=INK2, lw=1, ls="--")
+    for name, g in sets:
+        col_p = "prob_cal" if "prob_cal" in g else "prob"
+        p, y = g[col_p].to_numpy(), g.y.to_numpy()
+        edges = np.linspace(0, 1, bins + 1)
+        idx = np.clip(np.digitize(p, edges) - 1, 0, bins - 1)
+        mp = [p[idx == b].mean() for b in range(bins) if (idx == b).sum() >= 50]
+        my = [y[idx == b].mean() for b in range(bins) if (idx == b).sum() >= 50]
+        ece = sum((idx == b).mean() * abs(y[idx == b].mean() - p[idx == b].mean())
+                  for b in range(bins) if (idx == b).any())
+        lab = name.split("\n")[0]
+        col = C1 if lab.startswith("Cross") else COHORT_COLOR.get(lab, INK2)
+        ax.plot(mp, my, marker="o", ms=4, lw=1.5, color=col, label=f"{lab} (ECE={ece:.3f})")
+    ax.set_xlabel("Calibrated N3 probability")
+    ax.set_ylabel("Observed N3 fraction")
+    ax.set_title("Calibration (temperature-scaled)")
+    ax.legend(fontsize=7, loc="upper left")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    return _save(fig, out_dir, "fig_rq1_calibration.png")
+
+
+def fig_participant_f1(out_dir):
+    from sklearn.metrics import f1_score
+    data, labels, cols = [], [], []
+    for name, g in _pred_sets(out_dir):
+        if name.startswith("Cross"):
+            parts = list(g.groupby("cohort"))
+        else:
+            parts = [(name, g)]
+        for lab, gg in parts:
+            f = [f1_score(x.y, x.pred, zero_division=0) for _, x in gg.groupby("participant") if x.y.sum() >= 10]
+            if f:
+                data.append(f)
+                labels.append(lab + (" (CV)" if name.startswith("Cross") else ""))
+                cols.append(COHORT_COLOR.get(lab, INK2))
+    fig, ax = plt.subplots(figsize=(0.75 * len(data) + 1.6, 3.2))
+    bp = ax.boxplot(data, widths=0.5, patch_artist=True, showfliers=False,
+                    medianprops=dict(color=INK, lw=1.5))
+    for patch, c in zip(bp["boxes"], cols):
+        patch.set_facecolor(c)
+        patch.set_alpha(0.35)
+        patch.set_edgecolor(c)
+    rng = np.random.default_rng(0)
+    for i, (d, c) in enumerate(zip(data, cols), 1):
+        ax.scatter(i + rng.uniform(-0.15, 0.15, len(d)), d, s=8, color=c, edgecolor="white", linewidth=0.4,
+                   zorder=3)
+    ax.set_xticks(range(1, len(data) + 1), labels, rotation=25, ha="right", fontsize=8)
+    ax.set_ylabel("Per-participant N3 F1")
+    lo = min(min(d) for d in data) if data else 0.0
+    ax.set_ylim(max(0.0, np.floor((lo - 0.05) * 10) / 10), 1.01)
+    ax.set_title("N3 F1 per participant (>= 10 expert N3 epochs)")
+    ax.grid(axis="x", visible=False)
+    return _save(fig, out_dir, "fig_rq1_participant_f1.png")
+
+
+PRETTY = {"deepsleepnet": "vs DeepSleepNet", "tinysleepnet": "vs TinySleepNet", "attnsleep": "vs AttnSleep",
+          "lseqsleepnet": "vs L-SeqSleepNet"}
+
+
+def fig_sota_forest(out_dir):
+    t = pd.read_csv(os.path.join(out_dir, "rq1_sota_paired_tests.csv"))
+    fig, axes = plt.subplots(1, 2, figsize=(7.0, 0.5 * t.comparison.nunique() + 1.4), sharey=True)
+    for ax, metric in zip(axes, ("f1", "pr_auc")):
+        g = t[t.metric == metric].reset_index(drop=True)
+        y = np.arange(len(g))[::-1]
+        ax.axvline(0, color=INK2, lw=1)
+        ax.errorbar(g.median_participant_diff, y,
+                    xerr=[g.median_participant_diff - g.ci95_low, g.ci95_high - g.median_participant_diff],
+                    fmt="o", color=C1, ms=6, capsize=3, lw=1.5)
+        span = max(float(g.ci95_high.max()), 0.0) - min(float(g.ci95_low.min()), 0.0)
+        for yi, (_, r) in zip(y, g.iterrows()):
+            ax.text(r.ci95_high + 0.03 * span, yi, f"p={r.p_holm:.2g}", fontsize=7, color=INK2, ha="left", va="center")
+        ax.set_xlim(min(float(g.ci95_low.min()), 0.0) - 0.05 * span, max(float(g.ci95_high.max()), 0.0) + 0.30 * span)
+        ax.set_ylim(-0.6, len(g) - 0.4)
+        ax.set_yticks(y, [PRETTY.get(c.replace("full_v2 vs ", ""), c.replace("full_v2 vs ", "")) for c in g.comparison])
+        ax.set_xlabel(f"Median paired difference in {'F1' if metric == 'f1' else 'PR-AUC'}")
+        ax.grid(axis="y", visible=False)
+    fig.suptitle("SleepQualityNet v2 minus baseline (participant-level, Holm-adjusted p)", fontweight="bold", fontsize=10)
+    return _save(fig, out_dir, "fig_rq1_sota_forest.png")
+
+
+def fig_bland_altman(out_dir):
+    prof = pd.read_csv(os.path.join(out_dir, "rq7_overnight_n3_eeg_profiles.csv"))
+    pr = prof[prof.is_primary & (prof.split == "OOF")].dropna(subset=["pred_n3_minutes", "expert_n3_minutes"])
+    a, b = pr.pred_n3_minutes.to_numpy(), pr.expert_n3_minutes.to_numpy()
+    m, d = (a + b) / 2, a - b
+    bias, sd = d.mean(), d.std(ddof=1)
+    fig, ax = plt.subplots(figsize=(4.2, 3.2))
+    for c, g in pr.groupby("cohort"):
+        gm = (g.pred_n3_minutes + g.expert_n3_minutes) / 2
+        ax.scatter(gm, g.pred_n3_minutes - g.expert_n3_minutes, s=14, color=COHORT_COLOR.get(c, INK2),
+                   edgecolor="white", linewidth=0.4, label=c)
+    for v, ls, lab in ((bias, "-", f"bias {bias:+.1f}"), (bias + 1.96 * sd, "--", f"+1.96 SD {bias + 1.96 * sd:+.1f}"),
+                       (bias - 1.96 * sd, "--", f"-1.96 SD {bias - 1.96 * sd:+.1f}")):
+        ax.axhline(v, color=INK2, lw=1, ls=ls)
+        ax.text(ax.get_xlim()[1], v, lab, fontsize=7, color=INK2, ha="right", va="bottom")
+    ax.set_xlabel("Mean of predicted and expert N3 minutes")
+    ax.set_ylabel("Predicted - expert (min)")
+    ax.set_title("Bland-Altman: overnight N3 duration (OOF)")
+    ax.legend(fontsize=7, loc="upper left")
+    return _save(fig, out_dir, "fig_rq7_bland_altman.png")
+
+
+def fig_factor_by_stage(out_dir):
+    S = pd.read_parquet(os.path.join(out_dir, "factor_scores.parquet"))
+    S = S[(S.split == "OOF") & S.label.isin([2, 3])]
+    facs = [f for f in ("delta_intensity", "sw_morphology", "spectral_dominance", "rating_prior") if f in S]
+    names = {"delta_intensity": "Delta intensity", "sw_morphology": "Slow-wave morphology",
+             "spectral_dominance": "Spectral dominance", "rating_prior": "N3 EEG Rating"}
+    fig, axes = plt.subplots(1, len(facs), figsize=(2.3 * len(facs), 3.0), sharey=True)
+    for ax, f in zip(np.atleast_1d(axes), facs):
+        parts = [S.loc[S.label == k, f].dropna().to_numpy() for k in (2, 3)]
+        vp = ax.violinplot(parts, showextrema=False, showmedians=True, widths=0.8)
+        for body, c in zip(vp["bodies"], (C3, C1)):
+            body.set_facecolor(c)
+            body.set_alpha(0.45)
+            body.set_edgecolor(c)
+        vp["cmedians"].set_color(INK)
+        ax.set_xticks([1, 2], ["expert N2", "expert N3"])
+        ax.set_title(names[f], fontsize=9)
+        ax.grid(axis="x", visible=False)
+    np.atleast_1d(axes)[0].set_ylabel("Score (0-100)")
+    fig.suptitle("Factor scores: expert N2 vs N3 epochs (OOF)", fontweight="bold", fontsize=10)
+    fig.tight_layout()
+    return _save(fig, out_dir, "fig_rq2_factors_by_stage.png")
+
+
+def fig_interrater(out_dir):
+    ir = pd.read_csv(os.path.join(out_dir, "rq1_interrater_benchmark.csv"))
+    fig, ax = plt.subplots(figsize=(4.6, 0.5 * len(ir) + 1.2))
+    y = np.arange(len(ir))[::-1]
+    for yi, (_, r) in zip(y, ir.iterrows()):
+        ax.plot([r.expert_vs_expert_f1_mean, r.model_vs_expert_f1_mean], [yi, yi], color=GRID, lw=3, zorder=1)
+    ax.scatter(ir.expert_vs_expert_f1_mean, y, s=50, color=INK2, label="expert vs expert", zorder=2)
+    ax.scatter(ir.model_vs_expert_f1_mean, y, s=50, color=C1, label="model vs expert", zorder=3)
+    ax.set_yticks(y, [f"{c} ({n} scorers)" for c, n in zip(ir.cohort, ir.n_raters)], fontsize=8)
+    ax.set_xlabel("Mean N3 F1 against individual scorers")
+    ax.set_title("Model vs human inter-rater agreement")
+    ax.legend(fontsize=8, loc="lower left")
+    ax.grid(axis="y", visible=False)
+    return _save(fig, out_dir, "fig_rq1_interrater.png")
+
+
 def make_all(out_dir, log=print):
     made = []
     for fn in (fig_pr_curves, fig_homeostatic, fig_graded_agreement, fig_ablation,
-               fig_risk_coverage, fig_profiles, fig_example_night, fig_xai, fig_sota, fig_n3_grade):
+               fig_risk_coverage, fig_profiles, fig_example_night, fig_xai, fig_sota, fig_n3_grade,
+               fig_confusion_matrices, fig_stage_confusion, fig_roc_curves, fig_calibration,
+               fig_participant_f1, fig_sota_forest, fig_bland_altman, fig_factor_by_stage,
+               fig_interrater):
         try:
             made.append(fn(out_dir))
         except Exception as exc:
