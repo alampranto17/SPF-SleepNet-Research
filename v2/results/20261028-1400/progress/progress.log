@@ -956,3 +956,55 @@ ISRUC-III: 2/10 subjects cached
     !! CAP sdb4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
     !! CAP sdb4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
     !! CAP sdb4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[github] pushed 5 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261028-1400
+    !! CAP sdb4 from physionet-open.s3.amazonaws.com: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+    !! CAP sdb4 from physionet.org: URLError: <urlopen error Tunnel connection failed: 403 Forbidden> - retrying
+[CAP 108/108] CAP_sdb4.npz: FAILED download failed https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/sdb4.edf: <urlopen error Tunnel connection failed: 403 Forbidden>   (18.6 min, ETA 0 min)
+DOD download failed: could not download dreem-learning-evaluation scorers
+DOD relabel failed: could not download dreem-learning-evaluation scorers
+ISRUC-I: Drive pass 2 for the 92 missing subjects
+[drive] embeddedfolderview failed for 1KiEl4xk0gRTNG9Oeg-gCfzKGKU0gnjGH: <urlopen error Tunnel connection failed: 403 Forbidden>
+[drive] falling back to gdown 6.4.2 folder listing
+ISRUC-I Drive pass failed: HTTPSConnectionPool(host='drive.google.com', port=443): Max retries exceeded with url: /embeddedfolderview?id=1KiEl4xk0gRTNG9Oeg-gCfzKGKU0gnjGH (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+ISRUC-I: 8/100 subjects cached
+ISRUC-III: Drive pass 2 for the 8 missing subjects
+[drive] embeddedfolderview failed for 1b4Df79NxyiOiYjG83bk2c9tGKXVDpZ5F: <urlopen error Tunnel connection failed: 403 Forbidden>
+[drive] falling back to gdown 6.4.2 folder listing
+ISRUC-III Drive pass failed: HTTPSConnectionPool(host='drive.google.com', port=443): Max retries exceeded with url: /embeddedfolderview?id=1b4Df79NxyiOiYjG83bk2c9tGKXVDpZ5F (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+ISRUC-III: 2/10 subjects cached
+
+cached recordings: {'HMC': 8, 'ISRUC1': 8, 'ISRUC2': 6, 'CAP': 5, 'DODH': 4, 'DODO': 4, 'ISRUC3': 2} | total 37 | cache size 0.11 GB | elapsed 20.3 min
+[corpus] 25/37 recordings loaded
+[corpus] 37 recordings, 20,200 epochs, 34 participants; X on cpu (0.12 GB)
+cohort     channel_raw
+CAP        C4-A1          5
+DOD-H      C3_M2          4
+DOD-O      C3_M2          4
+HMC        C4-M1          8
+ISRUC-I    C4-A1          2
+           C4-M1          6
+ISRUC-II   C4-M1          6
+ISRUC-III  C4-M1          2
+[RQ1] detection
+[analysis] run/cache alignment: 3/3 checked runs map exactly onto the current cache (run_alignment_check.csv)
+[RQ2/3] factor scores
+[RQ2b] within-N3 grade (Low / Moderate / High)
+[RQ4] component analysis
+[RQ1b] same-protocol comparison with published models
+[RQ6] reliability
+[RQ7] episodes / overnight profiles
+[RQ5] explainability
+[analysis] excluded from evaluation: {'DOD-H': 4, 'DOD-O': 4} recordings (see evaluation_exclusions.csv)
+go_no_go_decisions.csv
+rq1_detection_metrics.csv
+rq1_sota_comparison.csv
+rq1_interrater_benchmark.csv
+rq2_rk_grade_validation.csv
+rq2_n3_grade_validity.csv
+rq4_component_effects.csv
+rq2_factor_validity.csv
+rq6_reliability_components.csv
+rq7_profile_agreement.csv
+[figures] fig_pr_curves skipped: name 'vals' is not defined
+wrote ./work/sqn2_v2_outputs.zip 9.6 MB | total elapsed 0.38 h
+[github] pushed 55 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261028-1400
