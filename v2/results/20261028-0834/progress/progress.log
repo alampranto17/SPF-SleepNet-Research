@@ -437,3 +437,36 @@ ISRUC-III: 10/10 subjects cached
 [DOD-H relabel 14/25] DODH_7d7788011876.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.975   (19.2 min, ETA 15 min)
 [DOD-H relabel 15/25] DODH_7ab8ff5fc9bf.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.979   (19.6 min, ETA 13 min)
 [DOD-H relabel 16/25] DODH_769df255fbbd.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.976   (20.3 min, ETA 11 min)
+[github] pushed 5 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261028-0834
+[DOD-H relabel 17/25] DODH_844f68ba4a7b.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.975   (23.4 min, ETA 11 min)
+[DOD-H relabel 18/25] DODH_a30245e325fc.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.969   (24.3 min, ETA 9 min)
+[DOD-H relabel 19/25] DODH_a25b2296466e.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.990   (24.4 min, ETA 8 min)
+[DOD-H relabel 20/25] DODH_a45689510be6.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.972   (26.0 min, ETA 7 min)
+[DOD-H relabel 21/25] DODH_aa160c7897e0.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.982   (28.0 min, ETA 5 min)
+[DOD-H relabel 22/25] DODH_b5d5785dd8de.npz: lag=+60 epochs (+30 min), scorer-vs-h5 agreement=0.962   (28.1 min, ETA 4 min)
+[DOD-H relabel 23/25] DODH_bb474ab026a2.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.960   (29.7 min, ETA 3 min)
+[DOD-H relabel 24/25] DODH_d3cadb7868b1.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.937   (30.6 min, ETA 1 min)
+[DOD-H relabel 25/25] DODH_f2a69bdc2be0.npz: lag=+0 epochs (+0 min), scorer-vs-h5 agreement=0.932   (32.5 min, ETA 0 min)
+
+cached recordings: {'HMC': 151, 'CAP': 108, 'ISRUC1': 100, 'DODO': 55, 'DODH': 25, 'ISRUC2': 16, 'ISRUC3': 10} | total 465 | cache size 2.44 GB | elapsed 92.1 min
+[kaggle] new version of alampranto/sqn2-cache
+[corpus] CAP_n13: 762 epochs with non-finite signal (float16 overflow) -> recording excluded from evaluation
+[corpus] CAP_n14: 612 epochs with non-finite signal (float16 overflow) -> recording excluded from evaluation
+[corpus] CAP_n15: 657 epochs with non-finite signal (float16 overflow) -> recording excluded from evaluation
+[corpus] 25/465 recordings loaded
+[corpus] 50/465 recordings loaded
+[corpus] 75/465 recordings loaded
+[corpus] 100/465 recordings loaded
+[corpus] 125/465 recordings loaded
+[corpus] 150/465 recordings loaded
+[corpus] 175/465 recordings loaded
+[corpus] 200/465 recordings loaded
+[corpus] 225/465 recordings loaded
+[corpus] 250/465 recordings loaded
+[corpus] 275/465 recordings loaded
+[corpus] 300/465 recordings loaded
+[corpus] 325/465 recordings loaded
+[corpus] 350/465 recordings loaded
+[corpus] 375/465 recordings loaded
+[corpus] 400/465 recordings loaded
+[corpus] 425/465 recordings loaded
