@@ -151,7 +151,7 @@ def show(df, caption=None, precision=3):
 
 # ---------------------------------------------------------------- design
 cells.append(md("""## 2. Study design: cohorts, channels and exclusions
-**Table 1** lists every cohort with its role, participants, recordings, scored epochs and available labels and metadata, exactly as found in the cache (fields that do not exist in a dataset are reported as unavailable, not imputed). The channel audit confirms that every recording uses a central EEG derivation and shows the native sampling rate before resampling to 100 Hz. Recordings removed from evaluation are listed with the reason."""))
+**Table 1** lists every cohort with its role, participants, recordings, scored epochs and available labels and metadata, exactly as found in the cache (fields that do not exist in a dataset are reported as unavailable, not imputed). The channel audit confirms that every recording uses a central EEG derivation and shows the native sampling rate before resampling to 100 Hz. Recordings removed from evaluation are listed with the reason, and every saved training run is checked to map exactly onto the evaluated cache."""))
 cells.append(code('''ROLE = {"ISRUC-I": "training", "HMC": "training", "ISRUC-II": "external (test-retest)", "ISRUC-III": "external",
         "DOD-H": "external (5 scorers)", "DOD-O": "external (5 scorers)", "CAP": "R&K S3/S4 reference (grade only)"}
 inv = T("data_inventory.csv")
@@ -176,6 +176,12 @@ if aud is not None:
             raw_channel_names=("channel_raw", lambda x: ", ".join(f"{k} ({v})" for k, v in x.value_counts().items())),
             native_fs_Hz=("native_fs", lambda x: ", ".join(f"{v:g}" for v in sorted(x.unique())))).reset_index()
     show(ca)
+al = T("run_alignment_check.csv")
+if al is not None and len(al):
+    display(Markdown(f"**Run/cache integrity:** {int(al.aligned.sum())} of {len(al)} saved training runs map exactly onto "
+                     f"the evaluated cache" + ("" if al.aligned.all() else "; misaligned runs (excluded):")))
+    if not al.aligned.all():
+        show(al[~al.aligned.astype(bool)])
 exc = T("evaluation_exclusions.csv")
 if exc is not None:
     display(Markdown("**Evaluation exclusions** (primary model; every reason is reported in the Methods)"))

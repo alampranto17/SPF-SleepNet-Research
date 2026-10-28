@@ -59,6 +59,47 @@ CRITERIA = {
 # ---------------------------------------------------------------------------
 # Loading OOF predictions
 # ---------------------------------------------------------------------------
+RUN_ALIGNMENT = []   # one row per checked run file (written to run_alignment_check.csv)
+
+
+def check_run_alignment(corpus, f, r, meta):
+    """A saved run stores global epoch indices into the corpus.  They are only valid if the
+    corpus still contains exactly the recordings (and epoch counts) of the training session.
+    Returns True if every predicted epoch maps to a recording of the run's split and every
+    such recording is covered completely."""
+    want = list(dict.fromkeys(list(meta.get("test_recs", [])) + list(meta.get("external_recs", []))))
+    idx = np.asarray(r["idx"])
+    reason = ""
+    if not want:
+        reason = "split has no recordings"
+    elif idx.size and (idx.min() < 0 or idx.max() >= len(corpus.ep)):
+        reason = "epoch index outside the corpus"
+    else:
+        missing = [x for x in want if x not in corpus.rec.index]
+        if missing:
+            reason = f"{len(missing)} split recordings not in the cache (e.g. {missing[0]})"
+        else:
+            expected = corpus.idx_of(want)
+            if len(expected) != len(idx) or not np.array_equal(np.sort(expected), np.sort(idx)):
+                got = pd.Series(corpus.ep.rec.to_numpy()[idx]).value_counts()
+                bad = [x for x in want if got.get(x, 0) != int(corpus.rec.loc[x, "n"])]
+                reason = (f"epoch indices do not match the current corpus "
+                          f"({len(bad)} recordings differ, e.g. {bad[0] if bad else '?'})")
+    RUN_ALIGNMENT.append({"run": os.path.basename(f), "n_epochs": int(idx.size),
+                          "aligned": not reason, "reason": reason})
+    if reason:
+        print(f"WARNING: {os.path.basename(f)} skipped - {reason}. Its predictions cannot be "
+              f"mapped to the current cache; retrain it or restore the matching cache.")
+    return not reason
+
+
+def write_run_alignment(out_dir):
+    df = pd.DataFrame(RUN_ALIGNMENT).drop_duplicates("run") if RUN_ALIGNMENT else \
+        pd.DataFrame(columns=["run", "n_epochs", "aligned", "reason"])
+    df.to_csv(os.path.join(out_dir, "run_alignment_check.csv"), index=False)
+    return df
+
+
 def load_oof(corpus, run_dir, variant):
     files = sorted(glob.glob(os.path.join(run_dir, f"{variant}__fold[0-9]*.npz")))
     if not files:
@@ -67,6 +108,8 @@ def load_oof(corpus, run_dir, variant):
     for f in files:
         r = load_run(f)
         meta = json.loads(r["meta"])
+        if not check_run_alignment(corpus, f, r, meta):
+            continue
         test_recs = set(meta["test_recs"])
         idx = r["idx"]
         rec = corpus.ep.rec.to_numpy()[idx]
@@ -78,6 +121,8 @@ def load_oof(corpus, run_dir, variant):
                 df[k] = r[k]
         rows.append(df[is_test])
         ext.append(df[~is_test])
+    if not rows:
+        return None, None
     oof = pd.concat(rows, ignore_index=True)
     oof = oof.join(corpus.ep, on="idx")
     oof = _drop_invalid(oof, variant, "OOF")
@@ -253,6 +298,8 @@ def rq1(corpus, run_dir, out_dir, n_boot=1000):
             rows.append(m)
     for f in sorted(glob.glob(os.path.join(run_dir, f"{PRIMARY_VARIANT}__foldLOCO_*.npz"))):
         r = load_run(f)
+        if not check_run_alignment(corpus, f, r, json.loads(r["meta"])):
+            continue
         df = pd.DataFrame({"idx": r["idx"], "prob": r["prob"]}).join(corpus.ep, on="idx")
         df = _drop_invalid(df, PRIMARY_VARIANT + ":LOCO", "LOCO")
         df["pred"] = (df.prob >= float(r["threshold"])).astype(int)
