@@ -1,0 +1,28 @@
+{
+  "run_name": "20261028-0834",
+  "quick_test": false,
+  "python": "3.13.15",
+  "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "lightgbm": "4.6.0",
+    "mne": "1.13.2",
+    "shap": "0.52.0",
+    "h5py": "3.16.0",
+    "pyarrow": "23.0.1",
+    "matplotlib": "3.10.0",
+    "statsmodels": "0.15.0"
+  },
+  "cuda": "12.8",
+  "cudnn": 91900,
+  "gpus": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "global_seed": 42,
+  "seed_note": "fold seed = 42*1000 + (sum of ord(fold id) mod 997); folds frozen in runs/folds.json"
+}
