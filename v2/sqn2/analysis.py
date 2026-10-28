@@ -109,6 +109,13 @@ def _drop_invalid(df, variant, split):
             EXCLUSIONS.append({"variant": variant, "split": split, "cohort": coh, "rec": rec,
                                "n_epochs": len(g), "reason": "non-finite signal in cache (float16 overflow)"})
         bad |= inv
+    if "label_valid" in df:
+        lv = ~df.label_valid.fillna(True).astype(bool) & ~bad
+        for (coh, rec), g in df[lv].groupby(["cohort", "rec"]):
+            EXCLUSIONS.append({"variant": variant, "split": split, "cohort": coh, "rec": rec,
+                               "n_epochs": len(g),
+                               "reason": "scorer hypnograms not aligned to the signal (agreement < 0.6)"})
+        bad |= lv
     nf = ~np.isfinite(df.prob.to_numpy(dtype=float))
     nf_only = nf & ~bad.to_numpy()
     if nf_only.any():

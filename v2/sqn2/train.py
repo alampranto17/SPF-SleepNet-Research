@@ -50,6 +50,15 @@ BASELINE_VARIANTS = [k for k, v in VARIANTS.items() if "arch" in v]
 # ---------------------------------------------------------------------------
 # Corpus
 # ---------------------------------------------------------------------------
+def _labels_valid(meta):
+    """DOD scorer hypnograms must have been aligned to the signal (Zenodo DOD-O signals
+    are cropped relative to the scorer files); everything else is valid as loaded."""
+    if meta.get("cohort") in ("DOD-H", "DOD-O"):
+        a = meta.get("scorer_vs_h5_agreement")
+        return a is not None and a >= 0.6
+    return True
+
+
 class Corpus:
     """All cached recordings concatenated in chronological order."""
 
@@ -110,7 +119,8 @@ class Corpus:
                 "label2": lm[:, 1] if lm.shape[1] > 1 else np.full(n, -2),
                 "n_raters_epoch": n_r, "n3_vote_frac": frac,
                 "all_votes_n2n3": (scored.any(1) & np.all(~scored | np.isin(lm, [2, 3]), 1)),
-                "signal_valid": np.full(n, n_nonfinite == 0)}))
+                "signal_valid": np.full(n, n_nonfinite == 0),
+                "label_valid": np.full(n, _labels_valid(meta))}))
             self.labels_multi[meta["recording"]] = lm
             off += n
             if (i + 1) % 25 == 0:

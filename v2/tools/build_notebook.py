@@ -63,6 +63,7 @@ ISRUC1_MIN_TO_TRAIN = 90              # start training once >= this many ISRUC-I
 USE_ISRUC_OFFICIAL = False            # old server, retired (kept only as a last resort)
 USE_DOD_ZENODO = True                 # Dreem DOD-H / DOD-O, 5 scorers (external)
 USE_CAP_PHYSIONET = True              # CAP Sleep Database: expert R&K S3/S4 -> reference for the Low/Moderate/High N3 grade
+RELABEL_DOD = True                    # align DOD scorer hypnograms to the (cropped) Zenodo signals via the h5 hypnogram
 DOD_ALLOW_FULL_ZIP_DOWNLOAD = False   # only if range streaming fails AND disk has ~40 GB free
 # Optional: raw folders already attached as Kaggle datasets (leave None to download)
 RAW_ISRUC1_DIR = None
@@ -209,6 +210,12 @@ if "data" in RUN_STAGES:
                          allow_full_download=DOD_ALLOW_FULL_ZIP_DOWNLOAD)
         except Exception as exc:
             print("DOD download failed:", exc)
+    N_RELABELLED = 0
+    if RELABEL_DOD:
+        try:
+            N_RELABELLED = len(DL.relabel_dod(CACHE_DIR, max_recordings=3 if q else None) or [])
+        except Exception as exc:
+            print("DOD relabel failed:", exc)
     # further Drive passes: the anonymous Drive quota (~5 GB per machine) recovers with time.
     # Training cannot start before ISRUC-I is complete, so waiting here costs nothing extra.
     for rnd in range(1 + (0 if q else DRIVE_RETRY_ROUNDS)):
@@ -235,7 +242,7 @@ assert len(files) > 0, "No recordings cached - check Internet ON and the downloa
 for coh in ("ISRUC1", "HMC"):
     if not any(os.path.basename(f).startswith(coh + "_") for f in files):
         print(f"WARNING: no {coh} recordings cached - training cohort missing")
-if AUTO_KAGGLE_DATASETS and KUSER and len(files) > n_cached_before:
+if AUTO_KAGGLE_DATASETS and KUSER and (len(files) > n_cached_before or globals().get("N_RELABELLED", 0) > 0):
     KIO.push_dataset(CACHE_DIR, KUSER, CACHE_DATASET, "SleepQualityNet v2 compact EEG cache",
                      f"{len(files)} recordings")
 '''))
