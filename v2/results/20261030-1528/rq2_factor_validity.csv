@@ -1,0 +1,69 @@
+test,factor,n,median_diff,p,W,ci95_low,ci95_high,cohort
+early>late (detected N3),delta_intensity,213,8.804999143982194,1.587939152910416e-22,20126.0,6.8494780864302385,10.821777092963536,all
+early>late (detected N3),delta_intensity,131,9.159694676844104,2.7149845154867595e-14,7597.0,,,HMC
+early>late (detected N3),delta_intensity,82,8.726673514809107,6.876041377931082e-10,3012.0,,,ISRUC-I
+early>late (detected N3),sw_morphology,213,9.04183073674599,1.0502734675472695e-24,20576.0,6.982887145913011,11.39302630828054,all
+early>late (detected N3),sw_morphology,131,9.264102650079906,2.695547628805604e-16,7850.0,,,HMC
+early>late (detected N3),sw_morphology,82,8.574159675854588,7.494354753085178e-10,3009.0,,,ISRUC-I
+early>late (detected N3),spectral_dominance,213,4.535717928666131,1.098737906883166e-06,15659.0,2.831966077216657,7.4793444629560355,all
+early>late (detected N3),spectral_dominance,131,3.8102839178064443,6.360833978675906e-05,5991.0,,,HMC
+early>late (detected N3),spectral_dominance,82,7.185548900501409,0.002489167455533986,2309.0,,,ISRUC-I
+early>late (detected N3),n3_continuity,213,0.0,3.263971314714041e-06,3356.0,0.0,0.0,all
+early>late (detected N3),n3_continuity,131,0.0,0.0003865921388161921,1453.5,,,HMC
+early>late (detected N3),n3_continuity,82,0.0,0.0012499774181278069,401.5,,,ISRUC-I
+early>late (detected N3),rating_prior,213,7.213967563156636,1.1217288772619397e-19,19501.0,5.4402589615609,8.876204126529117,all
+early>late (detected N3),rating_prior,131,7.375518571335974,3.124521933558167e-13,7455.0,,,HMC
+early>late (detected N3),rating_prior,82,6.724165534286858,3.5617207201672705e-08,2867.0,,,ISRUC-I
+expertN3>expertN2,delta_intensity,249,32.01677794898133,6.745902909037878e-43,31125.0,,,all
+expertN3>expertN2,sw_morphology,249,30.826365031006247,6.745902909037878e-43,31125.0,,,all
+expertN3>expertN2,spectral_dominance,249,37.82143468584147,6.745902909037878e-43,31125.0,,,all
+expertN3>expertN2,n3_continuity,249,100.0,5.103435366524052e-47,31125.0,,,all
+early>late (detected N3),delta_intensity,99,9.999773504563883,1.1912943540714303e-11,4389.0,,,external:CAP
+early>late (detected N3),sw_morphology,99,12.016337870791908,3.8731676499425965e-13,4528.0,,,external:CAP
+early>late (detected N3),spectral_dominance,99,5.485719462752826,0.0007372488556020325,3386.0,,,external:CAP
+early>late (detected N3),n3_continuity,99,0.0,0.03315195171222061,764.5,,,external:CAP
+early>late (detected N3),rating_prior,99,9.21870399311453,8.68029778586842e-10,4200.0,,,external:CAP
+early>late (detected N3),delta_intensity,22,12.372879436479348,0.0026378631591796875,210.0,,,external:DOD-H
+early>late (detected N3),sw_morphology,22,14.651046031422458,0.0002963542938232422,226.0,,,external:DOD-H
+early>late (detected N3),spectral_dominance,22,2.891638920975744,0.1451115608215332,160.0,,,external:DOD-H
+early>late (detected N3),n3_continuity,22,0.0,0.169362073879829,15.0,,,external:DOD-H
+early>late (detected N3),rating_prior,22,8.033093814409646,0.0023424625396728516,211.0,,,external:DOD-H
+early>late (detected N3),delta_intensity,53,7.520780956263728,1.4959728135037999e-05,1187.0,,,external:DOD-O
+early>late (detected N3),sw_morphology,53,8.381463613508188,1.5072209651389332e-06,1243.0,,,external:DOD-O
+early>late (detected N3),spectral_dominance,53,3.8348508527553236,0.027084898753949076,933.0,,,external:DOD-O
+early>late (detected N3),n3_continuity,53,0.0,0.08641106007615579,74.0,,,external:DOD-O
+early>late (detected N3),rating_prior,53,7.084805553668097,3.586625696323065e-05,1164.0,,,external:DOD-O
+early>late (detected N3),delta_intensity,8,9.018765146882291,0.00390625,36.0,,,external:ISRUC-II
+early>late (detected N3),sw_morphology,8,8.069466150257073,0.00390625,36.0,,,external:ISRUC-II
+early>late (detected N3),spectral_dominance,8,3.7152329505560466,0.07421875,29.0,,,external:ISRUC-II
+early>late (detected N3),n3_continuity,8,0.0,0.3125,7.0,,,external:ISRUC-II
+early>late (detected N3),rating_prior,8,6.038914747117847,0.01953125,33.0,,,external:ISRUC-II
+early>late (detected N3),delta_intensity,10,0.5339629906457379,0.001953125,54.0,,,external:ISRUC-III
+early>late (detected N3),sw_morphology,10,0.4679018217782911,0.0009765625,55.0,,,external:ISRUC-III
+early>late (detected N3),spectral_dominance,10,5.453726982401303,0.0654296875,43.0,,,external:ISRUC-III
+early>late (detected N3),n3_continuity,10,0.0,0.25,3.0,,,external:ISRUC-III
+early>late (detected N3),rating_prior,10,2.3258957894498415,0.0419921875,45.0,,,external:ISRUC-III
+graded agreement: score ~ fraction of experts voting N3,delta_intensity,198,0.7416227807322349,1.5277082273150297e-34,19701.0,,,all multi-rater
+graded agreement: score ~ fraction of experts voting N3,delta_intensity,100,0.7494952373037209,1.9482799225479546e-18,5050.0,,,ISRUC-I
+graded agreement: score ~ fraction of experts voting N3,delta_intensity,25,0.7731353570781095,2.9802322387695312e-08,325.0,,,DOD-H
+graded agreement: score ~ fraction of experts voting N3,delta_intensity,55,0.6992214489336072,5.5380757730678676e-11,1540.0,,,DOD-O
+graded agreement: score ~ fraction of experts voting N3,delta_intensity,8,0.6545561789501382,0.00390625,36.0,,,ISRUC-II
+graded agreement: score ~ fraction of experts voting N3,delta_intensity,10,0.7173687714182527,0.0009765625,55.0,,,ISRUC-III
+graded agreement: score ~ fraction of experts voting N3,sw_morphology,198,0.7623481540581383,1.5277082273150297e-34,19701.0,,,all multi-rater
+graded agreement: score ~ fraction of experts voting N3,sw_morphology,100,0.7632623328573109,1.9482799225479546e-18,5050.0,,,ISRUC-I
+graded agreement: score ~ fraction of experts voting N3,sw_morphology,25,0.7892072228068888,2.9802322387695312e-08,325.0,,,DOD-H
+graded agreement: score ~ fraction of experts voting N3,sw_morphology,55,0.7420624623483731,5.5380757730678676e-11,1540.0,,,DOD-O
+graded agreement: score ~ fraction of experts voting N3,sw_morphology,8,0.6691478998620914,0.00390625,36.0,,,ISRUC-II
+graded agreement: score ~ fraction of experts voting N3,sw_morphology,10,0.765875818309022,0.0009765625,55.0,,,ISRUC-III
+graded agreement: score ~ fraction of experts voting N3,spectral_dominance,198,0.7454451596228523,1.5277082273150297e-34,19701.0,,,all multi-rater
+graded agreement: score ~ fraction of experts voting N3,spectral_dominance,100,0.7479720809696027,1.9482799225479546e-18,5050.0,,,ISRUC-I
+graded agreement: score ~ fraction of experts voting N3,spectral_dominance,25,0.7301309254801288,2.9802322387695312e-08,325.0,,,DOD-H
+graded agreement: score ~ fraction of experts voting N3,spectral_dominance,55,0.7410125004520217,5.5380757730678676e-11,1540.0,,,DOD-O
+graded agreement: score ~ fraction of experts voting N3,spectral_dominance,8,0.7587516761630995,0.00390625,36.0,,,ISRUC-II
+graded agreement: score ~ fraction of experts voting N3,spectral_dominance,10,0.7145258984578777,0.0009765625,55.0,,,ISRUC-III
+graded agreement: score ~ fraction of experts voting N3,rating_prior,198,0.8071561942100716,1.5277082273150297e-34,19701.0,,,all multi-rater
+graded agreement: score ~ fraction of experts voting N3,rating_prior,100,0.8123507737466484,1.9482799225479546e-18,5050.0,,,ISRUC-I
+graded agreement: score ~ fraction of experts voting N3,rating_prior,25,0.808874517314121,2.9802322387695312e-08,325.0,,,DOD-H
+graded agreement: score ~ fraction of experts voting N3,rating_prior,55,0.7939833048581875,5.5380757730678676e-11,1540.0,,,DOD-O
+graded agreement: score ~ fraction of experts voting N3,rating_prior,8,0.7937912384709911,0.00390625,36.0,,,ISRUC-II
+graded agreement: score ~ fraction of experts voting N3,rating_prior,10,0.8060286187195962,0.0009765625,55.0,,,ISRUC-III

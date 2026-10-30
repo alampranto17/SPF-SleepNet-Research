@@ -1,7 +1,7 @@
 {
- "stage": "C: training",
- "updated_utc": "2026-10-30 16:28:35",
- "elapsed_min": 60.4,
+ "stage": "D: RQ1-RQ7 analyses",
+ "updated_utc": "2026-10-30 16:48:38",
+ "elapsed_min": 80.4,
  "cached_recordings": {
   "HMC": 151,
   "CAP": 108,
@@ -11,6 +11,6 @@
   "DODO": 55,
   "ISRUC3": 10
  },
- "finished_training_runs": 87,
- "disk_free_gb": 17.3
+ "finished_training_runs": 92,
+ "disk_free_gb": 17.2
 }
