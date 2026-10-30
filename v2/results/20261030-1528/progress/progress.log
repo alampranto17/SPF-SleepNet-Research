@@ -440,3 +440,26 @@ ISRUC-III  C4-A1           10
 [train] full_nofeat fold 4 done  (elapsed 9.1 min)
   full_nopw__fold0: done in 118s  thr=0.455 T=1.36 innerPR-AUC=0.9186 params=96,226
 [train] full_nopw fold 0 done  (elapsed 11.1 min)
+[github] pushed 7 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261030-1528
+  full_nopw__fold1: done in 153s  thr=0.250 T=1.27 innerPR-AUC=0.9513 params=96,226
+[train] full_nopw fold 1 done  (elapsed 13.6 min)
+  full_nopw__fold2: done in 89s  thr=0.410 T=1.20 innerPR-AUC=0.9439 params=96,226
+[train] full_nopw fold 2 done  (elapsed 15.1 min)
+  full_nopw__fold3: done in 104s  thr=0.438 T=1.01 innerPR-AUC=0.9667 params=96,226
+[train] full_nopw fold 3 done  (elapsed 16.8 min)
+  full_nopw__fold4: done in 99s  thr=0.504 T=1.22 innerPR-AUC=0.9264 params=96,226
+[train] full_nopw fold 4 done  (elapsed 18.5 min)
+  full_noattn__fold0: done in 92s  thr=0.452 T=1.46 innerPR-AUC=0.9191 params=94,625
+[train] full_noattn fold 0 done  (elapsed 20.0 min)
+  full_noattn__fold1: done in 151s  thr=0.850 T=1.40 innerPR-AUC=0.9532 params=94,625
+[train] full_noattn fold 1 done  (elapsed 22.5 min)
+  full_noattn__fold2: done in 117s  thr=0.696 T=1.18 innerPR-AUC=0.9460 params=94,625
+[train] full_noattn fold 2 done  (elapsed 24.5 min)
+  full_noattn__fold3: done in 102s  thr=0.893 T=1.27 innerPR-AUC=0.9662 params=94,625
+[train] full_noattn fold 3 done  (elapsed 26.2 min)
+  full_noattn__fold4: done in 83s  thr=0.820 T=1.28 innerPR-AUC=0.9263 params=94,625
+[train] full_noattn fold 4 done  (elapsed 27.5 min)
+  full_ctx_r3__fold0: done in 86s  thr=0.680 T=1.37 innerPR-AUC=0.9144 params=62,946
+[train] full_ctx_r3 fold 0 done  (elapsed 29.0 min)
+  full_ctx_r3__fold1: done in 116s  thr=0.663 T=1.20 innerPR-AUC=0.9471 params=62,946
+[train] full_ctx_r3 fold 1 done  (elapsed 30.9 min)
