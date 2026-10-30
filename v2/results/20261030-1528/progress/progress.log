@@ -529,3 +529,31 @@ training stage finished, elapsed 1.17 h
 [RQ2b] within-N3 grade (Low / Moderate / High)
 [RQ4] component analysis
 [RQ1b] same-protocol comparison with published models
+[github] pushed 28 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261030-1528
+[RQ6] reliability
+[RQ7] episodes / overnight profiles
+[RQ5] explainability
+[RQ4x] leave-one-component-out ablations, seed variability, external ablations
+[RQ5x] explanations of errors and external cohorts, explanation robustness
+[RQ5x] OOF: 320 epochs ({'FN': 80, 'FP': 80, 'TN-N2': 80, 'TP': 80})
+[RQ5x] external: 747 epochs x 5 fold models
+[sensitivity] sensitivity analyses for every RQ
+[analysis] excluded from evaluation: {'CAP': 3} recordings (see evaluation_exclusions.csv)
+go_no_go_decisions.csv
+rq1_detection_metrics.csv
+rq1_sota_comparison.csv
+rq1_interrater_benchmark.csv
+rq2_rk_grade_validation.csv
+rq2_n3_grade_validity.csv
+rq4_component_effects.csv
+rq2_factor_validity.csv
+rq6_reliability_components.csv
+rq7_profile_agreement.csv
+rq4_extended_component_effects.csv
+rq4_seed_variability.csv
+rq5x_band_importance_by_outcome.csv
+rq5x_sensitivity.csv
+sensitivity_matrix.csv
+wrote /kaggle/working/sqn2_v2_outputs.zip 635.2 MB | total elapsed 1.54 h
+[github] token loaded from Kaggle secret 'github_token'
+[github] pushed 76 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261030-1528
