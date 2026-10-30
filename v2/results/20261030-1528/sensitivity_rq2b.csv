@@ -1,0 +1,8 @@
+analysis,setting,value,n_participants,note
+G3 AUROC,detected N3 (primary),0.7431804218329693,,
+G3 AUROC,median per-participant AUROC,0.8114130434782608,99.0,
+EXPLORATORY cross-fitted High threshold,"thresholds (half A, half B)",,,"0.211, 0.254 (manual anchor 0.50)"
+EXPLORATORY cross-fitted High threshold,kappa High vs S4,0.33880920386073554,,
+EXPLORATORY cross-fitted High threshold,sensitivity High for S4,0.5899698165776642,,
+EXPLORATORY cross-fitted High threshold,specificity not-High for S3,0.78743961352657,,
+EXPLORATORY alternative grading variable,rating_prior,0.775537348613534,,

@@ -1,0 +1,76 @@
+split,factor,setting,n,median_diff,p,W
+OOF,delta_intensity,"detected N3, halves (primary)",224,6.872957435935369,1.5011870168239716e-18,21059.0
+OOF,delta_intensity,"EXPERT N3 epochs (model-independent), halves",231,7.506420133538779,1.7908459078782485e-19,22497.5
+OOF,delta_intensity,"detected N3, first vs last third",198,11.18244120508054,1.3942731020002614e-17,16526.0
+OOF,delta_intensity,"detected N3, QC-clean epochs, halves",222,7.782697705884333,8.599383312421355e-19,20783.0
+OOF,delta_intensity,cohort HMC,136,6.554520417530853,2.6910258295193694e-11,7678.0
+OOF,delta_intensity,cohort ISRUC-I,88,8.46792007860823,4.345872939601924e-09,3341.0
+OOF,sw_morphology,"detected N3, halves (primary)",224,8.3054722901502,2.7021474416840673e-22,21961.0
+OOF,sw_morphology,"EXPERT N3 epochs (model-independent), halves",231,8.962506420133543,3.376079488897145e-23,23415.0
+OOF,sw_morphology,"detected N3, first vs last third",198,10.793336895089494,8.683805287153884e-22,17536.0
+OOF,sw_morphology,"detected N3, QC-clean epochs, halves",222,8.370236635730771,1.0111564898596593e-21,21482.0
+OOF,sw_morphology,cohort HMC,136,7.466030167259927,5.56862253113629e-14,8077.0
+OOF,sw_morphology,cohort ISRUC-I,88,9.120099633893734,2.7551646820340133e-10,3449.0
+OOF,spectral_dominance,"detected N3, halves (primary)",224,2.6700533556727706,0.003195650436480343,15248.0
+OOF,spectral_dominance,"EXPERT N3 epochs (model-independent), halves",231,4.499591989391725,5.969622089643551e-05,17310.0
+OOF,spectral_dominance,"detected N3, first vs last third",198,4.129194859066342,0.0008148856100069216,12394.0
+OOF,spectral_dominance,"detected N3, QC-clean epochs, halves",222,2.4731393016218384,0.0009660987393337966,15347.0
+OOF,spectral_dominance,cohort HMC,136,1.2259910301714037,0.0399925926165688,5464.0
+OOF,spectral_dominance,cohort ISRUC-I,88,5.185108654946966,0.018934633459341807,2457.0
+OOF,n3_continuity,"detected N3, halves (primary)",224,0.0,0.00019694323096125282,3749.5
+OOF,n3_continuity,"EXPERT N3 epochs (model-independent), halves",231,0.0,0.0012205525824220988,5795.0
+OOF,n3_continuity,"detected N3, first vs last third",198,0.0,0.0001441895351970367,3706.5
+OOF,n3_continuity,"detected N3, QC-clean epochs, halves",222,0.0,0.0006808748369545556,3138.0
+OOF,n3_continuity,cohort HMC,136,0.0,0.011469529029591436,1585.5
+OOF,n3_continuity,cohort ISRUC-I,88,0.0,0.0026951741539344375,459.5
+OOF,rating_prior,"detected N3, halves (primary)",224,6.189331078444134,5.976251547846557e-15,20093.0
+OOF,rating_prior,"EXPERT N3 epochs (model-independent), halves",231,6.815998972778637,9.591871662148251e-16,21478.0
+OOF,rating_prior,"detected N3, first vs last third",198,8.803810453792952,3.789281900762528e-15,16127.0
+OOF,rating_prior,"detected N3, QC-clean epochs, halves",222,6.715214078709208,6.3075169043754424e-15,19763.0
+OOF,rating_prior,cohort HMC,136,5.626615976756447,3.6837268791457936e-09,7320.0
+OOF,rating_prior,cohort ISRUC-I,88,6.6523711845796,1.478445606214343e-07,3190.0
+external,delta_intensity,"detected N3, halves (primary)",194,7.794840433965257,7.637762119209794e-18,16133.0
+external,delta_intensity,"EXPERT N3 epochs (model-independent), halves",178,9.446841521143348,2.92480472584012e-17,13726.5
+external,delta_intensity,"detected N3, first vs last third",178,12.82530407012299,3.889524552372905e-18,13888.0
+external,delta_intensity,"detected N3, QC-clean epochs, halves",189,9.021313220538605,5.384874254457809e-19,15624.5
+external,delta_intensity,cohort CAP,101,9.027541845031827,4.851239370813121e-12,4586.0
+external,delta_intensity,cohort DOD-H,25,11.905166360897823,0.0033627748489379883,261.0
+external,delta_intensity,cohort DOD-O,52,7.601186836085253,3.4497864339429435e-05,1126.0
+external,delta_intensity,cohort ISRUC-II,7,17.976376526013013,0.0234375,26.0
+external,delta_intensity,cohort ISRUC-III,9,0.7734819143394258,0.013671875,41.0
+external,sw_morphology,"detected N3, halves (primary)",194,8.338429480645967,6.294955413485619e-22,16938.0
+external,sw_morphology,"EXPERT N3 epochs (model-independent), halves",178,10.311959714011762,1.883709453575068e-18,13945.0
+external,sw_morphology,"detected N3, first vs last third",178,13.763750160434263,1.2519879138495082e-21,14493.0
+external,sw_morphology,"detected N3, QC-clean epochs, halves",189,9.215344310812135,2.960924941753148e-22,16230.0
+external,sw_morphology,cohort CAP,101,11.625255751096617,5.2611666136259767e-14,4770.0
+external,sw_morphology,cohort DOD-H,25,12.95893637743199,0.0006481707096099854,277.0
+external,sw_morphology,cohort DOD-O,52,7.607226714381703,1.7042780431638155e-06,1199.0
+external,sw_morphology,cohort ISRUC-II,7,23.381878855141068,0.0234375,26.0
+external,sw_morphology,cohort ISRUC-III,9,0.3412531237495582,0.01953125,40.0
+external,spectral_dominance,"detected N3, halves (primary)",194,4.3733437521234,0.00025982059841192767,12175.0
+external,spectral_dominance,"EXPERT N3 epochs (model-independent), halves",178,3.487038798668209,0.002975868745981332,9859.0
+external,spectral_dominance,"detected N3, first vs last third",178,6.294591288985529,0.00018170867501349276,10420.0
+external,spectral_dominance,"detected N3, QC-clean epochs, halves",189,5.01659079069556,1.4010193716529293e-05,12132.0
+external,spectral_dominance,cohort CAP,101,4.365133292564167,0.009233897732263213,3271.0
+external,spectral_dominance,cohort DOD-H,25,-1.6367126452401948,0.19785568118095398,195.0
+external,spectral_dominance,cohort DOD-O,52,4.220742452039591,0.06529896911023383,855.0
+external,spectral_dominance,cohort ISRUC-II,7,8.410908020203387,0.015625,27.0
+external,spectral_dominance,cohort ISRUC-III,9,5.457973771828492,0.08203125,35.0
+external,n3_continuity,"detected N3, halves (primary)",194,0.0,0.05941914941228038,1465.0
+external,n3_continuity,"EXPERT N3 epochs (model-independent), halves",178,0.0,0.0004984635042866707,1944.0
+external,n3_continuity,"detected N3, first vs last third",178,0.0,0.0023987652114895804,2361.0
+external,n3_continuity,"detected N3, QC-clean epochs, halves",189,0.0,0.07351783141395456,1006.0
+external,n3_continuity,cohort CAP,101,0.0,0.14471496745399226,535.0
+external,n3_continuity,cohort DOD-H,25,0.0,0.25881705929167276,13.5
+external,n3_continuity,cohort DOD-O,52,0.0,0.45437567953749997,62.0
+external,n3_continuity,cohort ISRUC-II,7,0.0,0.125,6.0
+external,n3_continuity,cohort ISRUC-III,9,0.0,0.25,5.0
+external,rating_prior,"detected N3, halves (primary)",194,7.698271273583835,3.575273428817261e-15,15551.0
+external,rating_prior,"EXPERT N3 epochs (model-independent), halves",178,7.54482061561459,4.859165991238714e-15,13296.0
+external,rating_prior,"detected N3, first vs last third",178,10.600244048832419,1.7027377993547472e-15,13387.0
+external,rating_prior,"detected N3, QC-clean epochs, halves",189,8.134810083576816,1.8564861030487618e-16,15113.0
+external,rating_prior,cohort CAP,101,7.561538809992982,1.156807901868447e-09,4339.0
+external,rating_prior,cohort DOD-H,25,9.084278951779126,0.003685474395751953,260.0
+external,rating_prior,cohort DOD-O,52,8.955748454168653,0.00022730841741327434,1074.0
+external,rating_prior,cohort ISRUC-II,7,8.92933342393151,0.015625,27.0
+external,rating_prior,cohort ISRUC-III,9,2.572557812960067,0.08203125,35.0

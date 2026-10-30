@@ -1,0 +1,195 @@
+research_question,analysis,setting,value,primary_value,holds,note
+RQ1,decision threshold,pooled OOF: fixed 0.5,0.8215732425525037,0.8493419804212665,True,
+RQ1,decision threshold,OOF HMC: fixed 0.5,0.8048152184682453,0.8315048606134112,True,
+RQ1,decision threshold,OOF ISRUC-I: fixed 0.5,0.8479771042018993,0.8769405743531419,True,
+RQ1,decision threshold,external CAP: fixed 0.5,0.8235734331150608,0.830936585767852,True,
+RQ1,decision threshold,external DOD-H: fixed 0.5,0.6229151559100797,0.7037761086531537,False,
+RQ1,decision threshold,external DOD-O: fixed 0.5,0.5090513134612767,0.5797522160593023,True,
+RQ1,decision threshold,external ISRUC-II: fixed 0.5,0.8411502909962342,0.8655057428677287,True,
+RQ1,decision threshold,external ISRUC-III: fixed 0.5,0.895838463432652,0.8693106201756721,True,
+RQ1,reference standard,OOF ISRUC-I: unanimous epochs only (all experts agree),0.9301371268337721,0.8769405743531419,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,OOF ISRUC-I: lenient: N3 if >= 1 expert scored N3,0.881564728765939,0.8769405743531419,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,OOF ISRUC-I: strict: N3 only if every expert scored N3,0.8510904596514284,0.8769405743531419,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"OOF ISRUC-I: individual experts, mean",0.867253011625617,0.8769405743531419,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"OOF ISRUC-I: individual experts, best",0.8769405743531419,0.8769405743531419,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external DOD-H: unanimous epochs only (all experts agree),0.7397362065762586,0.7037761086531537,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external DOD-H: lenient: N3 if >= 1 expert scored N3,0.8337464740576117,0.7037761086531537,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external DOD-H: strict: N3 only if every expert scored N3,0.4815576248639497,0.7037761086531537,False,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"external DOD-H: individual experts, mean",0.695286719566825,0.7037761086531537,False,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"external DOD-H: individual experts, best",0.7681750741839762,0.7037761086531537,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external DOD-O: unanimous epochs only (all experts agree),0.5500853727945362,0.5797522160593023,False,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external DOD-O: lenient: N3 if >= 1 expert scored N3,0.819375706324773,0.5797522160593023,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external DOD-O: strict: N3 only if every expert scored N3,0.24769349051768325,0.5797522160593023,False,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"external DOD-O: individual experts, mean",0.5880993246023275,0.5797522160593023,False,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"external DOD-O: individual experts, best",0.7622401947995477,0.5797522160593023,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external ISRUC-II: unanimous epochs only (all experts agree),0.9434364994663821,0.8655057428677287,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external ISRUC-II: lenient: N3 if >= 1 expert scored N3,0.8923766816143498,0.8655057428677287,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external ISRUC-II: strict: N3 only if every expert scored N3,0.8731726590280522,0.8655057428677287,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"external ISRUC-II: individual experts, mean",0.8833204291050472,0.8655057428677287,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"external ISRUC-II: individual experts, best",0.9011351153423655,0.8655057428677287,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external ISRUC-III: unanimous epochs only (all experts agree),0.9201716738197425,0.8693106201756721,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external ISRUC-III: lenient: N3 if >= 1 expert scored N3,0.8605188800410994,0.8693106201756721,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,external ISRUC-III: strict: N3 only if every expert scored N3,0.9028635597978664,0.8693106201756721,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"external ISRUC-III: individual experts, mean",0.8808424382652292,0.8693106201756721,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,reference standard,"external ISRUC-III: individual experts, best",0.8923742563547864,0.8693106201756721,True,criterion F1 >= 0.70 re-applied under this reference
+RQ1,QC,pooled OOF: QC-clean epochs only,0.877179430589274,,True,
+RQ1,participants,pooled OOF: median participant F1 (>= 10 expert-N3 epochs),0.875132135306554,,True,
+RQ1,QC,OOF HMC: QC-clean epochs only,0.8621822106882852,,True,
+RQ1,participants,OOF HMC: median participant F1 (>= 10 expert-N3 epochs),0.8496284501061571,,True,
+RQ1,QC,OOF ISRUC-I: QC-clean epochs only,0.8997340517390253,,True,
+RQ1,participants,OOF ISRUC-I: median participant F1 (>= 10 expert-N3 epochs),0.8912900755006018,,True,
+RQ1,QC,external CAP: QC-clean epochs only,0.8671280642434489,,True,
+RQ1,participants,external CAP: median participant F1 (>= 10 expert-N3 epochs),0.8566037735849057,,True,
+RQ1,QC,external DOD-H: QC-clean epochs only,0.7485846628924344,,True,
+RQ1,participants,external DOD-H: median participant F1 (>= 10 expert-N3 epochs),0.7344583928437194,,True,
+RQ1,QC,external DOD-O: QC-clean epochs only,0.6293818902514555,,False,
+RQ1,participants,external DOD-O: median participant F1 (>= 10 expert-N3 epochs),0.6062717770034843,,False,
+RQ1,QC,external ISRUC-II: QC-clean epochs only,0.8900023860653782,,True,
+RQ1,participants,external ISRUC-II: median participant F1 (>= 10 expert-N3 epochs),0.8822854643926397,,True,
+RQ1,QC,external ISRUC-III: QC-clean epochs only,0.8981921979067554,,True,
+RQ1,participants,external ISRUC-III: median participant F1 (>= 10 expert-N3 epochs),0.8655799463884662,,True,
+RQ2,early > late-night decline,"OOF delta_intensity: EXPERT N3 epochs (model-independent), halves",7.506420133538779,6.872957435935369,True,p=1.8e-19
+RQ2,early > late-night decline,"OOF delta_intensity: detected N3, first vs last third",11.18244120508054,6.872957435935369,True,p=1.4e-17
+RQ2,early > late-night decline,"OOF delta_intensity: detected N3, QC-clean epochs, halves",7.782697705884333,6.872957435935369,True,p=8.6e-19
+RQ2,early > late-night decline,OOF delta_intensity: cohort HMC,6.554520417530853,6.872957435935369,True,"p=2.7e-11, n=136"
+RQ2,early > late-night decline,OOF delta_intensity: cohort ISRUC-I,8.46792007860823,6.872957435935369,True,"p=4.3e-09, n=88"
+RQ2,early > late-night decline,"OOF sw_morphology: EXPERT N3 epochs (model-independent), halves",8.962506420133543,8.3054722901502,True,p=3.4e-23
+RQ2,early > late-night decline,"OOF sw_morphology: detected N3, first vs last third",10.793336895089494,8.3054722901502,True,p=8.7e-22
+RQ2,early > late-night decline,"OOF sw_morphology: detected N3, QC-clean epochs, halves",8.370236635730771,8.3054722901502,True,p=1e-21
+RQ2,early > late-night decline,OOF sw_morphology: cohort HMC,7.466030167259927,8.3054722901502,True,"p=5.6e-14, n=136"
+RQ2,early > late-night decline,OOF sw_morphology: cohort ISRUC-I,9.120099633893734,8.3054722901502,True,"p=2.8e-10, n=88"
+RQ2,early > late-night decline,"OOF spectral_dominance: EXPERT N3 epochs (model-independent), halves",4.499591989391725,2.6700533556727706,True,p=6e-05
+RQ2,early > late-night decline,"OOF spectral_dominance: detected N3, first vs last third",4.129194859066342,2.6700533556727706,True,p=0.00081
+RQ2,early > late-night decline,"OOF spectral_dominance: detected N3, QC-clean epochs, halves",2.4731393016218384,2.6700533556727706,True,p=0.00097
+RQ2,early > late-night decline,OOF spectral_dominance: cohort HMC,1.2259910301714037,2.6700533556727706,True,"p=0.04, n=136"
+RQ2,early > late-night decline,OOF spectral_dominance: cohort ISRUC-I,5.185108654946966,2.6700533556727706,True,"p=0.019, n=88"
+RQ2,early > late-night decline,"OOF n3_continuity: EXPERT N3 epochs (model-independent), halves",0.0,0.0,False,p=0.0012
+RQ2,early > late-night decline,"OOF n3_continuity: detected N3, first vs last third",0.0,0.0,False,p=0.00014
+RQ2,early > late-night decline,"OOF n3_continuity: detected N3, QC-clean epochs, halves",0.0,0.0,False,p=0.00068
+RQ2,early > late-night decline,OOF n3_continuity: cohort HMC,0.0,0.0,False,"p=0.011, n=136"
+RQ2,early > late-night decline,OOF n3_continuity: cohort ISRUC-I,0.0,0.0,False,"p=0.0027, n=88"
+RQ2,early > late-night decline,"OOF rating_prior: EXPERT N3 epochs (model-independent), halves",6.815998972778637,6.189331078444134,True,p=9.6e-16
+RQ2,early > late-night decline,"OOF rating_prior: detected N3, first vs last third",8.803810453792952,6.189331078444134,True,p=3.8e-15
+RQ2,early > late-night decline,"OOF rating_prior: detected N3, QC-clean epochs, halves",6.715214078709208,6.189331078444134,True,p=6.3e-15
+RQ2,early > late-night decline,OOF rating_prior: cohort HMC,5.626615976756447,6.189331078444134,True,"p=3.7e-09, n=136"
+RQ2,early > late-night decline,OOF rating_prior: cohort ISRUC-I,6.6523711845796,6.189331078444134,True,"p=1.5e-07, n=88"
+RQ2,early > late-night decline,"external delta_intensity: EXPERT N3 epochs (model-independent), halves",9.446841521143348,7.794840433965257,True,p=2.9e-17
+RQ2,early > late-night decline,"external delta_intensity: detected N3, first vs last third",12.82530407012299,7.794840433965257,True,p=3.9e-18
+RQ2,early > late-night decline,"external delta_intensity: detected N3, QC-clean epochs, halves",9.021313220538605,7.794840433965257,True,p=5.4e-19
+RQ2,early > late-night decline,external delta_intensity: cohort CAP,9.027541845031827,7.794840433965257,True,"p=4.9e-12, n=101"
+RQ2,early > late-night decline,external delta_intensity: cohort DOD-H,11.905166360897823,7.794840433965257,True,"p=0.0034, n=25"
+RQ2,early > late-night decline,external delta_intensity: cohort DOD-O,7.601186836085253,7.794840433965257,True,"p=3.4e-05, n=52"
+RQ2,early > late-night decline,external delta_intensity: cohort ISRUC-II,17.976376526013013,7.794840433965257,True,"p=0.023, n=7"
+RQ2,early > late-night decline,external delta_intensity: cohort ISRUC-III,0.7734819143394258,7.794840433965257,True,"p=0.014, n=9"
+RQ2,early > late-night decline,"external sw_morphology: EXPERT N3 epochs (model-independent), halves",10.311959714011762,8.338429480645967,True,p=1.9e-18
+RQ2,early > late-night decline,"external sw_morphology: detected N3, first vs last third",13.763750160434263,8.338429480645967,True,p=1.3e-21
+RQ2,early > late-night decline,"external sw_morphology: detected N3, QC-clean epochs, halves",9.215344310812135,8.338429480645967,True,p=3e-22
+RQ2,early > late-night decline,external sw_morphology: cohort CAP,11.625255751096617,8.338429480645967,True,"p=5.3e-14, n=101"
+RQ2,early > late-night decline,external sw_morphology: cohort DOD-H,12.95893637743199,8.338429480645967,True,"p=0.00065, n=25"
+RQ2,early > late-night decline,external sw_morphology: cohort DOD-O,7.607226714381703,8.338429480645967,True,"p=1.7e-06, n=52"
+RQ2,early > late-night decline,external sw_morphology: cohort ISRUC-II,23.381878855141068,8.338429480645967,True,"p=0.023, n=7"
+RQ2,early > late-night decline,external sw_morphology: cohort ISRUC-III,0.3412531237495582,8.338429480645967,True,"p=0.02, n=9"
+RQ2,early > late-night decline,"external spectral_dominance: EXPERT N3 epochs (model-independent), halves",3.487038798668209,4.3733437521234,True,p=0.003
+RQ2,early > late-night decline,"external spectral_dominance: detected N3, first vs last third",6.294591288985529,4.3733437521234,True,p=0.00018
+RQ2,early > late-night decline,"external spectral_dominance: detected N3, QC-clean epochs, halves",5.01659079069556,4.3733437521234,True,p=1.4e-05
+RQ2,early > late-night decline,external spectral_dominance: cohort CAP,4.365133292564167,4.3733437521234,True,"p=0.0092, n=101"
+RQ2,early > late-night decline,external spectral_dominance: cohort DOD-H,-1.6367126452401948,4.3733437521234,False,"p=0.2, n=25"
+RQ2,early > late-night decline,external spectral_dominance: cohort DOD-O,4.220742452039591,4.3733437521234,False,"p=0.065, n=52"
+RQ2,early > late-night decline,external spectral_dominance: cohort ISRUC-II,8.410908020203387,4.3733437521234,True,"p=0.016, n=7"
+RQ2,early > late-night decline,external spectral_dominance: cohort ISRUC-III,5.457973771828492,4.3733437521234,False,"p=0.082, n=9"
+RQ2,early > late-night decline,"external n3_continuity: EXPERT N3 epochs (model-independent), halves",0.0,0.0,False,p=0.0005
+RQ2,early > late-night decline,"external n3_continuity: detected N3, first vs last third",0.0,0.0,False,p=0.0024
+RQ2,early > late-night decline,"external n3_continuity: detected N3, QC-clean epochs, halves",0.0,0.0,False,p=0.074
+RQ2,early > late-night decline,external n3_continuity: cohort CAP,0.0,0.0,False,"p=0.14, n=101"
+RQ2,early > late-night decline,external n3_continuity: cohort DOD-H,0.0,0.0,False,"p=0.26, n=25"
+RQ2,early > late-night decline,external n3_continuity: cohort DOD-O,0.0,0.0,False,"p=0.45, n=52"
+RQ2,early > late-night decline,external n3_continuity: cohort ISRUC-II,0.0,0.0,False,"p=0.12, n=7"
+RQ2,early > late-night decline,external n3_continuity: cohort ISRUC-III,0.0,0.0,False,"p=0.25, n=9"
+RQ2,early > late-night decline,"external rating_prior: EXPERT N3 epochs (model-independent), halves",7.54482061561459,7.698271273583835,True,p=4.9e-15
+RQ2,early > late-night decline,"external rating_prior: detected N3, first vs last third",10.600244048832419,7.698271273583835,True,p=1.7e-15
+RQ2,early > late-night decline,"external rating_prior: detected N3, QC-clean epochs, halves",8.134810083576816,7.698271273583835,True,p=1.9e-16
+RQ2,early > late-night decline,external rating_prior: cohort CAP,7.561538809992982,7.698271273583835,True,"p=1.2e-09, n=101"
+RQ2,early > late-night decline,external rating_prior: cohort DOD-H,9.084278951779126,7.698271273583835,True,"p=0.0037, n=25"
+RQ2,early > late-night decline,external rating_prior: cohort DOD-O,8.955748454168653,7.698271273583835,True,"p=0.00023, n=52"
+RQ2,early > late-night decline,external rating_prior: cohort ISRUC-II,8.92933342393151,7.698271273583835,True,"p=0.016, n=7"
+RQ2,early > late-night decline,external rating_prior: cohort ISRUC-III,2.572557812960067,7.698271273583835,False,"p=0.082, n=9"
+RQ2b,G3 S4-vs-S3 AUROC,median per-participant AUROC,0.8114130434782608,0.7431804218329693,True,
+RQ2b,EXPLORATORY cross-fitted High threshold,kappa High vs S4,0.33880920386073554,,,"exploratory, not a verdict"
+RQ2b,EXPLORATORY cross-fitted High threshold,sensitivity High for S4,0.5899698165776642,,,"exploratory, not a verdict"
+RQ2b,EXPLORATORY cross-fitted High threshold,specificity not-High for S3,0.78743961352657,,,"exploratory, not a verdict"
+RQ2b,EXPLORATORY alternative grading variable,rating_prior,0.775537348613534,,,"exploratory, not a verdict"
+RQ3,weight perturbation,reasonable(alpha=20*prior),0.9794817306866465,0.9794817306866465,True,5th-percentile Spearman rho
+RQ3,weight perturbation,extreme(alpha=1),0.8085376934990506,0.9794817306866465,False,5th-percentile Spearman rho
+RQ3,leave one factor out,without_delta_intensity,0.9771876611862306,0.9794817306866465,True,
+RQ3,leave one factor out,without_sw_morphology,0.9824899168470335,0.9794817306866465,True,
+RQ3,leave one factor out,without_spectral_dominance,0.9837631540465516,0.9794817306866465,True,
+RQ3,leave one factor out,without_n3_continuity,0.9917718385618988,0.9794817306866465,True,
+RQ3,alternative weighting,prior_vs_equal_rho,0.9890102999192816,0.9794817306866465,True,
+RQ3,alternative weighting,prior_vs_pca_rho,0.9983517678861333,0.9794817306866465,True,
+RQ3,split-half reliability,Spearman-Brown,0.9938062551799681,,,descriptive
+RQ6,error-detection AUROC,OOF all,0.8791727999381694,,True,
+RQ6,error-detection AUROC,OOF HMC,0.8650937565570924,,True,
+RQ6,error-detection AUROC,OOF ISRUC-I,0.9016688480935698,,True,
+RQ6,error-detection AUROC,external all,0.7950187659672155,,True,
+RQ6,error-detection AUROC,external CAP,0.8525207964950121,,True,
+RQ6,error-detection AUROC,external DOD-H,0.7513067606026055,,True,
+RQ6,error-detection AUROC,external DOD-O,0.6888597328093657,,False,
+RQ6,error-detection AUROC,external ISRUC-II,0.8720304855134344,,True,
+RQ6,error-detection AUROC,external ISRUC-III,0.9412761451785874,,True,
+RQ7,episode definition,"OOF: longest episode, min 1 epochs, gap 0",0.7419986859280506,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"OOF: longest episode, min 1 epochs, gap 2",0.7804139177592886,,True,"primary definition: min 2, gap 2"
+RQ7,episode definition,"OOF: longest episode, min 1 epochs, gap 4",0.693152068198158,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"OOF: longest episode, min 2 epochs, gap 0",0.741917449697607,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"OOF: longest episode, min 2 epochs, gap 4",0.693152068198158,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"OOF: longest episode, min 3 epochs, gap 0",0.741809414122556,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"OOF: longest episode, min 3 epochs, gap 2",0.7803256500161253,,True,"primary definition: min 2, gap 2"
+RQ7,episode definition,"OOF: longest episode, min 3 epochs, gap 4",0.6930539982900747,,False,"primary definition: min 2, gap 2"
+RQ7,"N3 minutes ICC(2,1)",OOF all: QC-clean epochs,0.8439158530223267,,True,
+RQ7,"N3 minutes ICC(2,1)",OOF HMC: all scored epochs,0.7902946848311673,,True,
+RQ7,"N3 minutes ICC(2,1)",OOF HMC: QC-clean epochs,0.8209853447073097,,True,
+RQ7,"N3 minutes ICC(2,1)",OOF ISRUC-I: all scored epochs,0.8472689743385526,,True,
+RQ7,"N3 minutes ICC(2,1)",OOF ISRUC-I: QC-clean epochs,0.8892971905106866,,True,
+RQ7,episode definition,"external: longest episode, min 1 epochs, gap 0",0.5029285377841135,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"external: longest episode, min 1 epochs, gap 2",0.5198293267948031,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"external: longest episode, min 1 epochs, gap 4",0.5110124790432891,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"external: longest episode, min 2 epochs, gap 0",0.5027786636110207,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"external: longest episode, min 2 epochs, gap 4",0.5110124790432891,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"external: longest episode, min 3 epochs, gap 0",0.5024140811505594,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"external: longest episode, min 3 epochs, gap 2",0.5196636328699885,,False,"primary definition: min 2, gap 2"
+RQ7,episode definition,"external: longest episode, min 3 epochs, gap 4",0.5111201786765235,,False,"primary definition: min 2, gap 2"
+RQ7,"N3 minutes ICC(2,1)",external all: QC-clean epochs,0.5581952756170938,,False,
+RQ7,"N3 minutes ICC(2,1)",external CAP: all scored epochs,0.7281418954297622,,False,
+RQ7,"N3 minutes ICC(2,1)",external CAP: QC-clean epochs,0.8373496897400058,,True,
+RQ7,"N3 minutes ICC(2,1)",external DOD-H: all scored epochs,0.40304775549022287,,False,
+RQ7,"N3 minutes ICC(2,1)",external DOD-H: QC-clean epochs,0.5281224027642121,,False,
+RQ7,"N3 minutes ICC(2,1)",external DOD-O: all scored epochs,0.22192068293798764,,False,
+RQ7,"N3 minutes ICC(2,1)",external DOD-O: QC-clean epochs,0.2552242591515099,,False,
+RQ7,"N3 minutes ICC(2,1)",external ISRUC-II: all scored epochs,0.8378686283653886,,True,
+RQ7,"N3 minutes ICC(2,1)",external ISRUC-II: QC-clean epochs,0.8691638264203323,,True,
+RQ7,"N3 minutes ICC(2,1)",external ISRUC-III: all scored epochs,0.7944960012331423,,True,
+RQ7,"N3 minutes ICC(2,1)",external ISRUC-III: QC-clean epochs,0.8722780131070622,,True,
+RQ4,leave-one-component-out from full model,feature fusion | full model,0.007070707070707,,True,p_holm=0.017; seed-noise floor=0.004
+RQ4,leave-one-component-out from full model,positive-class weighting | full model,0.0,,False,p_holm=1; seed-noise floor=0.004
+RQ4,leave-one-component-out from full model,temporal attention | full model,0.0029283126536894,,False,p_holm=1; seed-noise floor=0.004
+RQ4,leave-one-component-out from full model,context receptive field +/-15 vs +/-3 epochs,0.0030060804809728,,False,p_holm=1; seed-noise floor=0.004
+RQ4,leave-one-component-out from full model,all 19 features vs delta-group features only,0.0019007678498695,,False,p_holm=1; seed-noise floor=0.004
+RQ4,training-seed variability,SD of pooled F1 across 3 seeds,0.0030023619261404,,,descriptive
+RQ5,participant bootstrap,"share delta top (perturbation and IG), 95% CI lower bound",1.0,1.0,True,95% CI 1.00-1.00
+RQ5,IG baseline,"top-band agreement, zero vs noise baseline (epochs)",1.0,,True,
+RQ5,IG baseline,share delta top with noise baseline (epochs),1.0,1.0,True,
+RQ5,IG steps,"median completeness error, 32 steps",0.0149916909496228,,,|sum IG - (f(x)-f(x0))| / |f(x)-f(x0)|
+RQ5,IG steps,"median completeness error, 64 steps",0.0069771854815467,0.0151775140599721,True,holds = 32 steps already converged
+RQ5,delta top for both methods,OOF HMC FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,OOF HMC TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,OOF ISRUC-I FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,OOF ISRUC-I TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external CAP FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external CAP TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external DOD-H FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external DOD-H TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external DOD-O FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external DOD-O TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external ISRUC-II FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external ISRUC-II TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external ISRUC-III FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+RQ5,delta top for both methods,external ISRUC-III TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta

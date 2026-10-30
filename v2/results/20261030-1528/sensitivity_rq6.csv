@@ -1,0 +1,19 @@
+split,cohort,setting,error_auroc,n
+OOF,all,combined reliability score,0.8791727999381694,227430
+OOF,all,"model confidence only (no OOD, no QC)",0.872133926728545,227430
+OOF,HMC,combined reliability score,0.8650937565570924,137243
+OOF,HMC,"model confidence only (no OOD, no QC)",0.8607355331793309,137243
+OOF,ISRUC-I,combined reliability score,0.9016688480935698,90187
+OOF,ISRUC-I,"model confidence only (no OOD, no QC)",0.889671788165177,90187
+external,all,combined reliability score,0.7950187659672155,206080
+external,all,"model confidence only (no OOD, no QC)",0.7536003957844655,206080
+external,CAP,combined reliability score,0.8525207964950121,105083
+external,CAP,"model confidence only (no OOD, no QC)",0.8477848047056492,105083
+external,DOD-H,combined reliability score,0.7513067606026055,24665
+external,DOD-H,"model confidence only (no OOD, no QC)",0.6830135821472483,24665
+external,DOD-O,combined reliability score,0.6888597328093657,53236
+external,DOD-O,"model confidence only (no OOD, no QC)",0.6116391880876071,53236
+external,ISRUC-II,combined reliability score,0.8720304855134344,14207
+external,ISRUC-II,"model confidence only (no OOD, no QC)",0.8271287535993419,14207
+external,ISRUC-III,combined reliability score,0.9412761451785874,8889
+external,ISRUC-III,"model confidence only (no OOD, no QC)",0.9534611819611787,8889
