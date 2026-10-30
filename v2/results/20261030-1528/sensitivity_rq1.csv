@@ -1,0 +1,103 @@
+set,analysis,setting,f1,n_epochs,n_participants,share_of_epochs_unanimous
+pooled OOF,decision threshold,inner-validation threshold (primary),0.8493419804212665,,,
+pooled OOF,decision threshold,fixed threshold 0.5,0.8215732425525037,,,
+pooled OOF,decision threshold,inner threshold - 0.10,0.8398116928557796,,,
+pooled OOF,decision threshold,inner threshold + 0.10,0.8456673667224338,,,
+pooled OOF,decision threshold,temperature-scaled probability >= 0.5,0.8215732425525037,,,
+pooled OOF,decision threshold,"label-optimised threshold 0.75 (UPPER BOUND, not an estimate)",0.8507491508865993,,,
+pooled OOF,QC,QC-clean epochs only,0.877179430589274,127506.0,,
+pooled OOF,participants,median participant F1 (>= 10 expert-N3 epochs),0.875132135306554,,248.0,
+pooled OOF,participants,share of participants with F1 >= 0.70,0.9032258064516129,,248.0,
+OOF HMC,decision threshold,inner-validation threshold (primary),0.8315048606134112,,,
+OOF HMC,decision threshold,fixed threshold 0.5,0.8048152184682453,,,
+OOF HMC,decision threshold,inner threshold - 0.10,0.820855614973262,,,
+OOF HMC,decision threshold,inner threshold + 0.10,0.8303599497013517,,,
+OOF HMC,decision threshold,temperature-scaled probability >= 0.5,0.8048152184682453,,,
+OOF HMC,decision threshold,"label-optimised threshold 0.76 (UPPER BOUND, not an estimate)",0.8367843862662564,,,
+OOF HMC,QC,QC-clean epochs only,0.8621822106882852,79126.0,,
+OOF HMC,participants,median participant F1 (>= 10 expert-N3 epochs),0.8496284501061571,,148.0,
+OOF HMC,participants,share of participants with F1 >= 0.70,0.8783783783783784,,148.0,
+OOF ISRUC-I,decision threshold,inner-validation threshold (primary),0.8769405743531419,,,
+OOF ISRUC-I,decision threshold,fixed threshold 0.5,0.8479771042018993,,,
+OOF ISRUC-I,decision threshold,inner threshold - 0.10,0.8695462715834196,,,
+OOF ISRUC-I,decision threshold,inner threshold + 0.10,0.8690051822784052,,,
+OOF ISRUC-I,decision threshold,temperature-scaled probability >= 0.5,0.8479771042018993,,,
+OOF ISRUC-I,decision threshold,"label-optimised threshold 0.75 (UPPER BOUND, not an estimate)",0.8722193481634765,,,
+OOF ISRUC-I,QC,QC-clean epochs only,0.8997340517390253,48380.0,,
+OOF ISRUC-I,participants,median participant F1 (>= 10 expert-N3 epochs),0.8912900755006018,,100.0,
+OOF ISRUC-I,participants,share of participants with F1 >= 0.70,0.94,,100.0,
+external CAP,decision threshold,inner-validation threshold (primary),0.830936585767852,,,
+external CAP,decision threshold,fixed threshold 0.5,0.8235734331150608,,,
+external CAP,decision threshold,inner threshold - 0.10,0.8313321673511899,,,
+external CAP,decision threshold,inner threshold + 0.10,0.8186659131908974,,,
+external CAP,decision threshold,temperature-scaled probability >= 0.5,0.8247314251371046,,,
+external CAP,decision threshold,"label-optimised threshold 0.64 (UPPER BOUND, not an estimate)",0.8327446167355166,,,
+external CAP,QC,QC-clean epochs only,0.8671280642434489,63154.0,,
+external CAP,participants,median participant F1 (>= 10 expert-N3 epochs),0.8566037735849057,,105.0,
+external CAP,participants,share of participants with F1 >= 0.70,0.8666666666666667,,105.0,
+external DOD-H,decision threshold,inner-validation threshold (primary),0.7037761086531537,,,
+external DOD-H,decision threshold,fixed threshold 0.5,0.6229151559100797,,,
+external DOD-H,decision threshold,inner threshold - 0.10,0.6624794666151319,,,
+external DOD-H,decision threshold,inner threshold + 0.10,0.7478797224363917,,,
+external DOD-H,decision threshold,temperature-scaled probability >= 0.5,0.6279707495429616,,,
+external DOD-H,decision threshold,"label-optimised threshold 0.95 (UPPER BOUND, not an estimate)",0.8354140127388535,,,
+external DOD-H,QC,QC-clean epochs only,0.7485846628924344,15373.0,,
+external DOD-H,participants,median participant F1 (>= 10 expert-N3 epochs),0.7344583928437194,,24.0,
+external DOD-H,participants,share of participants with F1 >= 0.70,0.6666666666666666,,24.0,
+external DOD-O,decision threshold,inner-validation threshold (primary),0.5797522160593023,,,
+external DOD-O,decision threshold,fixed threshold 0.5,0.5090513134612767,,,
+external DOD-O,decision threshold,inner threshold - 0.10,0.5442355341786912,,,
+external DOD-O,decision threshold,inner threshold + 0.10,0.621783062580249,,,
+external DOD-O,decision threshold,temperature-scaled probability >= 0.5,0.5135246464369079,,,
+external DOD-O,decision threshold,"label-optimised threshold 0.95 (UPPER BOUND, not an estimate)",0.7164472391432501,,,
+external DOD-O,QC,QC-clean epochs only,0.6293818902514555,33625.0,,
+external DOD-O,participants,median participant F1 (>= 10 expert-N3 epochs),0.6062717770034843,,51.0,
+external DOD-O,participants,share of participants with F1 >= 0.70,0.3333333333333333,,51.0,
+external ISRUC-II,decision threshold,inner-validation threshold (primary),0.8655057428677287,,,
+external ISRUC-II,decision threshold,fixed threshold 0.5,0.8411502909962342,,,
+external ISRUC-II,decision threshold,inner threshold - 0.10,0.8552116684453931,,,
+external ISRUC-II,decision threshold,inner threshold + 0.10,0.8610248447204969,,,
+external ISRUC-II,decision threshold,temperature-scaled probability >= 0.5,0.8425925925925926,,,
+external ISRUC-II,decision threshold,"label-optimised threshold 0.71 (UPPER BOUND, not an estimate)",0.865887590428492,,,
+external ISRUC-II,QC,QC-clean epochs only,0.8900023860653782,7263.0,,
+external ISRUC-II,participants,median participant F1 (>= 10 expert-N3 epochs),0.8822854643926397,,8.0,
+external ISRUC-II,participants,share of participants with F1 >= 0.70,0.875,,8.0,
+external ISRUC-III,decision threshold,inner-validation threshold (primary),0.8693106201756721,,,
+external ISRUC-III,decision threshold,fixed threshold 0.5,0.895838463432652,,,
+external ISRUC-III,decision threshold,inner threshold - 0.10,0.8853046594982079,,,
+external ISRUC-III,decision threshold,inner threshold + 0.10,0.8378076062639821,,,
+external ISRUC-III,decision threshold,temperature-scaled probability >= 0.5,0.89607504319921,,,
+external ISRUC-III,decision threshold,"label-optimised threshold 0.44 (UPPER BOUND, not an estimate)",0.8972188633615478,,,
+external ISRUC-III,QC,QC-clean epochs only,0.8981921979067554,3882.0,,
+external ISRUC-III,participants,median participant F1 (>= 10 expert-N3 epochs),0.8655799463884662,,10.0,
+external ISRUC-III,participants,share of participants with F1 >= 0.70,1.0,,10.0,
+OOF ISRUC-I,reference standard,consensus label (primary),0.8769405743531419,90187.0,,0.9439276170623261
+OOF ISRUC-I,reference standard,unanimous epochs only (all experts agree),0.9301371268337721,85130.0,,0.9439276170623261
+OOF ISRUC-I,reference standard,lenient: N3 if >= 1 expert scored N3,0.881564728765939,90187.0,,0.9439276170623261
+OOF ISRUC-I,reference standard,strict: N3 only if every expert scored N3,0.8510904596514284,90187.0,,0.9439276170623261
+OOF ISRUC-I,reference standard,"individual experts, mean",0.867253011625617,90187.0,,0.9439276170623261
+OOF ISRUC-I,reference standard,"individual experts, best",0.8769405743531419,90187.0,,0.9439276170623261
+external DOD-H,reference standard,consensus label (primary),0.7037761086531537,24665.0,,0.8609365497668762
+external DOD-H,reference standard,unanimous epochs only (all experts agree),0.7397362065762586,21235.0,,0.8609365497668762
+external DOD-H,reference standard,lenient: N3 if >= 1 expert scored N3,0.8337464740576117,24665.0,,0.8609365497668762
+external DOD-H,reference standard,strict: N3 only if every expert scored N3,0.4815576248639497,24665.0,,0.8609365497668762
+external DOD-H,reference standard,"individual experts, mean",0.695286719566825,24665.0,,0.8609365497668762
+external DOD-H,reference standard,"individual experts, best",0.7681750741839762,24665.0,,0.8609365497668762
+external DOD-O,reference standard,consensus label (primary),0.5797522160593023,53236.0,,0.8111616199564204
+external DOD-O,reference standard,unanimous epochs only (all experts agree),0.5500853727945362,43183.0,,0.8111616199564204
+external DOD-O,reference standard,lenient: N3 if >= 1 expert scored N3,0.819375706324773,53236.0,,0.8111616199564204
+external DOD-O,reference standard,strict: N3 only if every expert scored N3,0.24769349051768325,53236.0,,0.8111616199564204
+external DOD-O,reference standard,"individual experts, mean",0.5880993246023275,53236.0,,0.8111616199564204
+external DOD-O,reference standard,"individual experts, best",0.7622401947995477,53236.0,,0.8111616199564204
+external ISRUC-II,reference standard,consensus label (primary),0.8655057428677287,14207.0,,0.9481945519814177
+external ISRUC-II,reference standard,unanimous epochs only (all experts agree),0.9434364994663821,13471.0,,0.9481945519814177
+external ISRUC-II,reference standard,lenient: N3 if >= 1 expert scored N3,0.8923766816143498,14207.0,,0.9481945519814177
+external ISRUC-II,reference standard,strict: N3 only if every expert scored N3,0.8731726590280522,14207.0,,0.9481945519814177
+external ISRUC-II,reference standard,"individual experts, mean",0.8833204291050472,14207.0,,0.9481945519814177
+external ISRUC-II,reference standard,"individual experts, best",0.9011351153423655,14207.0,,0.9481945519814177
+external ISRUC-III,reference standard,consensus label (primary),0.8693106201756721,8889.0,,0.9627629654629317
+external ISRUC-III,reference standard,unanimous epochs only (all experts agree),0.9201716738197425,8558.0,,0.9627629654629317
+external ISRUC-III,reference standard,lenient: N3 if >= 1 expert scored N3,0.8605188800410994,8889.0,,0.9627629654629317
+external ISRUC-III,reference standard,strict: N3 only if every expert scored N3,0.9028635597978664,8889.0,,0.9627629654629317
+external ISRUC-III,reference standard,"individual experts, mean",0.8808424382652292,8889.0,,0.9627629654629317
+external ISRUC-III,reference standard,"individual experts, best",0.8923742563547864,8889.0,,0.9627629654629317

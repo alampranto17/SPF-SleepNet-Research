@@ -1,0 +1,100 @@
+split,cohort,metric,min_epochs,gap_tol,icc21,n
+OOF,all,longest_episode_min,1.0,0.0,0.7419986859280506,251
+OOF,all,longest_episode_min,1.0,2.0,0.7804139177592886,251
+OOF,all,longest_episode_min,1.0,4.0,0.693152068198158,251
+OOF,all,longest_episode_min,2.0,0.0,0.741917449697607,251
+OOF,all,longest_episode_min,2.0,2.0,0.7803256500161253,251
+OOF,all,longest_episode_min,2.0,4.0,0.693152068198158,251
+OOF,all,longest_episode_min,3.0,0.0,0.741809414122556,251
+OOF,all,longest_episode_min,3.0,2.0,0.7803256500161253,251
+OOF,all,longest_episode_min,3.0,4.0,0.6930539982900747,251
+OOF,all,n3_minutes [all scored epochs],,,0.805714293961098,251
+OOF,all,n3_minutes [QC-clean epochs],,,0.8439158530223267,251
+OOF,HMC,longest_episode_min,1.0,0.0,0.7030343322592866,151
+OOF,HMC,longest_episode_min,1.0,2.0,0.7549581982290448,151
+OOF,HMC,longest_episode_min,1.0,4.0,0.6268982481235637,151
+OOF,HMC,longest_episode_min,2.0,0.0,0.7029108564682914,151
+OOF,HMC,longest_episode_min,2.0,2.0,0.7548253409017783,151
+OOF,HMC,longest_episode_min,2.0,4.0,0.6268982481235637,151
+OOF,HMC,longest_episode_min,3.0,0.0,0.7029108564682914,151
+OOF,HMC,longest_episode_min,3.0,2.0,0.7548253409017783,151
+OOF,HMC,longest_episode_min,3.0,4.0,0.6267999990084361,151
+OOF,HMC,n3_minutes [all scored epochs],,,0.7902946848311673,151
+OOF,HMC,n3_minutes [QC-clean epochs],,,0.8209853447073097,151
+OOF,ISRUC-I,longest_episode_min,1.0,0.0,0.7932412937070294,100
+OOF,ISRUC-I,longest_episode_min,1.0,2.0,0.8200803576926504,100
+OOF,ISRUC-I,longest_episode_min,1.0,4.0,0.8228244864117404,100
+OOF,ISRUC-I,longest_episode_min,2.0,0.0,0.7932412937070294,100
+OOF,ISRUC-I,longest_episode_min,2.0,2.0,0.8200803576926504,100
+OOF,ISRUC-I,longest_episode_min,2.0,4.0,0.8228244864117404,100
+OOF,ISRUC-I,longest_episode_min,3.0,0.0,0.7929166893579481,100
+OOF,ISRUC-I,longest_episode_min,3.0,2.0,0.8200803576926504,100
+OOF,ISRUC-I,longest_episode_min,3.0,4.0,0.8228244864117404,100
+OOF,ISRUC-I,n3_minutes [all scored epochs],,,0.8472689743385526,100
+OOF,ISRUC-I,n3_minutes [QC-clean epochs],,,0.8892971905106866,100
+external,all,longest_episode_min,1.0,0.0,0.5029285377841135,211
+external,all,longest_episode_min,1.0,2.0,0.5198293267948031,211
+external,all,longest_episode_min,1.0,4.0,0.5110124790432891,211
+external,all,longest_episode_min,2.0,0.0,0.5027786636110207,211
+external,all,longest_episode_min,2.0,2.0,0.5198293267948031,211
+external,all,longest_episode_min,2.0,4.0,0.5110124790432891,211
+external,all,longest_episode_min,3.0,0.0,0.5024140811505594,211
+external,all,longest_episode_min,3.0,2.0,0.5196636328699885,211
+external,all,longest_episode_min,3.0,4.0,0.5111201786765235,211
+external,all,n3_minutes [all scored epochs],,,0.4568144307300435,211
+external,all,n3_minutes [QC-clean epochs],,,0.5581952756170938,211
+external,CAP,longest_episode_min,1.0,0.0,0.7832795664946183,105
+external,CAP,longest_episode_min,1.0,2.0,0.7584957993989074,105
+external,CAP,longest_episode_min,1.0,4.0,0.6983673680513773,105
+external,CAP,longest_episode_min,2.0,0.0,0.7832795664946183,105
+external,CAP,longest_episode_min,2.0,2.0,0.7584957993989074,105
+external,CAP,longest_episode_min,2.0,4.0,0.6983673680513773,105
+external,CAP,longest_episode_min,3.0,0.0,0.7832452341299972,105
+external,CAP,longest_episode_min,3.0,2.0,0.7585076360355735,105
+external,CAP,longest_episode_min,3.0,4.0,0.6984523677460556,105
+external,CAP,n3_minutes [all scored epochs],,,0.7281418954297622,105
+external,CAP,n3_minutes [QC-clean epochs],,,0.8373496897400058,105
+external,DOD-H,longest_episode_min,1.0,0.0,0.5141628602874824,25
+external,DOD-H,longest_episode_min,1.0,2.0,0.5416072365212431,25
+external,DOD-H,longest_episode_min,1.0,4.0,0.3701384004303034,25
+external,DOD-H,longest_episode_min,2.0,0.0,0.5141628602874824,25
+external,DOD-H,longest_episode_min,2.0,2.0,0.5416072365212431,25
+external,DOD-H,longest_episode_min,2.0,4.0,0.3701384004303034,25
+external,DOD-H,longest_episode_min,3.0,0.0,0.5141628602874824,25
+external,DOD-H,longest_episode_min,3.0,2.0,0.5416072365212431,25
+external,DOD-H,longest_episode_min,3.0,4.0,0.3701384004303034,25
+external,DOD-H,n3_minutes [all scored epochs],,,0.40304775549022287,25
+external,DOD-H,n3_minutes [QC-clean epochs],,,0.5281224027642121,25
+external,DOD-O,longest_episode_min,1.0,0.0,0.2486194377505058,55
+external,DOD-O,longest_episode_min,1.0,2.0,0.2941875562058485,55
+external,DOD-O,longest_episode_min,1.0,4.0,0.31710076854852,55
+external,DOD-O,longest_episode_min,2.0,0.0,0.24854180432059716,55
+external,DOD-O,longest_episode_min,2.0,2.0,0.2941875562058485,55
+external,DOD-O,longest_episode_min,2.0,4.0,0.31710076854852,55
+external,DOD-O,longest_episode_min,3.0,0.0,0.24853365020948393,55
+external,DOD-O,longest_episode_min,3.0,2.0,0.2939952313448161,55
+external,DOD-O,longest_episode_min,3.0,4.0,0.31710076854852,55
+external,DOD-O,n3_minutes [all scored epochs],,,0.22192068293798764,55
+external,DOD-O,n3_minutes [QC-clean epochs],,,0.2552242591515099,55
+external,ISRUC-II,longest_episode_min,1.0,0.0,0.5882286826834702,16
+external,ISRUC-II,longest_episode_min,1.0,2.0,0.5493232426138844,16
+external,ISRUC-II,longest_episode_min,1.0,4.0,0.6269847163081524,16
+external,ISRUC-II,longest_episode_min,2.0,0.0,0.5882286826834702,16
+external,ISRUC-II,longest_episode_min,2.0,2.0,0.5493232426138844,16
+external,ISRUC-II,longest_episode_min,2.0,4.0,0.6269847163081524,16
+external,ISRUC-II,longest_episode_min,3.0,0.0,0.5882286826834702,16
+external,ISRUC-II,longest_episode_min,3.0,2.0,0.5493232426138844,16
+external,ISRUC-II,longest_episode_min,3.0,4.0,0.6269847163081524,16
+external,ISRUC-II,n3_minutes [all scored epochs],,,0.8378686283653886,16
+external,ISRUC-II,n3_minutes [QC-clean epochs],,,0.8691638264203323,16
+external,ISRUC-III,longest_episode_min,1.0,0.0,0.9330628803245434,10
+external,ISRUC-III,longest_episode_min,1.0,2.0,0.9222124169435217,10
+external,ISRUC-III,longest_episode_min,1.0,4.0,0.9559585155955921,10
+external,ISRUC-III,longest_episode_min,2.0,0.0,0.9330628803245434,10
+external,ISRUC-III,longest_episode_min,2.0,2.0,0.9222124169435217,10
+external,ISRUC-III,longest_episode_min,2.0,4.0,0.9559585155955921,10
+external,ISRUC-III,longest_episode_min,3.0,0.0,0.9330628803245434,10
+external,ISRUC-III,longest_episode_min,3.0,2.0,0.9222124169435217,10
+external,ISRUC-III,longest_episode_min,3.0,4.0,0.9559585155955921,10
+external,ISRUC-III,n3_minutes [all scored epochs],,,0.7944960012331423,10
+external,ISRUC-III,n3_minutes [QC-clean epochs],,,0.8722780131070622,10

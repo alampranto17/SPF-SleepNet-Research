@@ -1,0 +1,20 @@
+analysis,setting,value,primary_value,holds,note
+participant bootstrap,"share delta top (perturbation and IG), 95% CI lower bound",1.0,1.0,True,95% CI 1.00-1.00
+IG baseline,"top-band agreement, zero vs noise baseline (epochs)",1.0,,True,
+IG baseline,share delta top with noise baseline (epochs),1.0,1.0,True,
+IG steps,"median completeness error, 32 steps",0.014991690949622802,,,|sum IG - (f(x)-f(x0))| / |f(x)-f(x0)|
+IG steps,"median completeness error, 64 steps",0.006977185481546725,0.015177514059972134,True,holds = 32 steps already converged
+delta top for both methods,OOF HMC FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,OOF HMC TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,OOF ISRUC-I FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,OOF ISRUC-I TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external CAP FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external CAP TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external DOD-H FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external DOD-H TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external DOD-O FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external DOD-O TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external ISRUC-II FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external ISRUC-II TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external ISRUC-III FP,1.0,1.0,,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
+delta top for both methods,external ISRUC-III TP,1.0,1.0,True,FP rows are descriptive: delta-driven errors = N2 epochs with N3-like delta
