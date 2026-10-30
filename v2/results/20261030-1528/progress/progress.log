@@ -490,3 +490,42 @@ ISRUC-III  C4-A1           10
 [train] full_v2_seed1 fold 3 done  (elapsed 50.6 min)
   full_v2_seed1__fold4: done in 89s  thr=0.745 T=1.18 innerPR-AUC=0.9268 params=96,226
 [train] full_v2_seed1 fold 4 done  (elapsed 52.1 min)
+[github] pushed 7 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261030-1528
+  full_v2_seed2__fold0: done in 113s  thr=0.526 T=1.54 innerPR-AUC=0.9207 params=96,226
+[train] full_v2_seed2 fold 0 done  (elapsed 54.0 min)
+  full_v2_seed2__fold1: done in 104s  thr=0.685 T=1.10 innerPR-AUC=0.9495 params=96,226
+[train] full_v2_seed2 fold 1 done  (elapsed 55.7 min)
+  full_v2_seed2__fold2: done in 104s  thr=0.846 T=1.07 innerPR-AUC=0.9460 params=96,226
+[train] full_v2_seed2 fold 2 done  (elapsed 57.4 min)
+  full_v2_seed2__fold3: done in 84s  thr=0.717 T=1.04 innerPR-AUC=0.9643 params=96,226
+[train] full_v2_seed2 fold 3 done  (elapsed 58.8 min)
+  full_v2_seed2__fold4: done in 99s  thr=0.722 T=1.37 innerPR-AUC=0.9271 params=96,226
+[train] full_v2_seed2 fold 4 done  (elapsed 60.5 min)
+[train] deepsleepnet fold 0 done  (elapsed 60.5 min)
+[train] deepsleepnet fold 1 done  (elapsed 60.5 min)
+[train] deepsleepnet fold 2 done  (elapsed 60.5 min)
+[train] deepsleepnet fold 3 done  (elapsed 60.5 min)
+[train] deepsleepnet fold 4 done  (elapsed 60.5 min)
+[train] tinysleepnet fold 0 done  (elapsed 60.5 min)
+[train] tinysleepnet fold 1 done  (elapsed 60.5 min)
+[train] tinysleepnet fold 2 done  (elapsed 60.5 min)
+[train] tinysleepnet fold 3 done  (elapsed 60.5 min)
+[train] tinysleepnet fold 4 done  (elapsed 60.5 min)
+[train] attnsleep fold 0 done  (elapsed 60.5 min)
+[train] attnsleep fold 1 done  (elapsed 60.5 min)
+[train] attnsleep fold 2 done  (elapsed 60.5 min)
+[train] attnsleep fold 3 done  (elapsed 60.5 min)
+[train] attnsleep fold 4 done  (elapsed 60.5 min)
+[train] lseqsleepnet fold 0 done  (elapsed 60.5 min)
+[train] lseqsleepnet fold 1 done  (elapsed 60.5 min)
+[train] lseqsleepnet fold 2 done  (elapsed 60.5 min)
+[train] lseqsleepnet fold 3 done  (elapsed 60.5 min)
+[train] lseqsleepnet fold 4 done  (elapsed 60.5 min)
+[kaggle] new version of alampranto/sqn2-runs
+training stage finished, elapsed 1.17 h
+[RQ1] detection
+[analysis] run/cache alignment: 7/7 checked runs map exactly onto the current cache (run_alignment_check.csv)
+[RQ2/3] factor scores
+[RQ2b] within-N3 grade (Low / Moderate / High)
+[RQ4] component analysis
+[RQ1b] same-protocol comparison with published models

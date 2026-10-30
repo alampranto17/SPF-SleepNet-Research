@@ -1,0 +1,7 @@
+variant,split,cohort,rec,n_epochs,reason
+full_v2,external,CAP,CAP_n13,970,non-finite signal in cache (float16 overflow)
+full_v2,external,CAP,CAP_n14,968,non-finite signal in cache (float16 overflow)
+full_v2,external,CAP,CAP_n15,977,non-finite signal in cache (float16 overflow)
+full_v2:LOCO,LOCO,CAP,CAP_n13,970,non-finite signal in cache (float16 overflow)
+full_v2:LOCO,LOCO,CAP,CAP_n14,968,non-finite signal in cache (float16 overflow)
+full_v2:LOCO,LOCO,CAP,CAP_n15,977,non-finite signal in cache (float16 overflow)

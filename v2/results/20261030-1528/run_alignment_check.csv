@@ -1,0 +1,8 @@
+run,n_epochs,aligned,reason
+full_v2__fold0.npz,256867,True,
+full_v2__fold1.npz,255711,True,
+full_v2__fold2.npz,254411,True,
+full_v2__fold3.npz,255221,True,
+full_v2__fold4.npz,255220,True,
+full_v2__foldLOCO_train_HMC.npz,293104,True,
+full_v2__foldLOCO_train_ISRUC-I.npz,340160,True,
