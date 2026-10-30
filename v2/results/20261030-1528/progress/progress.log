@@ -463,3 +463,30 @@ ISRUC-III  C4-A1           10
 [train] full_ctx_r3 fold 0 done  (elapsed 29.0 min)
   full_ctx_r3__fold1: done in 116s  thr=0.663 T=1.20 innerPR-AUC=0.9471 params=62,946
 [train] full_ctx_r3 fold 1 done  (elapsed 30.9 min)
+[github] pushed 7 files to alampranto17/SPF-SleepNet-Research@v2-kaggle:v2/results/20261030-1528
+  full_ctx_r3__fold2: done in 111s  thr=0.870 T=1.37 innerPR-AUC=0.9435 params=62,946
+[train] full_ctx_r3 fold 2 done  (elapsed 32.8 min)
+  full_ctx_r3__fold3: done in 101s  thr=0.760 T=1.05 innerPR-AUC=0.9666 params=62,946
+[train] full_ctx_r3 fold 3 done  (elapsed 34.5 min)
+  full_ctx_r3__fold4: done in 82s  thr=0.870 T=1.46 innerPR-AUC=0.9212 params=62,946
+[train] full_ctx_r3 fold 4 done  (elapsed 35.8 min)
+  full_deltafeat__fold0: done in 93s  thr=0.510 T=1.49 innerPR-AUC=0.9183 params=95,650
+[train] full_deltafeat fold 0 done  (elapsed 37.4 min)
+  full_deltafeat__fold1: done in 104s  thr=0.690 T=0.99 innerPR-AUC=0.9482 params=95,650
+[train] full_deltafeat fold 1 done  (elapsed 39.1 min)
+  full_deltafeat__fold2: done in 119s  thr=0.693 T=1.06 innerPR-AUC=0.9481 params=95,650
+[train] full_deltafeat fold 2 done  (elapsed 41.1 min)
+  full_deltafeat__fold3: done in 104s  thr=0.863 T=1.22 innerPR-AUC=0.9656 params=95,650
+[train] full_deltafeat fold 3 done  (elapsed 42.8 min)
+  full_deltafeat__fold4: done in 99s  thr=0.770 T=1.34 innerPR-AUC=0.9238 params=95,650
+[train] full_deltafeat fold 4 done  (elapsed 44.5 min)
+  full_v2_seed1__fold0: done in 98s  thr=0.470 T=1.42 innerPR-AUC=0.9181 params=96,226
+[train] full_v2_seed1 fold 0 done  (elapsed 46.1 min)
+  full_v2_seed1__fold1: done in 89s  thr=0.760 T=0.99 innerPR-AUC=0.9458 params=96,226
+[train] full_v2_seed1 fold 1 done  (elapsed 47.6 min)
+  full_v2_seed1__fold2: done in 79s  thr=0.800 T=1.21 innerPR-AUC=0.9439 params=96,226
+[train] full_v2_seed1 fold 2 done  (elapsed 48.9 min)
+  full_v2_seed1__fold3: done in 104s  thr=0.730 T=1.16 innerPR-AUC=0.9662 params=96,226
+[train] full_v2_seed1 fold 3 done  (elapsed 50.6 min)
+  full_v2_seed1__fold4: done in 89s  thr=0.745 T=1.18 innerPR-AUC=0.9268 params=96,226
+[train] full_v2_seed1 fold 4 done  (elapsed 52.1 min)
