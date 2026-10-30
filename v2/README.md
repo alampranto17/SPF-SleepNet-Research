@@ -34,7 +34,7 @@ Training: ISRUC-Sleep I (100) and HMC (151). External: ISRUC-II (8 × 2 sessions
 ## Repository layout
 | Path | Content |
 |---|---|
-| `sqn2/` | package: `data`, `download`, `features`, `scores`, `models`, `baselines`, `train`, `stats`, `analysis`, `xai`, `report`, `figures`, `pipeline`, `kaggle_io`, `github_io` |
+| `sqn2/` | package: `data`, `download`, `features`, `scores`, `models`, `baselines`, `train`, `stats`, `analysis`, `xai`, `xai_ext`, `sensitivity`, `report`, `figures`, `pipeline`, `kaggle_io`, `github_io` |
 | `results/<run>/` | tables, figures and progress log of each Kaggle run (pushed automatically); `20261027-1633` is the first complete run |
 | `tools/` | notebook builders and diagnostics |
 | `docs/` | plan, v1 audit and supervisor-comment resolution, literature/novelty check, feasibility audit |
@@ -42,4 +42,6 @@ Training: ISRUC-Sleep I (100) and HMC (151). External: ISRUC-II (8 × 2 sessions
 | `export_compact.py` | standalone local exporter (copy of `sqn2/data.py`) |
 
 ## Status
+**v2.1 (30 Oct 2026):** sensitivity analyses for every RQ, leave-one-component-out ablations from the full model with a seed-noise floor, explanations of errors and external cohorts, and a results notebook that skips invalid runs. Pre-specified verdicts are unchanged; see [`docs/04_v2_1_upgrade_sensitivity_ablation_xai.md`](docs/04_v2_1_upgrade_sensitivity_ablation_xai.md). The reportable full run is `results/20261028-0834`; `results/20261028-1400` came from a container without data access (16 participants) and must not be reported.
+
 First complete real-data run: `results/20261027-1633`. The next run adds the DOD scorer-hypnogram alignment fix, the environment record and the additional figures (confusion matrices, ROC, calibration, per-participant F1, baseline forest plot, Bland–Altman, factor-by-stage, inter-rater).

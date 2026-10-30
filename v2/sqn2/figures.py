@@ -523,13 +523,127 @@ def fig_interrater(out_dir):
     return _save(fig, out_dir, "fig_rq1_interrater.png")
 
 
+BANDS5 = ["delta", "theta", "alpha", "sigma", "beta"]
+OUTCOME_COLOR = {"TP": C1, "FP": C2, "FN": C3, "TN-N2": C4}
+
+
+def fig_xai_outcomes(out_dir):
+    """Band-stop drop in P(N3) per band, by outcome, OOF and external (v2.1)."""
+    X = pd.read_csv(os.path.join(out_dir, "rq5x_epoch_explanations.csv"))
+    splits = [s for s in ("OOF", "external") if (X.split == s).any()]
+    fig, axes = plt.subplots(len(splits), 2, figsize=(7.4, 2.7 * len(splits)), squeeze=False)
+    for i, sp in enumerate(splits):
+        g = X[X.split == sp]
+        outs = [o for o in OUTCOME_COLOR if (g.outcome == o).any()]
+        w = 0.8 / max(len(outs), 1)
+        for j, (pre, lab) in enumerate((("drop_", "Drop in P(N3) after band-stop"),
+                                        ("ig_", "Signed share of IG attribution"))):
+            ax = axes[i, j]
+            for k, o in enumerate(outs):
+                pm = g[g.outcome == o].groupby("participant")[[f"{pre}{b}" for b in BANDS5]].mean()
+                med = pm.median().to_numpy()
+                lo, hi = pm.quantile(0.25).to_numpy(), pm.quantile(0.75).to_numpy()
+                x = np.arange(5) + (k - (len(outs) - 1) / 2) * w
+                ax.bar(x, med, w, color=OUTCOME_COLOR[o], label=f"{o} (n={len(pm)})")
+                ax.errorbar(x, med, yerr=[med - lo, hi - med], fmt="none", ecolor=INK2, lw=0.8)
+            ax.set_xticks(range(5), BANDS5)
+            ax.axhline(0, color=INK2, lw=0.8)
+            ax.set_ylabel(lab)
+            ax.set_title(f"{sp}: {'perturbation' if j == 0 else 'integrated gradients'}")
+            if j == 0:
+                ax.legend(fontsize=7)
+    fig.tight_layout()
+    return _save(fig, out_dir, "fig_rq5x_band_by_outcome.png")
+
+
+def fig_shap_features(out_dir):
+    fr = pd.read_csv(os.path.join(out_dir, "rq5x_shap_feature_ranking.csv"))
+    fr = fr.sort_values("mean")
+    fig, ax = plt.subplots(figsize=(5.2, 0.22 * len(fr) + 0.8))
+    cols = [C1 if g == "delta" else INK2 for g in fr.group]
+    ax.barh(fr.feature, fr["mean"], xerr=fr["std"].fillna(0), color=cols, ecolor=GRID)
+    ax.set_xlabel("Mean |SHAP| on the surrogate of the network logit (mean ± SD over folds)")
+    ax.set_title("Handcrafted features ranked by SHAP (blue = delta / slow-wave group)")
+    return _save(fig, out_dir, "fig_rq5x_shap_features.png")
+
+
+def fig_xai_examples(out_dir):
+    z = np.load(os.path.join(out_dir, "rq5x_examples.npz"))
+    keys = sorted({k.rsplit("|", 1)[0] for k in z.files})
+    pref = [k for k in keys if k.startswith("OOF") and k.endswith("|TP")][:1] + \
+           [k for k in keys if k.endswith("|FP") and ("DOD" in k)][:1] + \
+           [k for k in keys if k.startswith("OOF") and k.endswith("|FN")][:1]
+    pref = pref or keys[:3]
+    t = np.arange(3000) / 100.0
+    fig, axes = plt.subplots(len(pref), 1, figsize=(7.4, 2.0 * len(pref)), squeeze=False)
+    for ax, k in zip(axes[:, 0], pref):
+        eeg, ig = z[f"{k}|eeg_uv"], z[f"{k}|ig_t"]
+        ax.plot(t, eeg, color=INK2, lw=0.6)
+        ax.set_ylabel("EEG (µV)")
+        lim = np.percentile(np.abs(ig), 99) + 1e-12
+        ax.imshow(np.clip(ig, -lim, lim)[None, :], aspect="auto", cmap="RdBu_r", vmin=-lim, vmax=lim,
+                  extent=(0, 30, eeg.min(), eeg.max()), alpha=0.35)
+        ax2 = ax.twinx()
+        seg = np.linspace(0, 30, 33)
+        ax2.step(seg[:-1], z[f"{k}|attention"], where="post", color=C1, lw=1.2, label="attention")
+        ax2.step(seg[:-1], z[f"{k}|sw_coverage"] * z[f"{k}|attention"].max(), where="post", color=C2,
+                 lw=1.0, ls="--", label="slow-wave coverage (scaled)")
+        ax2.grid(False)
+        ax2.set_yticks([])
+        ax.set_title(k.replace("|", " · "))
+        ax.set_xlim(0, 30)
+    axes[-1, 0].set_xlabel("Time in epoch (s); shading = integrated-gradient attribution (red +, blue −)")
+    ax2.legend(fontsize=7, loc="upper right")
+    fig.tight_layout()
+    return _save(fig, out_dir, "fig_rq5x_examples.png")
+
+
+def fig_rq4_extended(out_dir):
+    c = pd.read_csv(os.path.join(out_dir, "rq4_extended_component_effects.csv"))
+    c = c[c.metric == "f1"].iloc[::-1]
+    fig, ax = plt.subplots(figsize=(6.4, 0.45 * len(c) + 1.0))
+    y = np.arange(len(c))
+    col = [C1 if (r.p_holm < 0.05 and r.exceeds_seed_noise) else INK2 for r in c.itertuples()]
+    ax.errorbar(c.median_diff, y, xerr=[c.median_diff - c.ci95_low, c.ci95_high - c.median_diff],
+                fmt="none", ecolor=GRID, lw=2)
+    ax.scatter(c.median_diff, y, color=col, zorder=3)
+    nf = float(c.seed_noise_floor.iloc[0]) if c.seed_noise_floor.notna().any() else np.nan
+    if nf == nf:
+        ax.axvspan(-nf, nf, color=GRID, alpha=0.6, label=f"seed-noise floor ±{nf:.3f}")
+        ax.legend(fontsize=7)
+    ax.axvline(0, color=INK2, lw=0.8)
+    ax.set_yticks(y, c.component)
+    ax.set_xlabel("Participant-level median ΔF1, full model minus ablated (95% CI)")
+    ax.set_title("Leave-one-component-out from the full model (blue = significant and above seed noise)")
+    return _save(fig, out_dir, "fig_rq4x_leave_one_out.png")
+
+
+def fig_sensitivity_matrix(out_dir):
+    m = pd.read_csv(os.path.join(out_dir, "sensitivity_matrix.csv"))
+    m = m[m.holds.notna()]
+    if not len(m):
+        raise ValueError("no binary sensitivity rows")
+    m["holds"] = m.holds.astype(str).str.lower().isin(["true", "1", "1.0"])
+    t = m.groupby(["research_question", "analysis"]).holds.agg(["sum", "size"]).reset_index()
+    t["label"] = t.research_question + " · " + t.analysis
+    t = t.iloc[::-1]
+    fig, ax = plt.subplots(figsize=(6.6, 0.32 * len(t) + 1.0))
+    ax.barh(t.label, t["size"], color=GRID, label="settings tested")
+    ax.barh(t.label, t["sum"], color=C1, label="conclusion holds")
+    ax.set_xlabel("Number of sensitivity settings")
+    ax.set_title("Sensitivity analyses: settings in which the primary conclusion holds")
+    ax.legend(fontsize=7, loc="lower right")
+    return _save(fig, out_dir, "fig_sensitivity_matrix.png")
+
+
 def make_all(out_dir, log=print):
     made = []
     for fn in (fig_pr_curves, fig_homeostatic, fig_graded_agreement, fig_ablation,
                fig_risk_coverage, fig_profiles, fig_example_night, fig_xai, fig_sota, fig_n3_grade,
                fig_confusion_matrices, fig_stage_confusion, fig_roc_curves, fig_calibration,
                fig_participant_f1, fig_sota_forest, fig_bland_altman, fig_factor_by_stage,
-               fig_interrater):
+               fig_interrater, fig_xai_outcomes, fig_shap_features, fig_xai_examples,
+               fig_rq4_extended, fig_sensitivity_matrix):
         try:
             made.append(fn(out_dir))
         except Exception as exc:

@@ -7,7 +7,8 @@ import nbformat as nbf
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PKG = os.path.join(ROOT, "sqn2")
 MODULES = ["__init__", "data", "download", "features", "scores", "models", "baselines", "train",
-           "stats", "analysis", "xai", "report", "figures", "pipeline", "kaggle_io", "github_io"]
+           "stats", "analysis", "xai", "xai_ext", "sensitivity", "report", "figures", "pipeline",
+           "kaggle_io", "github_io"]
 
 md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
 MODULE_ROLE = {
@@ -22,6 +23,8 @@ MODULE_ROLE = {
     "stats": "bootstrap CIs, paired tests, Holm correction, ICC, agreement statistics",
     "analysis": "pre-specified criteria and RQ1-RQ7 analyses, exclusions",
     "xai": "SHAP surrogate, input-gradient saliency, attention and band-perturbation explanations",
+    "xai_ext": "v2.1: explanations of errors and external cohorts, SHAP by outcome, explanation robustness",
+    "sensitivity": "v2.1: sensitivity analyses for every RQ and the sensitivity matrix",
     "report": "data inventory, methods parameters, go/no-go table",
     "figures": "all figures",
     "pipeline": "training order, time budget, fold freezing, analysis orchestration",
@@ -49,7 +52,7 @@ cells.append(md("""# SleepQualityNet v2: single-channel N3 detection with a rule
 | 3 | Data acquisition | HMC, ISRUC-I/II/III, CAP, DOD-H/O → compact 100 Hz cache; channel audit | restored from `sqn2-cache` in minutes (first build: hours) |
 | 4 | Cohort inventory | corpus, Table-1 style inventory, channel audit | 2–5 min |
 | 5 | Model training | 5-fold participant CV: primary model, ablations, published baselines, GBM, leave-one-cohort-out | skipped when runs are restored from `sqn2-runs` |
-| 6 | Pre-specified analyses | RQ1–RQ7 + RQ1b (baselines) + RQ2b (within-N3 grade), evaluated mechanically against fixed criteria | 1.5–2 h |
+| 6 | Pre-specified analyses | RQ1–RQ7 + RQ1b (baselines) + RQ2b (within-N3 grade), evaluated mechanically against fixed criteria; v2.1 sensitivity analyses, extended ablations and extended XAI reported separately | 2–2.5 h |
 | 7 | Figures | all manuscript and supplementary figures, grouped by research question | 2–5 min |
 | 8 | Export | zip archive, GitHub push of tables and figures (no EEG data) | 1–2 min |
 | 9 | Reporting rules and availability statements | wording rules, data/code availability, reproducibility checklist | – |
@@ -337,6 +340,17 @@ Order: the primary model (`full_v2`) on all folds first, then the ablation varia
 | cnn_feat_pw_noattn | ✓ | ✓ | mean pool | – |
 | **full_v2** | ✓ | ✓ | ✓ | ✓ |
 
+**v2.1 ablations (added after run 20261028-0834; reported separately, not part of the pre-specified RQ4 verdict).** Leave-one-component-out from the full model, a smaller context, delta-only features and two seed repeats of the primary model (≈ 1.6 min per fold each on T4 ×2):
+
+| variant | features | pos-weight | attention | context |
+|---|:-:|:-:|:-:|:-:|
+| full_nofeat | – | ✓ | ✓ | ±15 |
+| full_nopw | ✓ | – | ✓ | ±15 |
+| full_noattn | ✓ | ✓ | mean pool | ±15 |
+| full_ctx_r3 | ✓ | ✓ | ✓ | ±3 |
+| full_deltafeat | delta group (10/19) | ✓ | ✓ | ±15 |
+| full_v2_seed1 / _seed2 | ✓ | ✓ | ✓ | ±15 (training seed +1 / +2) |
+
 **Same-protocol published baselines** (raw EEG only, identical folds, selection, threshold, loss and class weight): DeepSleepNet (2017), TinySleepNet (2020), AttnSleep (2021), L-SeqSleepNet (2023). Training order: full_v2 → ablations → baselines → GBM → leave-one-cohort-out; anything not finished within the time budget continues on the next commit.
 
 Training cohorts: ISRUC-I + HMC. External (never trained on): ISRUC-II, ISRUC-III, DOD-H, DOD-O; CAP (R&K S3/S4 expert reference for the within-N3 grade only).
@@ -405,7 +419,8 @@ else:
     for f in ("go_no_go_decisions.csv", "rq1_detection_metrics.csv", "rq1_sota_comparison.csv",
               "rq1_interrater_benchmark.csv", "rq2_rk_grade_validation.csv", "rq2_n3_grade_validity.csv",
               "rq4_component_effects.csv", "rq2_factor_validity.csv", "rq6_reliability_components.csv",
-              "rq7_profile_agreement.csv"):
+              "rq7_profile_agreement.csv", "rq4_extended_component_effects.csv", "rq4_seed_variability.csv",
+              "rq5x_band_importance_by_outcome.csv", "rq5x_sensitivity.csv", "sensitivity_matrix.csv"):
         fp = os.path.join(OUT_DIR, f)
         if os.path.exists(fp):
             print(f); display(pd.read_csv(fp))
@@ -419,7 +434,9 @@ cells.append(code('''if ANALYSED:
     FIGS = FG.make_all(OUT_DIR)
     GROUPS = [("rq1_", "RQ1 / RQ1b - N3 detection and same-protocol baselines"),
               ("rq2_", "RQ2 - factor-score validity"), ("rq2b_", "RQ2b - within-N3 slow-wave grade"),
-              ("rq4_", "RQ4 - component contributions"), ("rq5_", "RQ5 - explanations"),
+              ("rq4_", "RQ4 - component contributions"), ("rq4x_", "RQ4 (v2.1) - leave-one-component-out"),
+              ("rq5_", "RQ5 - explanations"), ("rq5x_", "RQ5 (v2.1) - errors, external cohorts, robustness"),
+              ("sensitivity_", "Sensitivity analyses (v2.1)"),
               ("rq6_", "RQ6 - reliability"), ("rq7_", "RQ7 - episodes and overnight profiles"),
               ("example_", "Illustrative night")]
     shown = set()

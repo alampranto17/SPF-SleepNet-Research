@@ -30,8 +30,9 @@ cells.append(md("""# SleepQualityNet v2: results in manuscript order
 8. RQ5: explanations
 9. RQ6: reliability score
 10. RQ7: N3 episodes and the Overnight N3 EEG Profile
-11. Go / no-go decisions, Methods parameters and environment
-12. Claims: what the results support and what they do not
+11. Sensitivity analyses, extended ablations and extended explanations (v2.1)
+12. Go / no-go decisions, Methods parameters and environment
+13. Claims: what the results support and what they do not
 
 ### Scope
 The factor scores, the Overall N3 EEG Rating and the within-N3 grade are rule-derived research-prototype descriptors of the EEG signal. They are not clinical sleep quality and are not validated against expert quality ratings.
@@ -48,7 +49,7 @@ The GitHub copy contains tables and figures only. Figures that need per-epoch pr
 cells.append(code('''RESULTS_DIR = None                     # e.g. "/kaggle/working/outputs" or "./outputs"; None = automatic
 GITHUB_REPO = "alampranto17/SPF-SleepNet-Research"
 GITHUB_BRANCH = "v2-kaggle"
-GITHUB_RUN = "latest"                  # or a run folder name such as "20261027-1633"
+GITHUB_RUN = "latest"                  # latest VALID full run (GPU, complete cohorts); or e.g. "20261028-0834"
 
 import glob, json, os, re, urllib.request
 import numpy as np, pandas as pd
@@ -64,9 +65,37 @@ def _github_results(repo, branch, run, dest="./results_cache"):
     runs = sorted({m.group(1) for n in names
                    for m in [re.match(r"[^/]+/v2/results/([^/]+)/research_question_results\\.csv$", n)] if m}, reverse=True)
     runs = [r for r in runs if "quicktest" not in r]
-    if not runs:
-        raise FileNotFoundError("no full run with research_question_results.csv on GitHub yet")
-    run = runs[0] if run == "latest" else run
+
+    def _valid(r):
+        """A reportable run: real GPU training, not a quick test, both training cohorts complete.
+        (Run 20261028-1400, for example, came from a container without data access: 16 participants.)"""
+        try:
+            env = json.loads(zf.read(f"{names[0].split('/')[0]}/v2/results/{r}/environment.json"))
+            inv = pd.read_csv(io.BytesIO(zf.read(f"{names[0].split('/')[0]}/v2/results/{r}/data_inventory.csv")))
+        except KeyError:
+            return False, "environment.json or data_inventory.csv missing"
+        if env.get("quick_test") or not env.get("gpus"):
+            return False, "quick test or no GPU recorded"
+        part = inv[inv.field == "participants"].set_index("dataset").detail
+        n = {k: int(str(part.get(k, 0)).replace(",", "")) for k in ("ISRUC-I", "HMC")}
+        if n["ISRUC-I"] < 95 or n["HMC"] < 145:
+            return False, f"incomplete training cohorts {n}"
+        return True, ""
+    if run == "latest":
+        chosen = None
+        for r in runs:
+            ok, why = _valid(r)
+            if ok:
+                chosen = r
+                break
+            print(f"skipping run {r}: {why}")
+        if chosen is None:
+            raise FileNotFoundError("no valid full run with research_question_results.csv on GitHub yet")
+        run = chosen
+    else:
+        ok, why = _valid(run)
+        if not ok:
+            print(f"WARNING: run {run} is not a valid full run ({why}); its numbers must not be reported")
     out = os.path.join(dest, run)
     for n in names:
         m = re.match(r"[^/]+/v2/results/" + re.escape(run) + r"/(.+)$", n)
@@ -357,8 +386,60 @@ for f in ("fig_rq7_bland_altman.png", "fig_rq7_profiles.png", "fig_example_overn
     F(f)
 '''))
 
+# ---------------------------------------------------------------- v2.1
+cells.append(md("""## 11. Sensitivity analyses, extended ablations and extended explanations (v2.1)
+These analyses were added after the first full run. **They never change a pre-specified verdict in §3**; they show how robust each conclusion is and where the errors come from. Rows marked EXPLORATORY are hypothesis-generating only.
+
+### 11.1 Sensitivity matrix
+One row per research question × analysis × setting. `holds` says whether the primary conclusion still holds under that alternative analysis choice (empty = descriptive)."""))
+cells.append(code('''mat = T("sensitivity_matrix.csv")
+if mat is not None:
+    h = mat.holds.astype(str).str.lower()
+    mat["holds"] = np.where(h.isin(["true", "1.0", "1"]), "yes", np.where(h.isin(["false", "0.0", "0"]), "NO", ""))
+    summ = mat[mat.holds != ""].groupby(["research_question", "analysis"]).holds \\
+              .agg(settings="size", conclusion_holds=lambda s: int((s == "yes").sum())).reset_index()
+    show(summ, "**Summary: number of sensitivity settings in which the primary conclusion holds**")
+    show(mat, "**Full sensitivity matrix**")
+F("fig_sensitivity_matrix.png")
+'''))
+cells.append(md("""### 11.2 RQ1: why external performance drops (threshold, reference standard, false positives)
+The decision threshold is varied around the inner-validation threshold; the *label-optimised* row is an upper bound only (it uses the evaluated labels). The reference-standard rows re-score the same predictions against individual experts, unanimous epochs only, a lenient (≥ 1 expert) and a strict (all experts) reference. The false-positive table shows the expert stage of every false positive and how many of them at least one expert scored as N3."""))
+cells.append(code('''s1 = T("sensitivity_rq1.csv")
+if s1 is not None:
+    show(s1.pivot_table(index=["analysis", "setting"], columns="set", values="f1", aggfunc="first").reset_index(),
+         "**F1 under alternative analysis choices**")
+fp = T("sensitivity_rq1_false_positive_structure.csv")
+show(fp, "**Structure of the false positives**")
+'''))
+cells.append(md("""### 11.3 RQ2, RQ2b, RQ6 and RQ7 sensitivity tables"""))
+cells.append(code('''for f, cap in (("sensitivity_rq2.csv", "RQ2: night-time decline under alternative definitions (expert N3, thirds, QC-clean, per cohort)"),
+               ("sensitivity_rq2b.csv", "RQ2b: participant-level AUROC and EXPLORATORY cross-fitted High threshold"),
+               ("sensitivity_rq6.csv", "RQ6: error-detection AUROC per cohort, with and without the OOD/QC components"),
+               ("sensitivity_rq7.csv", "RQ7: episode definition (minimum length, gap tolerance), per cohort, QC-clean")):
+    show(T(f), f"**{cap}**")
+'''))
+cells.append(md("""### 11.4 RQ4 (v2.1): leave-one-component-out from the full model, seed variability, external cohorts
+The pre-specified RQ4 comparisons add components to a model *without* temporal context. Here each component is removed from the **full** model; an effect is interpretable only if it is significant after Holm correction **and** larger than the largest seed-to-seed difference of the primary model (three training seeds)."""))
+cells.append(code('''show(T("rq4_extended_component_effects.csv"), "**Leave-one-component-out (participant-level paired Wilcoxon, own Holm family)**")
+show(T("rq4_seed_variability.csv"), "**Training-seed variability of the primary model**")
+xm = T("rq4_variant_external_metrics.csv")
+if xm is not None:
+    show(xm.pivot_table(index="variant", columns="cohort", values="f1").reset_index(),
+         "**F1 of every ablation variant on every external cohort (5-fold ensembles)**")
+F("fig_rq4x_leave_one_out.png")
+'''))
+cells.append(md("""### 11.5 RQ5 (v2.1): explanations of errors and external cohorts, explanation robustness
+Same methods as RQ5, applied to true positives (TP), false positives (FP), false negatives (FN) and expert-N2 true negatives (TN-N2), out-of-fold and in every external cohort (external epochs explained with all five fold models, attributions averaged). The SHAP surrogate is evaluated per outcome (signed group attribution: positive = pushes toward N3) and every handcrafted feature is ranked. Robustness: integrated-gradient baseline (zero vs noise), number of steps (completeness error), participant bootstrap of the RQ5 criterion, and the criterion re-applied per external cohort."""))
+cells.append(code('''show(T("rq5x_band_importance_by_outcome.csv"), "**Band importance by outcome (participant-level medians)**")
+show(T("rq5x_shap_by_outcome.csv"), "**SHAP surrogate by outcome (per fold)**")
+show(T("rq5x_shap_feature_ranking.csv"), "**Feature ranking by mean |SHAP|**")
+show(T("rq5x_sensitivity.csv"), "**Explanation robustness**")
+for f in ("fig_rq5x_band_by_outcome.png", "fig_rq5x_shap_features.png", "fig_rq5x_examples.png"):
+    F(f)
+'''))
+
 # ---------------------------------------------------------------- decisions
-cells.append(md("""## 11. Go / no-go decisions, Methods parameters and environment
+cells.append(md("""## 12. Go / no-go decisions, Methods parameters and environment
 The go / no-go table maps each verdict to a development decision. `methods_parameters.csv` holds every parameter value quoted in the Methods; `environment.json` the software and hardware of the run."""))
 cells.append(code('''for f in ("go_no_go_decisions.csv", "methods_parameters.csv"):
     t = T(f)
@@ -372,7 +453,7 @@ if os.path.exists(err):
     display(Markdown("**Analyses that failed in this run** (must be resolved or reported)")); print(open(err).read())
 '''))
 
-cells.append(md("""## 12. Claims: what the results support and what they do not
+cells.append(md("""## 13. Claims: what the results support and what they do not
 Use the verdict table in §3 as the single source for every claim.
 
 **May be claimed when the corresponding verdict supports it**
