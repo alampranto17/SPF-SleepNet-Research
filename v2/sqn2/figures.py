@@ -229,7 +229,7 @@ def fig_sota(out_dir):
     ax.barh(y, t.f1, color=col, height=0.6)
     for yi, (f, m) in enumerate(zip(t.f1, t.model)):
         ax.text(f + 0.005, yi, f"{f:.3f}", va="center", fontsize=8, color=INK)
-    ax.set_yticks(y, [("SleepQualityNet v2" if m == "full_v2" else m) for m in t.model])
+    ax.set_yticks(y, [("Proposed" if m == "full_v2" else m) for m in t.model])
     ax.set_xlim(max(0, t.f1.min() - 0.1), min(1, t.f1.max() + 0.06))
     ax.set_xlabel("Pooled out-of-fold N3 F1 (identical folds and protocol)")
     ax.set_title("Same-protocol comparison with published architectures")
@@ -457,7 +457,7 @@ def fig_sota_forest(out_dir):
         ax.set_yticks(y, [PRETTY.get(c.replace("full_v2 vs ", ""), c.replace("full_v2 vs ", "")) for c in g.comparison])
         ax.set_xlabel(f"Median paired difference in {'F1' if metric == 'f1' else 'PR-AUC'}")
         ax.grid(axis="y", visible=False)
-    fig.suptitle("SleepQualityNet v2 minus baseline (participant-level, Holm-adjusted p)", fontweight="bold", fontsize=10)
+    fig.suptitle("Proposed model minus baseline (participant-level, Holm-adjusted p)", fontweight="bold", fontsize=10)
     return _save(fig, out_dir, "fig_rq1_sota_forest.png")
 
 
