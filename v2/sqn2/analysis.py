@@ -607,6 +607,84 @@ def rq4(corpus, run_dir, out_dir):
     return tab, comp
 
 
+# Added in v2.1, after the first full run (20261028-0834).  Reported in their own
+# table with their own Holm family; they do NOT enter the pre-specified RQ4 verdict.
+EXTENDED_COMPARISONS = [
+    ("feature fusion | full model", "full_v2", "full_nofeat"),
+    ("positive-class weighting | full model", "full_v2", "full_nopw"),
+    ("temporal attention | full model", "full_v2", "full_noattn"),
+    ("context receptive field +/-15 vs +/-3 epochs", "full_v2", "full_ctx_r3"),
+    ("all 19 features vs delta-group features only", "full_v2", "full_deltafeat"),
+]
+
+
+def rq4_extended(corpus, run_dir, out_dir):
+    """Leave-one-component-out ablations from the full model, training-seed
+    variability, and every ablation variant on the external cohorts."""
+    from .train import SEED_VARIANTS
+    names = ABLATION_VARIANTS + ["feat_gbm"]
+    per_part, oofs, exts = {}, {}, {}
+    for v in names:
+        oof, ext = load_oof(corpus, run_dir, v)
+        if oof is None:
+            continue
+        oofs[v], exts[v] = scored(oof), ext
+        per_part[v] = _participant_metrics(oofs[v])
+    # seed variability of the primary model
+    seed_rows, seed_vs = [], [v for v in SEED_VARIANTS if v in oofs]
+    for v in seed_vs:
+        m = pooled_metrics(oofs[v])
+        seed_rows.append({"variant": v, "f1": m["f1"], "pr_auc": m["pr_auc"], "kappa": m["kappa"]})
+    noise = {}
+    if len(seed_vs) >= 2:
+        sd = pd.DataFrame(seed_rows)
+        seed_rows.append({"variant": "SD across seeds", "f1": sd.f1.std(ddof=1),
+                          "pr_auc": sd.pr_auc.std(ddof=1), "kappa": sd.kappa.std(ddof=1)})
+        seed_rows.append({"variant": "range across seeds", "f1": sd.f1.max() - sd.f1.min(),
+                          "pr_auc": sd.pr_auc.max() - sd.pr_auc.min(),
+                          "kappa": sd.kappa.max() - sd.kappa.min()})
+        # participant-level seed-to-seed |median difference|: the noise floor for RQ4
+        for metric in ("f1", "pr_auc"):
+            diffs = []
+            for a, b in [(seed_vs[i], seed_vs[j]) for i in range(len(seed_vs))
+                         for j in range(i + 1, len(seed_vs))]:
+                j = per_part[a][[metric]].join(per_part[b][[metric]], lsuffix="_a", rsuffix="_b").dropna()
+                diffs.append(abs(float(np.median(j[f"{metric}_a"] - j[f"{metric}_b"]))))
+            noise[metric] = max(diffs)
+    pd.DataFrame(seed_rows).to_csv(os.path.join(out_dir, "rq4_seed_variability.csv"), index=False)
+    # leave-one-component-out comparisons, own Holm family
+    rows = []
+    for name, a, b in EXTENDED_COMPARISONS:
+        if a not in per_part or b not in per_part:
+            continue
+        for metric in ("f1", "pr_auc"):
+            j = per_part[a][[metric]].join(per_part[b][[metric]], lsuffix="_a", rsuffix="_b").dropna()
+            w = ST.wilcoxon_paired(j[f"{metric}_a"], j[f"{metric}_b"])
+            ci = ST.boot_ci_median_diff(j[f"{metric}_a"] - j[f"{metric}_b"])
+            rows.append({"component": name, "with": a, "without": b, "metric": metric,
+                         **w, "ci95_low": ci[0], "ci95_high": ci[1],
+                         "seed_noise_floor": noise.get(metric, np.nan)})
+    comp = pd.DataFrame(rows)
+    if len(comp):
+        comp["p_holm"] = ST.holm(comp.p.to_numpy())
+        # an effect is interpretable only if it is significant AND larger than the
+        # largest seed-to-seed difference of the primary model
+        comp["exceeds_seed_noise"] = comp.median_diff.abs() > comp.seed_noise_floor
+    comp.to_csv(os.path.join(out_dir, "rq4_extended_component_effects.csv"), index=False)
+    # every variant on every external cohort (5-fold ensembles)
+    xr = []
+    for v, ext in exts.items():
+        if ext is None or not len(ext):
+            continue
+        for c, g in scored(ext, primary_only=False).groupby("cohort"):
+            m = pooled_metrics(g)
+            xr.append({"variant": v, "cohort": c, **{k: m.get(k) for k in
+                                                     ("f1", "pr_auc", "roc_auc", "precision", "recall",
+                                                      "kappa", "n_participants")}})
+    pd.DataFrame(xr).to_csv(os.path.join(out_dir, "rq4_variant_external_metrics.csv"), index=False)
+    return comp
+
+
 # ---------------------------------------------------------------------------
 # RQ1b: same-protocol comparison with published architectures
 # ---------------------------------------------------------------------------
@@ -761,7 +839,7 @@ def rq2_bands(oof, S, out_dir, ext=None, Sx=None, rating="rating_prior", corpus=
             y4 = (g.rk_code == 4).astype(int).to_numpy()
             r = {"subset": subset, "n_epochs": int(len(g)), "n_participants": int(g.participant.nunique()),
                  "share_S4": float(y4.mean())}
-            for col in ("sw_time_frac", rating, "delta_intensity", "slow_wave_morphology",
+            for col in ("sw_time_frac", rating, "delta_intensity", "sw_morphology",
                         "spectral_dominance"):
                 if col in g and g[col].notna().any():
                     m = g[col].notna().to_numpy()

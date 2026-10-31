@@ -157,6 +157,12 @@ DETECTION_FEATURES = [
     "cand_slope_up_med",
 ]
 
+# delta / slow-wave features only (used by the delta-feature ablation and by the
+# SHAP feature grouping in xai.py)
+DELTA_FEATURES = ["logpow_sdelta", "logpow_delta", "rel_delta", "logratio_delta_theta",
+                  "logratio_delta_alpha", "logratio_delta_beta", "sw_count_per_min",
+                  "sw_time_frac", "log_cand_p2p_med", "cand_slope_up_med"]
+
 
 def detection_matrix(feat_table) -> np.ndarray:
     """Build the (n, len(DETECTION_FEATURES)) matrix from a feature dict/DataFrame."""

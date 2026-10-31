@@ -37,14 +37,12 @@ from . import features as FT
 from . import scores as SC
 from . import stats as ST
 from .models import SleepQualityNetV2, CONTEXT_RADIUS
-from .train import VARIANTS, PRIMARY_VARIANT, load_run
+from .train import VARIANTS, PRIMARY_VARIANT, build_model, load_run
 
 BANDS = {"delta": (0.5, 4.0), "theta": (4.0, 8.0), "alpha": (8.0, 12.0),
          "sigma": (12.0, 16.0), "beta": (16.0, 30.0)}
 FEATURE_GROUPS = {
-    "delta": ["logpow_sdelta", "logpow_delta", "rel_delta", "logratio_delta_theta",
-              "logratio_delta_alpha", "logratio_delta_beta", "sw_count_per_min",
-              "sw_time_frac", "log_cand_p2p_med", "cand_slope_up_med"],
+    "delta": FT.DELTA_FEATURES,
     "theta": ["logpow_theta", "rel_theta"], "alpha": ["logpow_alpha", "rel_alpha"],
     "sigma": ["logpow_sigma", "rel_sigma"], "beta": ["logpow_beta", "rel_beta"],
     "other": ["spectral_entropy"],
@@ -89,8 +87,7 @@ def rq5(corpus, run_dir, out_dir, oof, S=None, n_per_fold=120, per_participant=8
     for f in sorted(oof.fold.unique()):
         r = load_run(os.path.join(run_dir, f"{variant}__fold{f}.npz"))
         meta = json.loads(r["meta"])
-        model = SleepQualityNetV2(n_feat=corpus.Fraw.shape[1], use_feat=v["use_feat"],
-                                  use_attention=v["use_attention"], context=v["context"]).to(dev)
+        model = build_model(v, corpus.Fraw.shape[1]).to(dev)
         model.load_state_dict(torch.load(os.path.join(run_dir, f"{variant}__fold{f}.pt"),
                                          map_location=dev))
         model.eval()
