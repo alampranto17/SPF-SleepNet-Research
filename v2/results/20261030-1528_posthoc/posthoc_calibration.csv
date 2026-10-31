@@ -1,0 +1,19 @@
+variant,method,set,ece,brier,n
+full_v2,temperature scaling (inner split),OOF pooled,0.06029384391579161,0.0547089994231086,227430
+full_v2,temperature scaling (inner split),external CAP,0.04590262872719019,0.06420240646827732,105083
+full_v2,temperature scaling (inner split),external DOD-H,0.19167244421892485,0.12446908568882291,24665
+full_v2,temperature scaling (inner split),external DOD-O,0.22460917455602628,0.15704153079630337,53236
+full_v2,temperature scaling (inner split),external ISRUC-II,0.06052682009512683,0.04821985071345388,14207
+full_v2,temperature scaling (inner split),external ISRUC-III,0.02177115013063941,0.03469189529529749,8889
+full_v2,Platt scaling (cross-fitted on OOF),OOF pooled,0.003165320629132602,0.04228785764834981,227430
+full_v2,Platt scaling (fitted on all OOF),external CAP,0.021257113071987042,0.05807431516687912,105083
+full_v2,Platt scaling (fitted on all OOF),external DOD-H,0.11316620821204107,0.07289980014680637,24665
+full_v2,Platt scaling (fitted on all OOF),external DOD-O,0.14834109676934198,0.10478915096216698,53236
+full_v2,Platt scaling (fitted on all OOF),external ISRUC-II,0.009700090403158487,0.037802996248239414,14207
+full_v2,Platt scaling (fitted on all OOF),external ISRUC-III,0.04389526310606633,0.04377016793702874,8889
+full_nopw,temperature scaling (inner split),OOF pooled,0.005523969035901772,0.04268099123073144,227430
+full_nopw,temperature scaling (inner split),external CAP,0.014387451506540116,0.05671254928006862,105083
+full_nopw,temperature scaling (inner split),external DOD-H,0.12250869237664333,0.07534935472619508,24665
+full_nopw,temperature scaling (inner split),external DOD-O,0.15278417822225565,0.10322953017038719,53236
+full_nopw,temperature scaling (inner split),external ISRUC-II,0.01689791259794693,0.035960228059103816,14207
+full_nopw,temperature scaling (inner split),external ISRUC-III,0.04028941041375627,0.042718924061445035,8889

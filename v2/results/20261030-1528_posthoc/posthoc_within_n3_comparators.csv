@@ -1,0 +1,127 @@
+reference,set,epochs,candidate,value,n_participants,p
+graded expert agreement (median within-participant Spearman),all multi-rater,all N2/N3-voted,rating_prior,0.8071561942100716,198,1.5277082273150297e-34
+graded expert agreement (median within-participant Spearman),all multi-rater,all N2/N3-voted,signal_composite,0.7637220968803675,198,1.5277082273150297e-34
+graded expert agreement (median within-participant Spearman),all multi-rater,all N2/N3-voted,delta_intensity,0.7416227807322349,198,1.5277082273150297e-34
+graded expert agreement (median within-participant Spearman),all multi-rater,all N2/N3-voted,sw_morphology,0.7623481540581383,198,1.5277082273150297e-34
+graded expert agreement (median within-participant Spearman),all multi-rater,all N2/N3-voted,spectral_dominance,0.7454451596228523,198,1.5277082273150297e-34
+graded expert agreement (median within-participant Spearman),all multi-rater,all N2/N3-voted,sw_time_frac,0.650050948404873,170,6.087262816038074e-30
+graded expert agreement (median within-participant Spearman),all multi-rater,all N2/N3-voted,n3_logit,0.8394088821114221,198,1.5277082273150297e-34
+graded expert agreement (median within-participant Spearman),all multi-rater,all N2/N3-voted,p_n3_calibrated,0.8394562263833555,198,1.5277082273150297e-34
+graded expert agreement (median within-participant Spearman),all multi-rater,detected N3 only,rating_prior,0.5627473247739697,195,1.6738435061505968e-33
+graded expert agreement (median within-participant Spearman),all multi-rater,detected N3 only,signal_composite,0.5287485912624104,195,4.7982340811665415e-33
+graded expert agreement (median within-participant Spearman),all multi-rater,detected N3 only,delta_intensity,0.4890912255536049,195,2.0201913690439292e-32
+graded expert agreement (median within-participant Spearman),all multi-rater,detected N3 only,sw_morphology,0.5041944694754446,195,2.1382802104747932e-33
+graded expert agreement (median within-participant Spearman),all multi-rater,detected N3 only,spectral_dominance,0.5009666719686369,195,6.1188014603948095e-33
+graded expert agreement (median within-participant Spearman),all multi-rater,detected N3 only,sw_time_frac,0.4321866768018308,169,3.440319829019909e-28
+graded expert agreement (median within-participant Spearman),all multi-rater,detected N3 only,n3_logit,0.6699223364622792,195,5.532812900779432e-34
+graded expert agreement (median within-participant Spearman),all multi-rater,detected N3 only,p_n3_calibrated,0.6699223364622792,195,5.532812900779432e-34
+graded expert agreement (median within-participant Spearman),ISRUC-I,all N2/N3-voted,rating_prior,0.8123507737466484,100,1.9482799225479546e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,all N2/N3-voted,signal_composite,0.7685493880406172,100,1.9482799225479546e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,all N2/N3-voted,delta_intensity,0.7494952373037209,100,1.9482799225479546e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,all N2/N3-voted,sw_morphology,0.7632623328573109,100,1.9482799225479546e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,all N2/N3-voted,spectral_dominance,0.7479720809696027,100,1.9482799225479546e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,all N2/N3-voted,sw_time_frac,0.6720509480006562,82,1.8319454713391606e-15
+graded expert agreement (median within-participant Spearman),ISRUC-I,all N2/N3-voted,n3_logit,0.8444609491334669,100,1.9482799225479546e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,all N2/N3-voted,p_n3_calibrated,0.8444609491334669,100,1.9482799225479546e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,detected N3 only,rating_prior,0.5007020188526661,98,5.329388702409831e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,detected N3 only,signal_composite,0.4650165089659792,98,8.187873241092186e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,detected N3 only,delta_intensity,0.4116172564184551,98,2.1007118049806018e-17
+graded expert agreement (median within-participant Spearman),ISRUC-I,detected N3 only,sw_morphology,0.4407601187703149,98,7.701827028406962e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,detected N3 only,spectral_dominance,0.46463090910558236,98,1.0139633262205743e-17
+graded expert agreement (median within-participant Spearman),ISRUC-I,detected N3 only,sw_time_frac,0.3691925904883557,81,1.0158750926624362e-14
+graded expert agreement (median within-participant Spearman),ISRUC-I,detected N3 only,n3_logit,0.5819316194006872,98,4.165198736742955e-18
+graded expert agreement (median within-participant Spearman),ISRUC-I,detected N3 only,p_n3_calibrated,0.5819316194006872,98,4.165198736742955e-18
+graded expert agreement (median within-participant Spearman),DOD-H,all N2/N3-voted,rating_prior,0.808874517314121,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-H,all N2/N3-voted,signal_composite,0.7966012028894398,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-H,all N2/N3-voted,delta_intensity,0.7731353570781095,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-H,all N2/N3-voted,sw_morphology,0.7892072228068888,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-H,all N2/N3-voted,spectral_dominance,0.7301309254801288,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-H,all N2/N3-voted,sw_time_frac,0.7404530486260245,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-H,all N2/N3-voted,n3_logit,0.8437227454768079,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-H,all N2/N3-voted,p_n3_calibrated,0.844342371695479,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-H,detected N3 only,rating_prior,0.798590996461395,25,5.960464477539063e-08
+graded expert agreement (median within-participant Spearman),DOD-H,detected N3 only,signal_composite,0.7712156282187344,25,5.960464477539063e-08
+graded expert agreement (median within-participant Spearman),DOD-H,detected N3 only,delta_intensity,0.7401053757436724,25,5.960464477539063e-08
+graded expert agreement (median within-participant Spearman),DOD-H,detected N3 only,sw_morphology,0.7736183089787848,25,5.960464477539063e-08
+graded expert agreement (median within-participant Spearman),DOD-H,detected N3 only,spectral_dominance,0.694174508364871,25,8.940696716308594e-08
+graded expert agreement (median within-participant Spearman),DOD-H,detected N3 only,sw_time_frac,0.6943289549305489,25,5.960464477539063e-08
+graded expert agreement (median within-participant Spearman),DOD-H,detected N3 only,n3_logit,0.8297287331249334,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-H,detected N3 only,p_n3_calibrated,0.8275931625665084,25,2.9802322387695312e-08
+graded expert agreement (median within-participant Spearman),DOD-O,all N2/N3-voted,rating_prior,0.7939833048581875,55,5.5380757730678676e-11
+graded expert agreement (median within-participant Spearman),DOD-O,all N2/N3-voted,signal_composite,0.7444611379051757,55,5.5380757730678676e-11
+graded expert agreement (median within-participant Spearman),DOD-O,all N2/N3-voted,delta_intensity,0.6992214489336072,55,5.5380757730678676e-11
+graded expert agreement (median within-participant Spearman),DOD-O,all N2/N3-voted,sw_morphology,0.7420624623483731,55,5.5380757730678676e-11
+graded expert agreement (median within-participant Spearman),DOD-O,all N2/N3-voted,spectral_dominance,0.7410125004520217,55,5.5380757730678676e-11
+graded expert agreement (median within-participant Spearman),DOD-O,all N2/N3-voted,sw_time_frac,0.5673876938636264,55,5.852737520288064e-11
+graded expert agreement (median within-participant Spearman),DOD-O,all N2/N3-voted,n3_logit,0.8172493450921164,55,5.5380757730678676e-11
+graded expert agreement (median within-participant Spearman),DOD-O,all N2/N3-voted,p_n3_calibrated,0.8176155231669406,55,5.5380757730678676e-11
+graded expert agreement (median within-participant Spearman),DOD-O,detected N3 only,rating_prior,0.7369276453480215,55,8.600518439634673e-11
+graded expert agreement (median within-participant Spearman),DOD-O,detected N3 only,signal_composite,0.7221659155103574,55,1.1298834379029588e-10
+graded expert agreement (median within-participant Spearman),DOD-O,detected N3 only,delta_intensity,0.6747018721036554,55,1.1298834379029588e-10
+graded expert agreement (median within-participant Spearman),DOD-O,detected N3 only,sw_morphology,0.6985173570256613,55,7.295604085954747e-11
+graded expert agreement (median within-participant Spearman),DOD-O,detected N3 only,spectral_dominance,0.6885559878701331,55,1.0700190123555158e-10
+graded expert agreement (median within-participant Spearman),DOD-O,detected N3 only,sw_time_frac,0.5046725642188917,55,3.308382198869046e-10
+graded expert agreement (median within-participant Spearman),DOD-O,detected N3 only,n3_logit,0.7966290661855787,55,5.5380757730678676e-11
+graded expert agreement (median within-participant Spearman),DOD-O,detected N3 only,p_n3_calibrated,0.7948133604287054,55,5.5380757730678676e-11
+graded expert agreement (median within-participant Spearman),ISRUC-II,all N2/N3-voted,rating_prior,0.7937912384709911,8,0.00390625
+graded expert agreement (median within-participant Spearman),ISRUC-II,all N2/N3-voted,signal_composite,0.7031685212032107,8,0.00390625
+graded expert agreement (median within-participant Spearman),ISRUC-II,all N2/N3-voted,delta_intensity,0.6545561789501382,8,0.00390625
+graded expert agreement (median within-participant Spearman),ISRUC-II,all N2/N3-voted,sw_morphology,0.6691478998620914,8,0.00390625
+graded expert agreement (median within-participant Spearman),ISRUC-II,all N2/N3-voted,spectral_dominance,0.7587516761630995,8,0.00390625
+graded expert agreement (median within-participant Spearman),ISRUC-II,all N2/N3-voted,sw_time_frac,0.40291946084413965,8,0.00390625
+graded expert agreement (median within-participant Spearman),ISRUC-II,all N2/N3-voted,n3_logit,0.8438985692929087,8,0.00390625
+graded expert agreement (median within-participant Spearman),ISRUC-II,all N2/N3-voted,p_n3_calibrated,0.8438631569116652,8,0.00390625
+graded expert agreement (median within-participant Spearman),ISRUC-II,detected N3 only,rating_prior,0.41718753040613044,8,0.0078125
+graded expert agreement (median within-participant Spearman),ISRUC-II,detected N3 only,signal_composite,0.33276439489856047,8,0.0078125
+graded expert agreement (median within-participant Spearman),ISRUC-II,detected N3 only,delta_intensity,0.2765214444656429,8,0.0078125
+graded expert agreement (median within-participant Spearman),ISRUC-II,detected N3 only,sw_morphology,0.2928171144339427,8,0.01953125
+graded expert agreement (median within-participant Spearman),ISRUC-II,detected N3 only,spectral_dominance,0.3769422724182697,8,0.0078125
+graded expert agreement (median within-participant Spearman),ISRUC-II,detected N3 only,sw_time_frac,0.1262849632190625,8,0.02734375
+graded expert agreement (median within-participant Spearman),ISRUC-II,detected N3 only,n3_logit,0.5079109218330378,8,0.0078125
+graded expert agreement (median within-participant Spearman),ISRUC-II,detected N3 only,p_n3_calibrated,0.5082005090923095,8,0.0078125
+graded expert agreement (median within-participant Spearman),ISRUC-III,all N2/N3-voted,rating_prior,0.8060286187195962,10,0.0009765625
+graded expert agreement (median within-participant Spearman),ISRUC-III,all N2/N3-voted,signal_composite,0.7344007069211551,10,0.0009765625
+graded expert agreement (median within-participant Spearman),ISRUC-III,all N2/N3-voted,delta_intensity,0.7173687714182527,10,0.0009765625
+graded expert agreement (median within-participant Spearman),ISRUC-III,all N2/N3-voted,sw_morphology,0.765875818309022,10,0.0009765625
+graded expert agreement (median within-participant Spearman),ISRUC-III,all N2/N3-voted,spectral_dominance,0.7145258984578777,10,0.0009765625
+graded expert agreement (median within-participant Spearman),ISRUC-III,all N2/N3-voted,n3_logit,0.8482417364046383,10,0.0009765625
+graded expert agreement (median within-participant Spearman),ISRUC-III,all N2/N3-voted,p_n3_calibrated,0.8471754140561282,10,0.0009765625
+graded expert agreement (median within-participant Spearman),ISRUC-III,detected N3 only,rating_prior,0.257307640024048,9,0.001953125
+graded expert agreement (median within-participant Spearman),ISRUC-III,detected N3 only,signal_composite,0.2069415507174011,9,0.001953125
+graded expert agreement (median within-participant Spearman),ISRUC-III,detected N3 only,delta_intensity,0.2084977509001331,9,0.001953125
+graded expert agreement (median within-participant Spearman),ISRUC-III,detected N3 only,sw_morphology,0.21159690581072735,9,0.001953125
+graded expert agreement (median within-participant Spearman),ISRUC-III,detected N3 only,spectral_dominance,0.2053855992082477,9,0.001953125
+graded expert agreement (median within-participant Spearman),ISRUC-III,detected N3 only,n3_logit,0.3119153413031189,9,0.00390625
+graded expert agreement (median within-participant Spearman),ISRUC-III,detected N3 only,p_n3_calibrated,0.3102288984164775,9,0.00390625
+night-time decline (share of participants early > late),OOF,detected N3,rating_prior,0.7934272300469484,213,1.1217288772619397e-19
+night-time decline (share of participants early > late),OOF,detected N3,signal_composite,0.7746478873239436,213,6.685866157140466e-20
+night-time decline (share of participants early > late),OOF,detected N3,delta_intensity,0.8075117370892019,213,1.587939152910416e-22
+night-time decline (share of participants early > late),OOF,detected N3,sw_morphology,0.8356807511737089,213,1.0502734675472695e-24
+night-time decline (share of participants early > late),OOF,detected N3,spectral_dominance,0.6525821596244131,213,1.098737906883166e-06
+night-time decline (share of participants early > late),OOF,detected N3,sw_time_frac,0.7136150234741784,213,4.2868077298955033e-19
+night-time decline (share of participants early > late),OOF,detected N3,n3_logit,0.7323943661971831,213,1.2524351966076525e-16
+night-time decline (share of participants early > late),OOF,detected N3,p_n3_calibrated,0.7323943661971831,213,3.1432297961346987e-15
+night-time decline (share of participants early > late),external,detected N3,rating_prior,0.7578947368421053,190,7.920938913088459e-16
+night-time decline (share of participants early > late),external,detected N3,signal_composite,0.7842105263157895,190,2.374354837844741e-16
+night-time decline (share of participants early > late),external,detected N3,delta_intensity,0.8315789473684211,190,5.30962158655409e-18
+night-time decline (share of participants early > late),external,detected N3,sw_morphology,0.8473684210526315,190,8.160175051994307e-22
+night-time decline (share of participants early > late),external,detected N3,spectral_dominance,0.6368421052631579,190,6.005601524291343e-06
+night-time decline (share of participants early > late),external,detected N3,sw_time_frac,0.7157894736842105,190,1.5769438080773776e-18
+night-time decline (share of participants early > late),external,detected N3,n3_logit,0.7526315789473684,190,8.075042360618623e-14
+night-time decline (share of participants early > late),external,detected N3,p_n3_calibrated,0.7526315789473684,190,1.016938890611917e-12
+"expert R&K S4 vs S3, AUROC (CAP)",all S3/S4,all S3/S4,rating_prior,0.826556017310127,105,
+"expert R&K S4 vs S3, AUROC (CAP)",all S3/S4,all S3/S4,signal_composite,0.8092924708884317,105,
+"expert R&K S4 vs S3, AUROC (CAP)",all S3/S4,all S3/S4,delta_intensity,0.7753225646470658,105,
+"expert R&K S4 vs S3, AUROC (CAP)",all S3/S4,all S3/S4,sw_morphology,0.7957250093703984,105,
+"expert R&K S4 vs S3, AUROC (CAP)",all S3/S4,all S3/S4,spectral_dominance,0.8166769123676156,105,
+"expert R&K S4 vs S3, AUROC (CAP)",all S3/S4,all S3/S4,sw_time_frac,0.7824735186809237,105,
+"expert R&K S4 vs S3, AUROC (CAP)",all S3/S4,all S3/S4,n3_logit,0.8831773085713231,105,
+"expert R&K S4 vs S3, AUROC (CAP)",all S3/S4,all S3/S4,p_n3_calibrated,0.8829581126274766,105,
+"expert R&K S4 vs S3, AUROC (CAP)",S3/S4 and detected N3,S3/S4 and detected N3,rating_prior,0.775537348613534,104,
+"expert R&K S4 vs S3, AUROC (CAP)",S3/S4 and detected N3,S3/S4 and detected N3,signal_composite,0.7641982341167691,104,
+"expert R&K S4 vs S3, AUROC (CAP)",S3/S4 and detected N3,S3/S4 and detected N3,delta_intensity,0.7259935770429304,104,
+"expert R&K S4 vs S3, AUROC (CAP)",S3/S4 and detected N3,S3/S4 and detected N3,sw_morphology,0.7499077341527952,104,
+"expert R&K S4 vs S3, AUROC (CAP)",S3/S4 and detected N3,S3/S4 and detected N3,spectral_dominance,0.7815401594517493,104,
+"expert R&K S4 vs S3, AUROC (CAP)",S3/S4 and detected N3,S3/S4 and detected N3,sw_time_frac,0.7431804218329693,104,
+"expert R&K S4 vs S3, AUROC (CAP)",S3/S4 and detected N3,S3/S4 and detected N3,n3_logit,0.8601858434830039,104,
+"expert R&K S4 vs S3, AUROC (CAP)",S3/S4 and detected N3,S3/S4 and detected N3,p_n3_calibrated,0.8598423001507969,104,
