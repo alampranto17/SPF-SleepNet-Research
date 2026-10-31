@@ -11,9 +11,10 @@ Reported separately from the prespecified verdicts; nothing here changes a crite
    that remain when the least reliable epochs are withheld.
 3. Off-the-shelf comparator (review M5): YASA (pretrained, EEG only, inference mode)
    on every cohort, collapsed to N3 vs rest, scored against the same reference.
-4. Demographics from source headers (review M4): EDF header patient field and the
-   CAP hypnogram header are read with small HTTP range requests; if ages can be
-   parsed, participant median factor scores are correlated with age.
+4. Demographics from the source releases (review M4): CAP gender-age.xlsx (PhysioNet),
+   ISRUC Details spreadsheets if the server answers, HMC aggregated file.  Participant
+   median factor scores on expert N3 epochs are related to age and sex where available.
+   No individual demographic value is written to the outputs, only summaries.
 """
 from __future__ import annotations
 
@@ -149,84 +150,141 @@ def yasa_comparator(corpus, log=print):
 
 
 # ---------------------------------------------------------------------------
-# 4. Demographics from source headers
+# 4. Demographics from the source releases
 # ---------------------------------------------------------------------------
-HMC_BASE = "https://physionet-open.s3.amazonaws.com/hmc-sleep-staging/1.1/recordings/"
-CAP_BASE = "https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/"
+HMC_BASES = ("https://physionet-open.s3.amazonaws.com/hmc-sleep-staging/1.1/",
+             "https://physionet.org/files/hmc-sleep-staging/1.1/")
+CAP_BASES = ("https://physionet-open.s3.amazonaws.com/capslpdb/1.0.0/",
+             "https://physionet.org/files/capslpdb/1.0.0/")
+ISRUC_DETAILS = ("http://dataset.isr.uc.pt/ISRUC_Sleep/Details/Details_subgroup_{g}_Submission.xlsx",
+                 "https://sleeptight.isr.uc.pt/ISRUC_Sleep/Details/Details_subgroup_{g}_Submission.xlsx")
 
 
-def _get(url, nbytes=None, timeout=30):
-    req = urllib.request.Request(url)
-    if nbytes:
-        req.add_header("Range", f"bytes=0-{nbytes - 1}")
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return r.read(nbytes or -1)
-
-
-def _edf_header(url):
-    h = _get(url, 256).decode("latin-1", "ignore")
-    return {"patient_field": h[8:88].strip(), "recording_field": h[88:168].strip(),
-            "start_date": h[168:176].strip()}
-
-
-def _age_from(texts):
-    for t in texts:
-        m = re.search(r"\bage\D{0,3}(\d{1,3})", t, re.I)
-        if m and 1 <= int(m.group(1)) <= 100:
-            return float(m.group(1))
-    return np.nan
-
-
-def _sex_from(texts):
-    for t in texts:
-        m = re.search(r"(?:\bsex|\bgender)\W{0,3}([MF]|male|female)", t, re.I)
-        if m:
-            return m.group(1)[0].upper()
-        f = t.split()
-        if len(f) >= 2 and f[1] in ("M", "F"):        # EDF+ patient field: code sex birthdate name
-            return f[1]
-    return None
-
-
-def header_demographics(corpus, log=print):
-    rows = []
-    rec = corpus.rec[corpus.rec.cohort.isin(["HMC", "CAP"])]
-    for r, m in rec.iterrows():
-        key = r.split("_", 1)[1]
+def _get_any(urls, timeout=60):
+    last = None
+    for u in urls:
         try:
-            if m.cohort == "HMC":
-                h = _edf_header(HMC_BASE + f"{key}.edf")
-                texts = [h["patient_field"], h["recording_field"]]
-            else:
-                h = _edf_header(CAP_BASE + f"{key}.edf")
-                txt = _get(CAP_BASE + f"{key}.txt", 4000).decode("latin-1", "ignore")
-                texts = [h["patient_field"], h["recording_field"], txt.split("Sleep Stage")[0]]
-            rows.append({"rec": r, "participant": m.participant, "cohort": m.cohort,
-                         "patient_field": h["patient_field"], "age": _age_from(texts), "sex": _sex_from(texts)})
+            with urllib.request.urlopen(u, timeout=timeout) as r:
+                return r.read()
         except Exception as exc:
-            rows.append({"rec": r, "participant": m.participant, "cohort": m.cohort,
-                         "patient_field": f"ERROR {exc}", "age": np.nan, "sex": None})
-    dem = pd.DataFrame(rows)
-    log(f"[demographics] parsed age for {dem.age.notna().sum()}/{len(dem)} HMC/CAP recordings, "
-        f"sex for {dem.sex.notna().sum()}")
-    return dem
+            last = exc
+    raise RuntimeError(f"all sources failed ({last})")
+
+
+def _cap_demographics(tmp):
+    from . import data as D
+    raw = _get_any([b + "gender-age.xlsx" for b in CAP_BASES])
+    p = os.path.join(tmp, "cap_gender_age.xlsx")
+    open(p, "wb").write(raw)
+    for header in range(0, 4):
+        try:
+            df = pd.read_excel(p, header=header)
+        except Exception:
+            break
+        cs = D._find_col(df.columns, "subject", "patient", "record", "name", "id")
+        ca = D._find_col(df.columns, "age")
+        if cs is None or ca is None:
+            continue
+        cg = D._find_col(df.columns, "gender", "sex")
+        rows = []
+        for _, r in df.iterrows():
+            key = str(r[cs]).strip().lower()
+            if not re.match(r"^[a-z]+\d+$", key):
+                continue
+            try:
+                age = float(r[ca])
+            except (TypeError, ValueError):
+                continue
+            sex = str(r[cg]).strip()[:1].upper() if cg is not None else None
+            rows.append({"participant": f"CAP_{key}", "cohort": "CAP", "age": age, "sex": sex})
+        if rows:
+            return pd.DataFrame(rows)
+    # no usable header: detect the columns by content
+    df = pd.read_excel(p, header=None).astype(str)
+    is_key = df.apply(lambda c: c.str.strip().str.lower().str.match(r"^[a-z]+\d+$").mean())
+    is_sex = df.apply(lambda c: c.str.strip().str.upper().str[:1].isin(["M", "F"]).mean())
+    num = df.apply(lambda c: pd.to_numeric(c, errors="coerce"))
+    is_age = num.apply(lambda c: c.between(1, 100).mean())
+    if is_key.max() > 0.5 and is_age.max() > 0.5:
+        ck, ca, cg = is_key.idxmax(), is_age.idxmax(), (is_sex.idxmax() if is_sex.max() > 0.5 else None)
+        rows = [{"participant": f"CAP_{str(r[ck]).strip().lower()}", "cohort": "CAP",
+                 "age": float(num.loc[i, ca]),
+                 "sex": str(r[cg]).strip()[:1].upper() if cg is not None else None}
+                for i, r in df.iterrows()
+                if re.match(r"^[a-z]+\d+$", str(r[ck]).strip().lower()) and not np.isnan(num.loc[i, ca])]
+        if rows:
+            return pd.DataFrame(rows)
+    raise RuntimeError(f"could not parse CAP gender-age.xlsx (columns {list(df.columns)})")
+
+
+def _isruc_demographics(tmp):
+    from . import data as D
+    out = []
+    for g, cohort in (("I", "ISRUC-I"), ("II", "ISRUC-II"), ("III", "ISRUC-III")):
+        raw = _get_any([u.format(g=g) for u in ISRUC_DETAILS], timeout=30)
+        p = os.path.join(tmp, f"isruc_{g}.xlsx")
+        open(p, "wb").write(raw)
+        for pid, v in D.read_isruc_details(p, D.COHORT_PREFIX[cohort]).items():
+            sex = (v.get("sex") or "")[:1].upper() or None
+            out.append({"participant": pid, "cohort": cohort, "age": v["age"], "sex": sex})
+    return pd.DataFrame(out)
+
+
+def source_demographics(out_dir, log=print):
+    tmp = os.path.join(out_dir, "_tmp_dem")
+    os.makedirs(tmp, exist_ok=True)
+    parts, notes = [], []
+    for name, fn in (("CAP gender-age.xlsx (PhysioNet)", _cap_demographics),
+                     ("ISRUC Details spreadsheets", _isruc_demographics)):
+        try:
+            d = fn(tmp)
+            parts.append(d)
+            notes.append({"source": name, "status": "AVAILABLE", "n": len(d)})
+        except Exception as exc:
+            notes.append({"source": name, "status": f"NOT_AVAILABLE ({exc})", "n": 0})
+    try:
+        txt = _get_any([b + "Subjects_info_aggregated.txt" for b in HMC_BASES]).decode("latin-1", "ignore")
+        open(os.path.join(out_dir, "posthoc2_hmc_subjects_info_aggregated.txt"), "w").write(txt)
+        notes.append({"source": "HMC Subjects_info_aggregated.txt (PhysioNet)", "status": "AGGREGATED ONLY", "n": 0})
+    except Exception as exc:
+        notes.append({"source": "HMC Subjects_info_aggregated.txt", "status": f"NOT_AVAILABLE ({exc})", "n": 0})
+    import shutil
+    shutil.rmtree(tmp, ignore_errors=True)
+    for n in notes:
+        log(f"[demographics] {n}")
+    dem = pd.concat(parts, ignore_index=True) if parts else pd.DataFrame(columns=["participant", "cohort", "age", "sex"])
+    return dem, pd.DataFrame(notes)
+
+
+def demographics_summary(dem, corpus):
+    rows = []
+    evaluated = set(corpus.rec[corpus.rec.signal_valid].participant)
+    for c, g in dem[dem.participant.isin(evaluated)].groupby("cohort"):
+        rows.append({"cohort": c, "n_with_age": int(g.age.notna().sum()), "age_mean": g.age.mean(),
+                     "age_sd": g.age.std(), "age_min": g.age.min(), "age_max": g.age.max(),
+                     "n_male": int((g.sex == "M").sum()), "n_female": int((g.sex == "F").sum())})
+    return pd.DataFrame(rows)
 
 
 def age_association(d, dem):
-    """Participant median factor scores on expert N3 epochs vs age, per cohort."""
+    """Participant median factor scores (expert N3 epochs) vs age and sex, per cohort."""
     rows = []
     if dem.age.notna().sum() < 10:
-        return pd.DataFrame([{"note": "fewer than 10 participants with a parsable age; analysis not run"}])
+        return pd.DataFrame([{"note": "fewer than 10 participants with age; analysis not run"}])
+    cols = DECLINE_CANDIDATES[:4] + ["sw_time_frac"]
     ex = d[(d.label == 3) & d.is_primary]
-    pm = ex.groupby(["participant", "cohort"])[DECLINE_CANDIDATES[:4] + ["sw_time_frac"]].median().reset_index()
+    pm = ex.groupby(["participant", "cohort"])[cols].median().reset_index()
     pm = pm.merge(dem[["participant", "age", "sex"]], on="participant", how="inner")
-    for c, g in pm.groupby("cohort"):
+    from scipy import stats
+    for c, g in [("all with age", pm)] + list(pm.groupby("cohort")):
         g = g[g.age.notna()]
-        for col in DECLINE_CANDIDATES[:4] + ["sw_time_frac"]:
+        for col in cols:
             rho, p = ST.spearman(g[col], g.age)
-            rows.append({"cohort": c, "score": col, "n": int(len(g)), "spearman_vs_age": rho, "p": p,
-                         "age_median": float(g.age.median()), "age_min": float(g.age.min()),
-                         "age_max": float(g.age.max())})
+            m, f = g[g.sex == "M"][col].dropna(), g[g.sex == "F"][col].dropna()
+            ps = float(stats.mannwhitneyu(m, f).pvalue) if len(m) >= 5 and len(f) >= 5 else np.nan
+            rows.append({"cohort": c, "score": col, "n": int(len(g)), "spearman_vs_age": rho, "p_age": p,
+                         "median_male": float(m.median()) if len(m) else np.nan,
+                         "median_female": float(f.median()) if len(f) else np.nan, "p_sex": ps})
     return pd.DataFrame(rows)
 
 
@@ -238,10 +296,12 @@ def run_all(corpus, run_dir, out_dir, log=print):
     log("[posthoc2] 2. selective prediction by class")
     coverage_by_class(corpus, run_dir, os.path.join(out_dir, "_tmp_rq6")).to_csv(
         os.path.join(out_dir, "posthoc2_coverage_by_class.csv"), index=False)
-    log("[posthoc2] 4. demographics from source headers")
+    log("[posthoc2] 4. demographics from the source releases")
     try:
-        dem = header_demographics(corpus, log)
-        dem.to_csv(os.path.join(out_dir, "posthoc2_header_demographics.csv"), index=False)
+        dem, notes = source_demographics(out_dir, log)
+        notes.to_csv(os.path.join(out_dir, "posthoc2_demographics_sources.csv"), index=False)
+        demographics_summary(dem, corpus).to_csv(os.path.join(out_dir, "posthoc2_demographics_summary.csv"),
+                                                 index=False)
         age_association(d, dem).to_csv(os.path.join(out_dir, "posthoc2_age_association.csv"), index=False)
     except Exception as exc:
         log(f"[posthoc2] demographics failed: {exc}")
