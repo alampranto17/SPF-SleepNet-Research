@@ -81,7 +81,7 @@ CACHE_DATASET = "sqn2-cache"   # private dataset holding the compact cache (shar
 RUNS_DATASET = "sqn2-runs"     # private dataset holding finished training runs
 AUTO_GITHUB_PUSH = True        # push result tables/figures to GitHub (needs Kaggle secret github_token)
 GITHUB_REPO = "alampranto17/SPF-SleepNet-Research"
-GITHUB_BRANCH = "v2-kaggle"
+GITHUB_BRANCH = "main"
 PUSH_QUICK_TEST_RESULTS = False   # quick-test numbers are a pipeline check, not results
 GITHUB_SYNC_EVERY_MIN = 20        # live progress (log, status, cache list, results so far) -> GitHub; 0 = off
 

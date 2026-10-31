@@ -52,7 +52,7 @@ def _scrub(text, tok):
 _PUSH_LOCK = threading.Lock()
 
 
-def push_results(out_dir, repo="alampranto17/SPF-SleepNet-Research", branch="v2-kaggle",
+def push_results(out_dir, repo="alampranto17/SPF-SleepNet-Research", branch="main",
                  dest_root="v2/results", run_name=None, note="", token=None, log=print,
                  remote_url=None, extra_files=(), include_results=True, quiet=False):
     """Copy result files (and ``extra_files`` = [(src_path, rel_dest)]) to

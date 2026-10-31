@@ -47,7 +47,7 @@ The GitHub copy contains tables and figures only. Figures that need per-epoch pr
 
 cells.append(code('''RESULTS_DIR = None                     # e.g. "/kaggle/working/outputs" or "./outputs"; None = automatic
 GITHUB_REPO = "alampranto17/SPF-SleepNet-Research"
-GITHUB_BRANCH = "v2-kaggle"
+GITHUB_BRANCH = "main"
 GITHUB_RUN = "latest"                  # or a run folder name such as "20261027-1633"
 
 import glob, json, os, re, urllib.request

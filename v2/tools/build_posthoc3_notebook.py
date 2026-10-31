@@ -32,7 +32,7 @@ WORK = "/kaggle/working" if os.path.isdir("/kaggle/working") else "./work"
 CACHE_DIR, RUN_DIR, OUT_DIR = f"{WORK}/sqn2_cache", f"{WORK}/runs", f"{WORK}/outputs_posthoc3"
 for d in (CACHE_DIR, RUN_DIR, OUT_DIR, "sqn2"):
     os.makedirs(d, exist_ok=True)
-GITHUB_REPO, GITHUB_BRANCH, RUN_NAME = "alampranto17/SPF-SleepNet-Research", "v2-kaggle", "20261030-1528_posthoc3"
+GITHUB_REPO, GITHUB_BRANCH, RUN_NAME = "alampranto17/SPF-SleepNet-Research", "main", "20261030-1528_posthoc3"
 '''))
 for f in sorted(glob.glob(os.path.join(ROOT, "sqn2", "*.py"))):
     src = open(f).read()
