@@ -10,10 +10,25 @@ Runs only the analyses requested by the second pre-submission review, on the sav
 3. **Off-the-shelf comparator**: pretrained YASA (EEG only, inference mode) on every cohort, N3 vs rest.
 4. **Demographics from source headers** (HMC and CAP on PhysioNet, small range requests) and, if ages are available, the association of factor scores with age.
 
-**How to run:** Add input `sqn2-cache` and `sqn2-runs` (latest). Accelerator: none (CPU is enough). Internet ON. Secret `github_token` ticked. Then *Save Version → Save & Run All*. Results are pushed to `v2/results/20261030-1528_posthoc2/`.
+**How to run (use a fresh session: Save Version → Save & Run All, or Run → Factory reset first):** Add input `sqn2-cache` and `sqn2-runs` (latest). Accelerator: none (CPU is enough). Internet ON. Secret `github_token` ticked. Then *Save Version → Save & Run All*. Results are pushed to `v2/results/20261030-1528_posthoc2/`.
 These analyses are post hoc and never change a prespecified verdict.""")]
 cells.append(code('''import os, sys, subprocess, importlib
-subprocess.run([sys.executable, "-m", "pip", "install", "-q", "mne", "pyarrow", "h5py", "yasa"], check=False)
+# Pin the preinstalled scientific stack so that installing yasa cannot upgrade numpy/scipy/sklearn
+# (an unpinned install breaks the Kaggle image). If yasa cannot be resolved, only step 3 is skipped.
+from importlib.metadata import version, PackageNotFoundError
+pins = []
+for pkg in ("numpy", "scipy", "scikit-learn", "pandas", "numba", "matplotlib", "joblib", "torch", "pyarrow"):
+    try:
+        pins.append(f"{pkg}=={version(pkg)}")
+    except PackageNotFoundError:
+        pass
+open("/tmp/sqn2_constraints.txt", "w").write("\\n".join(pins))
+print("pinned:", pins)
+subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-c", "/tmp/sqn2_constraints.txt",
+                "mne", "h5py"], check=False)
+r = subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-c", "/tmp/sqn2_constraints.txt", "yasa"],
+                   check=False)
+print("yasa install:", "ok" if r.returncode == 0 else "FAILED (YASA comparator will be skipped)")
 WORK = "/kaggle/working" if os.path.isdir("/kaggle/working") else "./work"
 CACHE_DIR, RUN_DIR, OUT_DIR = f"{WORK}/sqn2_cache", f"{WORK}/runs", f"{WORK}/outputs_posthoc2"
 for d in (CACHE_DIR, RUN_DIR, OUT_DIR, "sqn2"):
