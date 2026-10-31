@@ -106,7 +106,7 @@ def _push_results(out_dir, repo, branch, dest_root, run_name, note, token, log, 
             if not quiet:
                 log("[github] nothing new to push")
             return True
-        git("-c", "user.name=SQN2 Kaggle runner", "-c", "user.email=noreply@users.noreply.github.com",
+        git("-c", "user.name=Md Shamsul Alam Pranto", "-c", "user.email=129358085+alampranto17@users.noreply.github.com",
             "commit", "-m", f"Kaggle {'progress' if quiet else 'results'} {run_name}")
         for k in range(3):                       # another push may have landed meanwhile
             try:
