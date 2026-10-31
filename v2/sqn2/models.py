@@ -61,19 +61,21 @@ class EpochEncoder(nn.Module):
 
 class SleepQualityNetV2(nn.Module):
     def __init__(self, n_feat=19, use_feat=True, use_attention=True, context=False,
-                 emb=64, dropout=0.3):
+                 emb=64, dropout=0.3, dilations=CONTEXT_DILATIONS):
         super().__init__()
         self.n_feat, self.use_feat, self.context = n_feat, use_feat, context
+        dilations = tuple(dilations)
         self.encoder = EpochEncoder(use_attention)
         self.fuse = nn.Sequential(nn.Linear(48 + (n_feat if use_feat else 0), emb),
                                   nn.LayerNorm(emb), nn.ReLU(), nn.Dropout(dropout))
         if context:
             # dilated residual temporal CNN over epoch embeddings:
-            # dilations 1,2,4,8 with kernel 3 -> receptive field +/-15 epochs (7.5 min)
+            # dilations 1,2,4,8 with kernel 3 -> receptive field +/-15 epochs (7.5 min);
+            # the receptive-field ablation uses dilations 1,2 (+/-3 epochs = 1.5 min)
             self.ctx = nn.ModuleList([nn.Sequential(
                 nn.Conv1d(emb, emb, 3, padding=d, dilation=d), nn.ReLU(), nn.Dropout(dropout),
-                nn.Conv1d(emb, emb, 1)) for d in CONTEXT_DILATIONS])
-            self.ctx_norm = nn.ModuleList([nn.LayerNorm(emb) for _ in CONTEXT_DILATIONS])
+                nn.Conv1d(emb, emb, 1)) for d in dilations])
+            self.ctx_norm = nn.ModuleList([nn.LayerNorm(emb) for _ in dilations])
         self.head = nn.Sequential(nn.Linear(emb, 32), nn.ReLU(), nn.Dropout(dropout),
                                   nn.Linear(32, 1))
 

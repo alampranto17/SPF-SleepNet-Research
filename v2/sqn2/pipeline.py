@@ -13,14 +13,16 @@ import pandas as pd
 
 from . import analysis as A
 from . import report as RP
+from . import sensitivity as SE
 from . import train as T
 from . import xai as X
+from . import xai_ext as XE
 
 DEFAULT_CFG = dict(
     lr=2e-3, wd=1e-2, warmup_steps=200, chunk_len=64, chunks_per_batch=16,
     max_passes=30, patience=5, mc_passes=10, seed=42, verbose=True, n_folds=5,
     variants=list(T.VARIANTS), run_gbm=True, run_loco=True, n_boot=1000,
-    xai_epochs_per_fold=120, time_budget_h=10.0,
+    xai_epochs_per_fold=120, xai_epochs_per_group=40, time_budget_h=10.0,
 )
 
 
@@ -188,6 +190,15 @@ def analyse_all(corpus, cfg, run_dir, out_dir, log=print):
                                                  r1b=res.get("r1b")), log)
     if summ is not None:
         _safe("go/no-go", lambda: RP.go_no_go(summ, out_dir), log)
+    # v2.1 additions: reported separately, never part of the pre-specified verdicts
+    log("[RQ4x] leave-one-component-out ablations, seed variability, external ablations")
+    res["r4x"] = _safe("RQ4 extended", lambda: A.rq4_extended(corpus, run_dir, out_dir), log)
+    log("[RQ5x] explanations of errors and external cohorts, explanation robustness")
+    res["r5x"] = _safe("RQ5 extended", lambda: XE.rq5_extended(
+        corpus, run_dir, out_dir, oof, ext, n_per_group=cfg.get("xai_epochs_per_group", 40), log=log), log)
+    log("[sensitivity] sensitivity analyses for every RQ")
+    res["sens"] = _safe("sensitivity", lambda: SE.run_all(
+        corpus, oof, ext, S, Sx, out_dir, r6[3] if r6 else None, r6[4] if r6 else None, log=log), log)
     al = _safe("run alignment", lambda: A.write_run_alignment(out_dir), log)
     if al is not None and (~al.aligned.astype(bool)).any():
         log(f"[analysis] WARNING: {int((~al.aligned.astype(bool)).sum())} run(s) skipped because their epoch "

@@ -18,7 +18,7 @@ These are rule-derived research-prototype descriptors of the EEG signal, **not**
 | [`SleepQualityNet_v2_results.ipynb`](SleepQualityNet_v2_results.ipynb) | **Results in manuscript order.** Reads the saved tables and figures (Kaggle output or `results/<run>/` here) and shows Table 1–3, the pre-specified verdicts and every RQ with its figures. No training, no EEG data, no hard-coded numbers. | CPU | ~1 min |
 | [`DOD_alignment_diagnostic.ipynb`](DOD_alignment_diagnostic.ipynb) | Diagnostic for the DOD scorer-hypnogram alignment (documented in the Methods). | CPU | ~5 min |
 
-Both main notebooks are generated from the package by `tools/build_notebook.py` and `tools/build_results_notebook.py`, so notebook and package code are always identical.
+The `sqn2/` package is identical to the code cells of the execution notebook (v2.1, run `20261030-1528`). v2.1 added `xai_ext.py`, `sensitivity.py`, leave-one-component-out ablations and seed repeats after the first full run; these are reported separately and never enter the pre-specified verdicts. `tools/build_notebook.py` and `tools/build_results_notebook.py` reproduce the v2.0 notebooks.
 
 ## Data
 Training: ISRUC-Sleep I (100) and HMC (151). External: ISRUC-II (8 × 2 sessions), ISRUC-III (10), Dreem DOD-H (25) and DOD-O (55), 5 scorers each. Reference for the within-N3 grade: CAP Sleep Database (R&K S3/S4). All datasets are public and downloaded by the execution notebook from their original sources; **no EEG data is stored in this repository** (ISRUC licence: research use only). Full instructions: [`docs/01_PLAN_and_how_to_run.md`](docs/01_PLAN_and_how_to_run.md).
@@ -34,7 +34,7 @@ Training: ISRUC-Sleep I (100) and HMC (151). External: ISRUC-II (8 × 2 sessions
 ## Repository layout
 | Path | Content |
 |---|---|
-| `sqn2/` | package: `data`, `download`, `features`, `scores`, `models`, `baselines`, `train`, `stats`, `analysis`, `xai`, `report`, `figures`, `pipeline`, `kaggle_io`, `github_io` |
+| `sqn2/` | package: `data`, `download`, `features`, `scores`, `models`, `baselines`, `train`, `stats`, `analysis`, `xai`, `xai_ext`, `sensitivity`, `report`, `figures`, `pipeline`, `kaggle_io`, `github_io` |
 | `results/<run>/` | tables, figures and progress log of each Kaggle run (pushed automatically); `20261027-1633` is the first complete run |
 | `tools/` | notebook builders and diagnostics |
 | `docs/` | plan, v1 audit and supervisor-comment resolution, literature/novelty check, feasibility audit |
@@ -42,4 +42,4 @@ Training: ISRUC-Sleep I (100) and HMC (151). External: ISRUC-II (8 × 2 sessions
 | `export_compact.py` | standalone local exporter (copy of `sqn2/data.py`) |
 
 ## Status
-First complete real-data run: `results/20261027-1633`. The next run adds the DOD scorer-hypnogram alignment fix, the environment record and the additional figures (confusion matrices, ROC, calibration, per-participant F1, baseline forest plot, Bland–Altman, factor-by-stage, inter-rater).
+Reported run: `results/20261030-1528` (v2.1; DOD scorer hypnograms aligned to the signals, all 97 saved runs verified against the cache). Earlier runs are kept for traceability: `20261027-1633` (before the DOD alignment fix) and `20261028-0834` (v2.0 with DOD alignment).

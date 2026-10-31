@@ -36,6 +36,23 @@ VARIANTS = {
     "cnn_feat_pw":         dict(use_feat=True, pos_weight=True, use_attention=True, context=False),
     "cnn_feat_pw_noattn":  dict(use_feat=True, pos_weight=True, use_attention=False, context=False),
     "full_v2":             dict(use_feat=True, pos_weight=True, use_attention=True, context=True),
+    # leave-one-component-out from the FULL model (context on), so every component is
+    # also tested in the configuration that is actually reported
+    "full_nofeat":         dict(use_feat=False, pos_weight=True, use_attention=True, context=True),
+    "full_nopw":           dict(use_feat=True, pos_weight=False, use_attention=True, context=True),
+    "full_noattn":         dict(use_feat=True, pos_weight=True, use_attention=False, context=True),
+    # receptive field of the context block: +/-3 epochs (1.5 min) instead of +/-15
+    "full_ctx_r3":         dict(use_feat=True, pos_weight=True, use_attention=True, context=True,
+                                dilations=(1, 2)),
+    # handcrafted features restricted to the delta / slow-wave group (10 of 19)
+    "full_deltafeat":      dict(use_feat=True, pos_weight=True, use_attention=True, context=True,
+                                feat_subset="delta"),
+    # seed repeats of the primary model: training-seed variability, the smallest
+    # component effect that can be distinguished from seed noise
+    "full_v2_seed1":       dict(use_feat=True, pos_weight=True, use_attention=True, context=True,
+                                seed_offset=1),
+    "full_v2_seed2":       dict(use_feat=True, pos_weight=True, use_attention=True, context=True,
+                                seed_offset=2),
     # same-protocol published baselines (raw EEG only; see baselines.py)
     "deepsleepnet":        dict(arch="deepsleepnet", use_feat=False, pos_weight=True),
     "tinysleepnet":        dict(arch="tinysleepnet", use_feat=False, pos_weight=True),
@@ -45,6 +62,33 @@ VARIANTS = {
 PRIMARY_VARIANT = "full_v2"
 ABLATION_VARIANTS = [k for k, v in VARIANTS.items() if "arch" not in v]
 BASELINE_VARIANTS = [k for k, v in VARIANTS.items() if "arch" in v]
+SEED_VARIANTS = [PRIMARY_VARIANT] + [k for k, v in VARIANTS.items() if v.get("seed_offset")]
+FEATURE_SUBSETS = {"delta": FT.DELTA_FEATURES}
+
+
+def feature_columns(v):
+    """Indices of the handcrafted features a variant receives (all 19 by default)."""
+    sub = v.get("feat_subset")
+    if not sub:
+        return np.arange(len(FT.DETECTION_FEATURES))
+    return np.array([FT.DETECTION_FEATURES.index(n) for n in FEATURE_SUBSETS[sub]])
+
+
+def build_model(v, n_feat_total):
+    """SleepQualityNet v2 network for a (non-baseline) variant definition."""
+    from .models import CONTEXT_DILATIONS
+    n_feat = len(feature_columns(v)) if v.get("feat_subset") else n_feat_total
+    return SleepQualityNetV2(n_feat=n_feat, use_feat=v["use_feat"],
+                             use_attention=v["use_attention"], context=v["context"],
+                             dilations=v.get("dilations", CONTEXT_DILATIONS))
+
+
+def variant_features(v, Fs):
+    """Restrict the standardised feature matrix to the variant's feature subset."""
+    if not v.get("feat_subset"):
+        return Fs
+    cols = torch.as_tensor(feature_columns(v), device=Fs.device)
+    return Fs.index_select(1, cols).contiguous()
 
 
 # ---------------------------------------------------------------------------
@@ -335,16 +379,15 @@ class Trainer:
             return self._run_gbm(split, path, scaler, tag, t0)
 
         v = VARIANTS[variant]
-        fs = _fold_seed(seed, split["fold"])
+        fs = _fold_seed(seed + v.get("seed_offset", 0), split["fold"])
         torch.manual_seed(fs)
         rng = np.random.default_rng(fs)
         if "arch" in v:
             from . import baselines as BL
             model = BL.build(v["arch"]).to(self.dev)
         else:
-            model = SleepQualityNetV2(n_feat=c.Fraw.shape[1], use_feat=v["use_feat"],
-                                      use_attention=v["use_attention"],
-                                      context=v["context"]).to(self.dev)
+            model = build_model(v, c.Fraw.shape[1]).to(self.dev)
+            Fs = variant_features(v, Fs)
         opt = torch.optim.AdamW(model.parameters(), lr=cfg["lr"], weight_decay=cfg["wd"])
         amp = self.dev.type == "cuda"
         gscaler = torch.amp.GradScaler("cuda", enabled=amp)
