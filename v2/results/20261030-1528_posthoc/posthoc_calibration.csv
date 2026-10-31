@@ -1,0 +1,9 @@
+variant,method,set,ece,brier,n
+full_v2,temperature scaling (inner split),OOF pooled,0.006071466424142673,0.004738358507540804,8960
+full_v2,temperature scaling (inner split),external CAP,0.005477322730898428,0.0028011521324530562,2600
+full_v2,temperature scaling (inner split),external ISRUC-II,0.004904581238038079,0.0026599830863558967,3120
+full_v2,temperature scaling (inner split),external ISRUC-III,0.004632342222164606,0.002051419112697317,1040
+full_v2,Platt scaling (cross-fitted on OOF),OOF pooled,0.001413081564891984,0.004596631884028832,8960
+full_v2,Platt scaling (fitted on all OOF),external CAP,0.00362646778429804,0.002432089701919192,2600
+full_v2,Platt scaling (fitted on all OOF),external ISRUC-II,0.0017763850542859175,0.0022228652536675384,3120
+full_v2,Platt scaling (fitted on all OOF),external ISRUC-III,0.003056808341436675,0.0014855408428313458,1040
