@@ -1,0 +1,58 @@
+\documentclass[journal]{IEEEtran}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}}
+\newcommand{\placeholder}[1]{\textbf{\textcolor{red}{[#1]}}}
+
+\begin{document}
+
+\title{Single-Channel EEG Detection of N3 Sleep with Interpretable Slow-Wave Factor Scores: A Multi-Cohort Study with Multi-Scorer References}
+
+\author{\placeholder{AUTHOR INPUT: author names, affiliations, institutional e-mail addresses, ORCID iDs; mark the corresponding author}%
+}
+
+\markboth{IEEE Journal of Biomedical and Health Informatics}{Single-Channel EEG Detection of N3 Sleep with Slow-Wave Factor Scores}
+
+\maketitle
+
+\begin{abstract}
+\textit{Objective:} Automatic stagers label epochs only as deep (N3) sleep or not, although slow-wave strength varies within N3. We developed a single-channel electroencephalography method that detects N3 and describes detected epochs with transparent slow-wave measures. \textit{Methods:} A convolutional network with feature fusion and temporal context was trained on 251 recordings from two cohorts (participant-grouped cross-validation) and tested on five external cohorts. Detected epochs received rule-based factor scores, an additive rating, a grade and a reliability score. Success criteria were prespecified. \textit{Results:} The detector achieved a pooled cross-validated N3 F1 of 0.849; externally, F1 was 0.580--0.869 and the receiver operating characteristic area at least 0.96. In the hardest cohort, model-expert agreement was within the expert range. Trained identically, the detector matched DeepSleepNet, a model with 264 times more parameters, and outperformed three others in cross-validation. Factor scores decreased across the night, slow-wave morphology more steeply than the detector output (post hoc), and the rating rose with the fraction of experts scoring N3 (median within-participant correlation 0.81 across N2/N3 epochs, 0.56 within detected N3); the detector output followed votes more closely. The grade partly separated expert stage 4 from stage 3 (area under the curve 0.743, below the prespecified 0.75). Excluding the 20\% least reliable epochs raised F1 on the remaining epochs to 0.949. \textit{Conclusion:} One electroencephalography channel supports N3 detection with high ranking accuracy in all cohorts and an interpretable within-N3 description following slow-wave physiology. \textit{Significance:} Slow-wave sleep is linked to brain health; this open method measures it from one channel as a research tool, not a clinical score.
+\end{abstract}
+% abstract numbers: 251 (rq1_detection_metrics pooled n_participants), 0.849/0.838/0.861 (rq1_detection_metrics), 0.580/0.869 (external rows),
+% 264 (ledger_extra DERIVED), 0.81 (research_question_results RQ2), 0.743 (rq2_rk_grade_validation), 0.949 (rq6_risk_coverage)
+
+\begin{IEEEkeywords}
+Electroencephalography, explainable artificial intelligence, external validation, slow-wave sleep, sleep staging, uncertainty.
+\end{IEEEkeywords}
+
+\input{sections/01-introduction}
+\input{sections/02-related-work}
+\input{sections/03-methods}
+\input{sections/04-results}
+\input{sections/05-discussion}
+\input{sections/06-conclusion}
+
+\section*{Data and code availability}
+All recordings are public: ISRUC-Sleep \cite{khalighi2016isruc}, the Haaglanden Medisch Centrum database \cite{alvarez2022hmcdb,alvarez2021hmc} and the CAP Sleep Database \cite{terzano2001cap} on PhysioNet \cite{goldberger2000physionet}, and the Dreem Open Datasets \cite{guillot2020dod}. No data are redistributed. The code, the executed notebooks and every result table and figure of the reported run are available at \url{https://github.com/alampranto17/SPF-SleepNet-Research} (folder \texttt{v2}, run \texttt{20261030-1528}).
+
+\section*{Ethics statement}
+This study used only publicly available, de-identified recordings released for research by the original investigators \cite{khalighi2016isruc,alvarez2021hmc,guillot2020dod,terzano2001cap}. No new data were collected. \placeholder{AUTHOR INPUT: confirm with your institution whether an exemption statement or reference number is required.}
+
+\section*{Acknowledgment}
+An AI system (Claude, Anthropic) assisted in drafting the text of all sections, the analysis code and the figures. The authors designed the study, checked every analysis, number and reference against the code outputs, and take full responsibility for the content. \placeholder{AUTHOR INPUT: confirm this disclosure; add other acknowledgments.}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}

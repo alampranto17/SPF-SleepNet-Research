@@ -1,0 +1,18 @@
+Dear Editor-in-Chief,
+
+We submit the manuscript "Single-Channel EEG Detection of N3 Sleep with Interpretable Slow-Wave Factor Scores: A Multi-Cohort Study with Multi-Scorer References" for consideration as a regular paper in the IEEE Journal of Biomedical and Health Informatics.
+
+Automatic sleep stagers report deep (N3) sleep as a binary label, although slow-wave expression varies continuously within the stage and the N2/N3 boundary is the least reproducible decision in manual scoring. The manuscript presents a single-channel EEG method that detects N3 and describes every detected epoch with transparent, rule-derived slow-wave measures, together with a reliability score.
+
+The work is relevant to JBHI because it addresses generalisation and interpretability of a health-informatics model with an evaluation design intended to be reproducible:
+- participant-grouped cross-validation on 251 participants and five external cohorts from different centres and devices, with research questions and success criteria fixed in the analysis code before the full results were computed, and every verdict reported as computed, including one criterion that was partially met and one that was not met;
+- a same-protocol comparison with four published architectures (DeepSleepNet, TinySleepNet, AttnSleep, L-SeqSleepNet) retrained on identical folds: the proposed 96k-parameter model matched a model with 264 times more parameters and exceeded the other three;
+- evaluation of the descriptors against the homeostatic night-time decline, which does not depend on expert scoring, and against the graded judgement of two to five experts per epoch, expert Rechtschaffen and Kales stage 3/4 scoring and night-to-night stability, together with a post hoc comparison with the detector's own output;
+- a reliability score evaluated against prediction errors and expert disagreement (error-detection area 0.879; F1 0.949 after withholding the 20% least reliable epochs).
+
+The descriptors are presented as research measures of the EEG signal, not as clinical sleep-quality scores, and the manuscript states this explicitly. All data are public; the code, executed notebooks and all result tables are openly available.
+
+We confirm that this manuscript is original, has not been published, is not under consideration elsewhere, and is not copyrighted elsewhere. [AUTHOR INPUT: if a preprint (e.g. arXiv/medRxiv) or a conference version exists, state it here and explain the extension.] All authors have approved the submission. In line with IEEE policy, the use of an AI system (Claude, Anthropic) to assist in drafting the text, analysis code and figures is disclosed in the Acknowledgment; the authors verified all content. "N2", "N3" and "F1" in the abstract are the standard sleep-stage and metric names rather than abbreviations defined by the authors. [AUTHOR INPUT: competing interests statement, e.g. "The authors declare no competing interests."]
+
+Sincerely,
+[AUTHOR INPUT: corresponding author name, affiliation, institutional e-mail, ORCID]
