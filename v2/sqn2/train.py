@@ -47,6 +47,9 @@ VARIANTS = {
     # handcrafted features restricted to the delta / slow-wave group (10 of 19)
     "full_deltafeat":      dict(use_feat=True, pos_weight=True, use_attention=True, context=True,
                                 feat_subset="delta"),
+    # complement: handcrafted features WITHOUT the delta group (9 of 19), post hoc v2.5
+    "full_nodeltafeat":    dict(use_feat=True, pos_weight=True, use_attention=True, context=True,
+                                feat_subset="nondelta"),
     # seed repeats of the primary model: training-seed variability, the smallest
     # component effect that can be distinguished from seed noise
     "full_v2_seed1":       dict(use_feat=True, pos_weight=True, use_attention=True, context=True,
@@ -63,7 +66,9 @@ PRIMARY_VARIANT = "full_v2"
 ABLATION_VARIANTS = [k for k, v in VARIANTS.items() if "arch" not in v]
 BASELINE_VARIANTS = [k for k, v in VARIANTS.items() if "arch" in v]
 SEED_VARIANTS = [PRIMARY_VARIANT] + [k for k, v in VARIANTS.items() if v.get("seed_offset")]
-FEATURE_SUBSETS = {"delta": FT.DELTA_FEATURES}
+FEATURE_SUBSETS = {"delta": FT.DELTA_FEATURES,
+                   # complement of the delta group (9 of 19): reviewer check of delta dominance
+                   "nondelta": [f for f in FT.DETECTION_FEATURES if f not in FT.DELTA_FEATURES]}
 
 
 def feature_columns(v):
